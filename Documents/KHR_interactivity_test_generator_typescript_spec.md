@@ -29,7 +29,7 @@ This project builds `khr-itest-gen`, a TypeScript/Node command-line generator th
 
 ## 2. Technology stack
 
-The generator **MUST** run on Node.js active LTS (22 or later) and be written in TypeScript 5.x with `strict`, `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` enabled. Runtime dependencies are limited to the table below; each one is pinned to an exact version in `package-lock.json`, and the lock file is committed.
+The generator **MUST** run on Node.js active LTS (22 or later) and be written in TypeScript 5.x or later with `strict`, `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` enabled. Runtime dependencies are limited to the table below; each one is pinned to an exact version in `package-lock.json`, and the lock file is committed.
 
 | Package | Role | Why this one |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ Each function implements the Specification's definition directly; none relies on
 | `neg`, `abs` | `(-a) \| 0`; `abs` defined via `neg` | Gives −2147483648 for INT\_MIN (spec line 2510) |
 | `div` | `Math.trunc(a / b) \| 0`, divisor 0 per spec definition | `INT_MIN / -1` wraps to INT\_MIN |
 | `rem` | `(a % b) \| 0`, divisor 0 per spec | `-2147483648 % -1` is `-0` in JS; `\| 0` normalises it |
-| `asr`, `lsl`, `lsr` | Explicit per-spec handling of counts outside 0–31 | JS masks counts to 5 bits |
+| `asr`, `lsl` | `a >> b`, `a << b` | None: the Specification uses only the low 5 bits of the count (lines 2841, 2855), exactly as JavaScript does |
 | bitwise, `clz`, `ctz`, `popcnt` | Per spec, with `>>> 0` where unsigned | Sign extension surprises |
 
 ### 5.3 binary64 helpers (`f64.ts`)
@@ -202,7 +202,7 @@ An ESLint `no-restricted-properties` / `no-restricted-syntax` rule set fails the
 | `toLocaleString`, `localeCompare`, `Intl` | Locale leakage (§1.7) | nowhere |
 | `JSON.stringify` | Loses NaN/±Infinity/−0 | `test/` only |
 | `Math.sin`, `Math.exp`, … transcendental | Engine-dependent accuracy | `src/graph/layout.ts` (indicator placement) |
-| `<<`, `>>`, `>>>` | 5-bit count masking | `src/numeric/int32.ts`, `src/prng/` |
+| `<<`, `>>`, `>>>` | Keeps bit-level code in two reviewed places | `src/numeric/int32.ts`, `src/prng/` |
 
 ## 6. PRNG and value sampling (`src/prng/`, `src/sampling/`)
 

@@ -426,7 +426,7 @@ The results are probably correct, but each label needs reading against the graph
 
 All four text issues listed in the previous report were fixed in `c5d1e1e8` ("KHR_interactivity: Fix typos"): `<EXTENSION_MANE>` at line 4761, the mismatched emphasis at line 5244, "less then" at line 5387, and "if it point to" at line 4203.
 
-One open issue comes from the new invalid set. The suite README reports 38 cases (`schemaAssert: true`) where the normative text requires only rejecting the graph, while the Validation section requires rejecting the whole extension. The suite expects extension rejection for these, and either outcome stops the graph from running. The specification should state which one applies.
+One open issue comes from the new invalid set. The suite README reports 38 cases (`schemaAssert: true`) where the normative text requires only rejecting the graph, while the Validation section requires rejecting the whole extension. The suite expects extension rejection for these, and either outcome stops the graph from running. The specification should state which one applies; this is reported as [glTF #2665](https://github.com/KhronosGroup/glTF/issues/2665).
 
 ---
 

@@ -25,7 +25,7 @@ A test that uses an operation only as part of the harness (for example `math/eq`
 
 ## Summary of findings
 
-Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 159 test assets with 1,073 sub-tests, plus 179 invalid-graph cases. The suite README gives 1,071 sub-tests; the count here was taken from the oracle files.
+Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 159 test assets with 1,073 sub-tests, plus 179 invalid-graph cases. The suite README gives 1,071 sub-tests; the count here was taken from the oracle files (reported as [Test-Assets #29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29)).
 
 Requirement-level coverage has improved a great deal. Of the 128 normative statements assessed (the BCP 14 terminology statement is excluded), 83 are covered, 17 are partially covered, and 28 have no coverage (6 of them impractical array-size limits). At the previous revision the figures were 14, 18, and 96.
 
@@ -404,9 +404,9 @@ These are properties of the current assets that limit what they can verify, inde
 
 **Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift. The authoring tool's sample-asset harness does not loosen this further: it takes the in-graph pass variable as the result and uses its own 0.05 / 3% tolerance only for a warning.
 
-**Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations.
+**Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations. Reported as [Test-Assets #25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25).
 
-**Sub-test labels round their inputs.** Labels such as `[a] 757.00 = 758.00` (`math/ceil`, actual input `757.003`) and `[a] 1.10 = 63.00` (`math/deg`, expected `62.9999962`) still appear wrong to a reviewer.
+**Sub-test labels round their inputs.** Labels such as `[a] 757.00 = 758.00` (`math/ceil`, actual input `757.003`) and `[a] 1.10 = 63.00` (`math/deg`, expected `62.9999962`) still appear wrong to a reviewer. Reported as [Test-Assets #27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27).
 
 **Ambiguous sub-test labels.** Several labels state the opposite of the expected value, because the result variable records a failure or a negated condition:
 
@@ -414,9 +414,9 @@ These are properties of the current assets that limit what they can verify, inde
 - `event/activation_order_and_onTick`: "receive: all get the sent value", "onTick: same values in a tick", and "timeSinceStart non-decreasing" all expect `False`.
 - `Extras/Float_Precision`: "0.1 + 0.2 != 0.3", "literal 1.79e308 is finite", and "1e30 * 1e30 is finite" expect `False`.
 
-The results are probably correct, but each label needs reading against the graph to confirm.
+The results are probably correct, but each label needs reading against the graph to confirm. Reported as [Test-Assets #26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26).
 
-**Locale leakage.** Log messages still use a comma as the decimal separator ("Proximity range: 0,0001"), including in the new assets. This only affects log text, not results.
+**Locale leakage.** Log messages still use a comma as the decimal separator ("Proximity range: 0,0001"), including in the new assets. This only affects log text, not results. Reported as [Test-Assets #28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28).
 
 **Out-of-scope operations.** `UserInteractions/eventOnHover` and `eventOnSelect` test `KHR_node_hoverability` and `KHR_node_selectability` operations. `graph/unsupported_operations_and_graphs` declares `test/*` operations on purpose, to check how unsupported extension operations are handled. Neither counts toward core operation coverage.
 

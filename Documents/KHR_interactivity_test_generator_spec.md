@@ -49,7 +49,7 @@ The full review is maintained separately as `Documents/KHR_interactivity_test_co
 
 ### 1.3 Summary of findings
 
-Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 159 test assets with 1,073 sub-tests, plus 179 invalid-graph cases. The suite README gives 1,071 sub-tests; the count here was taken from the oracle files.
+Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 159 test assets with 1,073 sub-tests, plus 179 invalid-graph cases. The suite README gives 1,071 sub-tests; the count here was taken from the oracle files (reported as [Test-Assets #29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29)).
 
 Requirement-level coverage has improved a great deal. Of the 128 normative statements assessed (the BCP 14 terminology statement is excluded), 83 are covered, 17 are partially covered, and 28 have no coverage (6 of them impractical array-size limits). At the previous revision the figures were 14, 18, and 96.
 
@@ -420,11 +420,11 @@ These are properties of the current assets that limit what they can verify, inde
 
 **Float inputs are single precision.** Outside `Extras/Float_Precision`, inline values such as `345.234436` and expected values such as `62.9999962` are still float32 values printed as decimals. Combined with tolerance-based comparison, this means double precision is verified only for the operations in that one asset.
 
-**Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift.
+**Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift. The authoring tool's sample-asset harness does not loosen this further: it takes the in-graph pass variable as the result and uses its own 0.05 / 3% tolerance only for a warning.
 
-**Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations.
+**Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations. Reported as [Test-Assets #25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25).
 
-**Sub-test labels round their inputs.** Labels such as `[a] 757.00 = 758.00` (`math/ceil`, actual input `757.003`) and `[a] 1.10 = 63.00` (`math/deg`, expected `62.9999962`) still appear wrong to a reviewer.
+**Sub-test labels round their inputs.** Labels such as `[a] 757.00 = 758.00` (`math/ceil`, actual input `757.003`) and `[a] 1.10 = 63.00` (`math/deg`, expected `62.9999962`) still appear wrong to a reviewer. Reported as [Test-Assets #27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27).
 
 **Ambiguous sub-test labels.** Several labels state the opposite of the expected value, because the result variable records a failure or a negated condition:
 
@@ -432,9 +432,9 @@ These are properties of the current assets that limit what they can verify, inde
 - `event/activation_order_and_onTick`: "receive: all get the sent value", "onTick: same values in a tick", and "timeSinceStart non-decreasing" all expect `False`.
 - `Extras/Float_Precision`: "0.1 + 0.2 != 0.3", "literal 1.79e308 is finite", and "1e30 * 1e30 is finite" expect `False`.
 
-The results are probably correct, but each label needs reading against the graph to confirm.
+The results are probably correct, but each label needs reading against the graph to confirm. Reported as [Test-Assets #26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26).
 
-**Locale leakage.** Log messages still use a comma as the decimal separator ("Proximity range: 0,0001"), including in the new assets. This only affects log text, not results.
+**Locale leakage.** Log messages still use a comma as the decimal separator ("Proximity range: 0,0001"), including in the new assets. This only affects log text, not results. Reported as [Test-Assets #28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28).
 
 **Out-of-scope operations.** `UserInteractions/eventOnHover` and `eventOnSelect` test `KHR_node_hoverability` and `KHR_node_selectability` operations. `graph/unsupported_operations_and_graphs` declares `test/*` operations on purpose, to check how unsupported extension operations are handled. Neither counts toward core operation coverage.
 
@@ -1095,7 +1095,7 @@ These points need a decision by the working group or the test-asset maintainers.
 4. **Index merging.** Whether `supplemental-index.json` is merged into `test-index.json` and `mathtests-index.json`, or kept separate, is for the maintainers to decide. The authoring tool's harness also runs any `test-Json/*.json` file that no index lists, so supplemental assets written under `Tests/Interactivity` run there whether or not the indexes are merged.
 5. **Conditional sub-tests.** Reporting a skipped sub-test as passed keeps existing runners working but hides skips from them. The alternative is a third result state, which existing runners do not support.
 6. **Extension-dependent sub-tests.** Section 10.11 uses an operation from another Khronos extension to test declaration handling. The maintainers may prefer that these sub-tests live with that extension's tests.
-7. **Existing suite issues.** Section 1.7 lists issues in the existing assets, such as engine-specific expected values and sub-test labels that state the opposite of the expected value. This generator does not correct them (Section 4.3); they need to be fixed in the existing generator.
+7. **Existing suite issues.** Section 1.7 lists issues in the existing assets, such as engine-specific expected values and sub-test labels that state the opposite of the expected value. This generator does not correct them (Section 4.3); they need to be fixed in the existing generator. They are reported as Test-Assets [#25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25), [#26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26), [#27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27), [#28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28) and [#29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29).
 8. **Component extraction in the harness.** The harness operation set in Section 7.2 has no `math/extract*` operations, which component-by-component comparison of vector and matrix results needs (Section 7.3). The existing suite's harness already uses `math/extract3`. The working group needs to decide whether the extract operations join the harness set, verified by the supplemental prerequisites asset.
 9. **Oracle file shape.** Section 7.4 lists the oracle properties as a flat set, but the existing oracle files, which existing runners read, nest sub-tests under `tests[].subTests[]` and add `description` and `entryPoints`. The nested shape is unchanged at revision `9ffd30e`. Section 7.4 should be updated to describe the nested shape.
 10. **Remaining rejection gaps.** Rejection tests are out of scope for this generator (Section 1.1). Section 1.6.1 lists the rejection cases the existing `invalid/` set does not yet include; they need to be added there.

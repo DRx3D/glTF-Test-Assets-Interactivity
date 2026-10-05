@@ -56,8 +56,8 @@ A supplemental asset whose results become final through an animation, through a 
 
 These are expected, and the documents already say disagreements never change expected values (requirements §12):
 
-- **Single precision in matrix operations.** `math/matInverse`, `math/matCompose` and parts of `math/matDecompose` go through gl-matrix on `Float32Array`. The precision sub-tests (requirements §10.3) for these operations will fail on this engine, which is the correct outcome under spec line 278.
-- **Configuration fallback is not implemented.** The tool's README lists "configuration default values and validation" and "declaration validation" as TODO, and `BehaveEngineNode` has a "todo: if one is missing or invalid" comment. The configuration-fallback sub-tests (requirements §10.5) will likely fail.
+- **Single precision in matrix operations.** `math/matInverse`, `math/matCompose` and parts of `math/matDecompose` go through gl-matrix on `Float32Array`. The precision sub-tests (requirements §10.3) for these operations will fail on this engine, which is the correct outcome under spec line 278. Reported as [AuthoringTool #129](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/129).
+- **Configuration fallback is not implemented.** The tool's README lists "configuration default values and validation" and "declaration validation" as TODO, and `BehaveEngineNode` has a "todo: if one is missing or invalid" comment. The configuration-fallback sub-tests (requirements §10.5) will likely fail. Reported as [AuthoringTool #130](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/130).
 - **Limited rejection.** `validateGraph` enforces the forward-reference rule, and nodes check for required values and configurations, but most rules in the `invalid/` set are not enforced. The harness does not run `invalid/` cases at all.
 
 ### 2.7 Two data sets support the riskiest manual work

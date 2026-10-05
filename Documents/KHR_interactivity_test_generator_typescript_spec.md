@@ -4,12 +4,12 @@
 | --- | --- |
 | Document status | Draft 0.3 |
 | Date | 2026-10-05 |
-| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.2, 2026-10-05) |
+| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.3, 2026-10-05) |
 | Author | Leonard Daly (Daly Realism) |
 
 ## 1. Overview
 
-This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.2, 2026-10-05). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
+This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.3, 2026-10-05). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
 
 **Goals**
 
@@ -453,7 +453,8 @@ event/onStart ─▶ event/send test/onStart {expectedDuration}
 
 - Variables are `TestResult_<category>/<asset>_<sub-test>` and `TestResult_HasPassed_<category>/<asset>_<sub-test>` (bool, initial `false`), matching the existing suite's naming (for example `TestResult_math/abs_[a] -10 = 10`).
 - **Asynchronous sub-tests** (delays, animation, interpolation, ticks) cannot finish inside the sequence. Each one increments a `Harness_Completed` int variable when it finishes and then runs an inline check: if `Harness_Completed` equals the number of async sub-tests, it runs the report. The synchronous `report` branch is omitted in assets that have async sub-tests.
-- **`expectedDuration`** = the largest scheduled completion time of any async sub-test (from its delay, animation or interpolation parameters), plus 0.5 s, rounded up to 0.1 s. The plan validator rejects values above `limits.maxExpectedDuration` (default 10 s, §7.9).
+- **`expectedDuration`** = the largest scheduled completion time of any async sub-test (from its delay, animation or interpolation parameters), plus 0.5 s, rounded up to 0.1 s. The plan validator warns above `limits.preferredExpectedDuration` (default 5.5 s, §7.9 SHOULD) and rejects values above `limits.maxExpectedDuration` (default 10 s, §7.9 MUST).
+- **Settle delay** (§7.2 item 3): an asset with async sub-tests also gets a `flow/setDelay` node, started from the `event/onStart` sequence, whose inline `duration` equals `expectedDuration`. Runners that estimate their wait from inline durations, such as the authoring tool's harness ([AuthoringTool #128](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/128)), then wait long enough.
 - **Isolation** (§7.8) is a property of targets (`isolated: true` in the registry). The asset planner gives each such target its own asset.
 - **No sub-test can block another** (§7.2 item 2): each `flow/sequence` output leads to an independent chain, and no harness path can stop the sequence. A sub-test whose operation activates `err` instead of `out` still reaches the comparison through a dedicated `err` branch.
 
@@ -528,6 +529,7 @@ The oracle uses the **on-disk** schema of the existing suite (section 9.1), whic
 - `expectedResultValue` is always an array, as in the existing suite. Special values are strings (`"NaN"`, `"Infinity"`, `"-Infinity"`, `"-0"`). The existing suite avoids `"-0"` by storing `1 / x` in the result variable and expecting `"Infinity"` or `"-Infinity"`; the writer supports that convention behind a `negZeroAsReciprocal` option, in case the working group adopts it (requirements doc Appendix A item 3).
 - `set` comparisons write the first permitted value in `expectedResultValue` (so legacy runners have something to show) and the full list in `comparison.values`.
 - Optional keys (`reviewRequired`, `conditional`, `expectedLogOutput`, `requiredRunnerCapabilities`) are omitted, not written as `null`, when they don't apply.
+- Every test lists its `entryPoints`, and no entry point sets `requiresUserInteraction` (§7.4), because the authoring tool's harness skips every sub-test of a test with an interaction entry point.
 
 ### 11.4 Description file (`description.ts`)
 
@@ -591,7 +593,7 @@ All checks run against the in-memory staging tree. Any failure exits with status
 | V3 | Oracle variables match the GLB | Re-parse the GLB; for each sub-test check that `resultVarId`/`successResultVarId` point to variables with the stated name and type | §12.2 |
 | V4 | Every in-scope target is covered or explained | Registry × (existing credits ∪ supplemental `targets` ∪ `NotCoverable`) | §12.3 |
 | V5 | No duplicate of an existing sub-test | Each supplemental `(target, op, types, inputs)` key compared with credited existing sub-tests | §12.4 |
-| V6 | Structural limits | ≤ 100 sub-tests, ≤ 2,000 nodes, socket lists ≤ 64, `expectedDuration` ≤ 10 s, isolation rules | §7.7–7.9 |
+| V6 | Structural limits | ≤ 100 sub-tests, ≤ 2,000 nodes, socket lists ≤ 64, `expectedDuration` ≤ 10 s (warning above 5.5 s), settle delay present for async assets, isolation rules | §7.7–7.9 |
 | V7 | Harness op set | Every node outside sub-test setup is in the §7.2 set (plus the agreed extract ops, section 10.4) | §7.2 |
 | V8 | Forward-only graph and unique names | Value refs lower, flow refs higher; variable names unique per asset | spec 5298, 5387; §7.2 |
 | V9 | Number round-trip | Every number in every generated JSON file re-parses to the bit pattern the generator intended | §5.4 |
@@ -643,7 +645,8 @@ khr-itest-gen explain <target> # show plan, sub-tests and expected values for on
 | `--copyright-owner`, `--copyright-year` | required | No default, so a year is never taken from the clock |
 | `limits.maxSubTests` / `maxNodes` | 100 / 2,000 | §7.7 |
 | `limits.maxEnumeration` | 64 | §8.1 |
-| `limits.maxExpectedDuration` | 10 s | §7.9 |
+| `limits.preferredExpectedDuration` | 5.5 s | §7.9 SHOULD; exceeding it is a warning |
+| `limits.maxExpectedDuration` | 10 s | §7.9 MUST |
 | `limits.timeTolerance` | 0.05 s | §7.9 |
 | `limits.referenceBits` | 128 | Minimum 128, section 7.2 |
 | `tolerances.transcendental` | r 1e−12, a 1e−300 | §9.3 |
@@ -719,7 +722,7 @@ interface EngineSession {
 
 **Clock.** The authoring tool's engine schedules `flow/setDelay` with `setTimeout` and ticks with `performance.now()`. The adapter drives it with fake timers (`@sinonjs/fake-timers`, replacing both), which gives the virtual clock and the jittered-tick run described above.
 
-**Expected disagreements on the authoring tool's engine** (known gaps at `3771735`): precision sub-tests for `math/matInverse`, `math/matCompose` and `math/matDecompose`, which use gl-matrix on `Float32Array`; configuration-fallback sub-tests, which the engine does not yet implement. These are recorded and filed, not treated as generator bugs.
+**Expected disagreements on the authoring tool's engine** (known gaps at `3771735`): precision sub-tests for `math/matInverse`, `math/matCompose` and `math/matDecompose`, which use gl-matrix on `Float32Array` ([AuthoringTool #129](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/129)); configuration-fallback sub-tests, which the engine does not yet implement ([AuthoringTool #130](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/130)). These are recorded and filed, not treated as generator bugs.
 
 Adapters are excluded from the determinism check. Their output goes only into the adapter section of the coverage report, and that section is written to a separate file (`supplemental-adapters.json`) when `--verify-determinism` is set, so engine non-determinism cannot fail the build.
 

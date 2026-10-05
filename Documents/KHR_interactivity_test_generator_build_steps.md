@@ -137,7 +137,7 @@ This step carries the most schedule risk (R4 and R5 in section 18).
 Build the whole pipeline end to end for just two targets before writing any more generators.
 
 1. **`graph/`**: typed builder; topological sort over value and flow edges (forward-only rule, spec lines 5298 and 5387); socket ids in Specification socket order; types array.
-2. **`graph/harness.ts`**: `event/onStart` sends `test/onStart`, then a `flow/sequence` runs each sub-test (setup, operation, set result variable, compare, branch, set pass variable, indicator) and finally the report. Asynchronous sub-tests use a `Harness_Completed` counter.
+2. **`graph/harness.ts`**: `event/onStart` sends `test/onStart`, then a `flow/sequence` runs each sub-test (setup, operation, set result variable, compare, branch, set pass variable, indicator) and finally the report. Asynchronous sub-tests use a `Harness_Completed` counter, and such an asset also gets a `flow/setDelay` with an inline `duration` equal to `expectedDuration`, kept at or under 5.5 s (§7.2 item 3, §7.9), so the authoring tool's harness waits long enough.
 3. **`graph/compare.ts`**: every comparison mode, including the `1 / x` sign-of-zero check. An operation is never used to verify its own result.
 4. **`asset/oracle.ts`, `description.ts`, `index.ts`, `naming.ts`**: split assets at 100 sub-tests or 2,000 nodes.
 5. **`validate/`**: self-checks V1–V9 and the in-memory staging tree, so nothing is written unless every check passes.

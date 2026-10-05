@@ -2,12 +2,12 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.1 |
-| Date | 2026-10-03 |
+| Document status | Draft 0.2 |
+| Date | 2026-10-05 |
 | Project specification | `Documents/KHR_interactivity_test_generator_typescript_spec.md` |
 | Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` |
 
-This is the build order for the supplemental test generator. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
+This is the build order for the supplemental test generator, updated for test suite revision `9ffd30e` (branch `fix/spec-and-json-conform-fixes`). That revision already covers most flow, event, animation, interpolation and rejection targets, so Steps 10 and 11 are smaller than in Draft 0.1. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
 
 "Section N" refers to the TypeScript project specification. "§N" refers to the requirements document.
 
@@ -17,8 +17,8 @@ This is the build order for the supplemental test generator. It follows the modu
 
 Both need the working group before M3 starts. Steps 1–3 can proceed while they are pending.
 
-- **R1, component extraction.** Ask the working group to add `math/extract2`, `extract3`, `extract4`, `extract2x2`, `extract3x3` and `extract4x4` to the harness operation set (§7.2). Without them, vector and matrix results cannot be compared component by component, which §7.3 requires.
-- **R2, oracle schema.** Confirm that the oracle shape on disk (`tests[].subTests[]` with `entryPoints`) is normative, and update the flat field list in §7.4 to match.
+- **R1, component extraction.** Ask the working group to add `math/extract2`, `extract3`, `extract4`, `extract2x2`, `extract3x3` and `extract4x4` to the harness operation set (§7.2). Without them, vector and matrix results cannot be compared component by component, which §7.3 requires. The existing suite's own harness already uses `math/extract3`, which supports the request.
+- **R2, oracle schema.** Confirm that the oracle shape on disk (`tests[].subTests[]` with `entryPoints`) is normative, and update the flat field list in §7.4 to match. The shape is unchanged at revision `9ffd30e`.
 
 ---
 
@@ -101,7 +101,8 @@ This step carries the most schedule risk (R4 and R5 in section 18).
 
 ## Step 5: Existing-suite reader and gap determination (M2)
 
-- **`existing/`**: walk `Tests/Interactivity` with sorted directory listings; parse every GLB and oracle (accepting both oracle shapes); build the sub-test inventory and the name set used for collision checks.
+- **`existing/`**: walk `Tests/Interactivity` with sorted directory listings; parse every GLB and oracle (accepting both oracle shapes); skip the `Overview.glb` and `mathtests.glb` aggregates; build the sub-test inventory and the name set used for collision checks. Both index files, `test-index.json` and `mathtests-index.json`, are at the top of `Tests/Interactivity`.
+- **Invalid-graph cases**: read `invalid/invalid-index.json` (179 cases). They are never generated against, but the mapping can credit rejection targets to them so the coverage report shows which rejection rules are covered.
 - **Gap determination**: a target counts as covered only if `existing-coverage.yaml` credits it. A mapping entry that names a sub-test missing from the inventory is a fatal error.
 - **`khr-itest-gen gaps`** prints the result. This is the first useful output: the real gap list.
 
@@ -140,7 +141,7 @@ Build the whole pipeline end to end for just two targets before writing any more
 3. **`graph/compare.ts`**: every comparison mode, including the `1 / x` sign-of-zero check. An operation is never used to verify its own result.
 4. **`asset/oracle.ts`, `description.ts`, `index.ts`, `naming.ts`**: split assets at 100 sub-tests or 2,000 nodes.
 5. **`validate/`**: self-checks V1–V9 and the in-memory staging tree, so nothing is written unless every check passes.
-6. **Two generators**: `prerequisites/` (verifies the harness operations) and `math/round` (`round-negzero`).
+6. **Two generators**: `prerequisites/` (verifies the harness operations) and `math/div` (`div-boundary`, for example `div(-7, 2) = -3`, spec line 2626). The earlier example, `math/round` negative zero, is now covered by the existing suite.
 7. **Golden test**: a reduced registry of about 15 targets, with the generated output committed and compared byte for byte.
 
 **M3 gate:** V1–V9 pass, the golden test is in place, and the slice runs correctly on one engine. Babylon.js with `NullEngine` is the first adapter target.
@@ -162,11 +163,11 @@ Build the whole pipeline end to end for just two targets before writing any more
 
 M5 depends only on M3, so it can run in parallel with M4.
 
-- **`flow/`**: loop ranges at the int32 limits (64 iterations or fewer each), `doN`, `waitAll`, `multiGate`, `throttle`, `setDelay` and `cancelDelay`.
-- **`variable/`**: every value type, type defaults, interpolation including slerp.
-- **`event/`**: activation order and first-tick values, each in an isolated asset.
+- **`flow/`**: what the existing suite still lacks: loop ranges at the int32 limits (64 iterations or fewer each), negative `n` for `doN`, `waitAll` with 0 and 64 inputs, `multiGate` with both options true, `setDelay` with a duration of 0, and `while` with a condition that changes in the body.
+- **`variable/`**: type defaults, matrix and `ref` variables, and interpolation of `float2`, `float3`, `float4` without slerp, and matrices.
+- **`event/`**: `send` and `receive` for vector, matrix and the remaining value types. Activation order and first-tick values are already covered.
 - **`debug/`**: asserts that `out` fires; records `expectedLogOutput` and declares `logCapture`.
-- **`config/`**: each invalid configuration must behave observably differently from the default, or generation fails.
+- **`config/`**: the fallback cases still missing (`flow/for` `initialIndex`, `math/quatFromAngles` `order`, `flow/multiGate` missing properties, `flow/waitAll` missing, non-integer and negative values, `debug/log` `severity`). Each invalid configuration must behave observably differently from the default, or generation fails.
 - **`concepts/`**: socket retention, type defaults, and the runnable edge cases using `g.raw()`.
 - Conditional sub-tests for the `maxActive*` limits.
 - First engine adapter, run with a fixed 1/60 s tick and with a deterministic jittered tick.
@@ -178,8 +179,8 @@ M5 depends only on M3, so it can run in parallel with M4.
 ## Step 11: Pointer and animation generators, reports and release (M6)
 
 - **Base scenes**: cameras, lights, morph targets, skins and animations.
-- **`pointer/`**: `get`/`set`/`interpolate` error paths, template syntax, `activeCamera`, rotation interpolation checked against slerp.
-- **`animation/`**: reverse playback, looping, restart, `stopAt`, and the isolated autoplay test.
+- **`pointer/`**: `activeCamera`, the `{}` form of the animation state pointers, `pointer/get` type mismatch, nodes outside the scene, valid template syntax (`~0`, `~1`), and interpolation of the remaining types. Error paths and rotation slerp are already covered.
+- **`animation/`**: an animation with a maximum time of 0, and the `maxActiveAnimations` limit. Reverse playback, looping, restart, `stopAt` and autoplay are already covered.
 - **`report/`**: `supplemental-coverage.json` as the source of truth, with `supplemental-coverage.md` rendered from it.
 - **Determinism**: `--verify-determinism`, and a CI job that compares output hashes from Windows and Linux.
 
@@ -203,7 +204,7 @@ After acceptance, the maintainers decide whether to merge `supplemental-index.js
 
 ## Effort
 
-The project spec estimates about 30 engineer-weeks:
+The project spec estimates about 27 engineer-weeks:
 
 | Milestone | Steps | Estimate (engineer-weeks) |
 | --- | --- | --- |
@@ -211,10 +212,10 @@ The project spec estimates about 30 engineer-weeks:
 | M2 Data and reference | 4–7 | 5 |
 | M3 Vertical slice | 8 | 5 |
 | M4 Math and type | 9 | 6 |
-| M5 Flow, state, events | 10 | 6 |
-| M6 Pointers, animation, release | 11–12 | 5 |
+| M5 Flow, state, events | 10 | 4 |
+| M6 Pointers, animation, release | 11–12 | 4 |
 
-With two engineers running M4 and M5 in parallel, calendar time drops by about six weeks.
+With two engineers running M4 and M5 in parallel, calendar time drops by about four weeks.
 
 ## Where to start
 

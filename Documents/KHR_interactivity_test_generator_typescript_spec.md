@@ -2,18 +2,18 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.1 |
-| Date | 2026-10-03 |
-| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.1, 2026-09-28) |
+| Document status | Draft 0.2 |
+| Date | 2026-10-05 |
+| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.2, 2026-10-05) |
 | Author | Leonard Daly (Daly Realism) |
 
 ## 1. Overview
 
-This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.1, 2026-09-28). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
+This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.2, 2026-10-05). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
 
 **Goals**
 
-- Produce about 150–170 supplemental assets and 1,500–1,800 sub-tests (requirements doc §1.9) that close every in-scope gap in §1.4–§1.6 and §10.
+- Produce about 130–150 supplemental assets and 1,300–1,600 sub-tests (requirements doc §1.9) that close every in-scope gap remaining at suite revision `9ffd30e` (§1.4–§1.6 and §10).
 - Byte-identical output for identical inputs on Windows, macOS and Linux (§5.3).
 - Assets that existing runners execute without changes (§4.3, §7.2, §7.4).
 - Every requirement in the requirements document traceable to a module and a test (Appendix, section 19).
@@ -62,7 +62,7 @@ Generator/
 │   ├── existing-coverage.yaml   # existing sub-test -> target mapping (§11)
 │   ├── operations.yaml          # 135 operation signatures, sockets, configs
 │   ├── interpretations.yaml     # §9.5 reviewRequired interpretations
-│   └── spec/                    # vendored Specification.adoc @ 166ed85 + schemas
+│   └── spec/                    # vendored Specification.adoc @ c5d1e1e8 + schemas
 ├── src/
 │   ├── cli/                 # entry point, options (section 14)
 │   ├── numeric/             # binary64, int32, spec math, formatting (section 5)
@@ -94,7 +94,7 @@ Generation is a single-process pipeline: load data, find gaps, plan, draw, compu
 
 ```mermaid
 flowchart TD
-  spec["Specification<br/>vendored copy @ 166ed85"] --> load
+  spec["Specification<br/>vendored copy @ c5d1e1e8"] --> load
   data["Data files<br/>registry, catalogue, mapping"] --> load
   suite["Existing suite<br/>Tests/Interactivity"] --> read
   load["Load and validate data<br/>registry/ · JSON Schema check on every data file"] --> gaps
@@ -327,24 +327,23 @@ What must be covered is data, reviewed by the working group; how to cover it is 
 ### 8.1 Target entries (`data/registry/*.yaml`)
 
 ```yaml
-specRevision: 166ed85
+specRevision: c5d1e1e8
 targets:
-  - id: S-568-negzero
+  - id: S-2626-inexact
     kind: statement                 # statement | type | procedure | pointer | edge
-    specRef: { line: 568, section: "math/round" }
-    summary: "round of x in (-0.5, 0) returns -0"
+    specRef: { line: 2626, section: "math/div" }
+    summary: "int division with an inexact negative quotient truncates toward zero"
     scope: in                       # in | out-rejection | out-impractical
     covers:                         # what a sub-test must do to count
-      op: math/round
-      types: [float]
-      valueClasses: [halfway]
+      op: math/div
+      types: [int]
+      valueClasses: [unit, scatter]
       comparison: exact
-      requires: [negZeroCheck]
-    generator: math/round           # generator that owns this target
+    generator: math/div             # generator that owns this target
     reviewRequired: false
 ```
 
-- Identifiers follow §10.1 (`S-`, `T-`, `P-`, `O-`, `E-`). A statement with several requirements is split into parts (`S-568-halfway`, `S-568-negzero`).
+- Identifiers follow §10.1 (`S-`, `T-`, `P-`, `O-`, `E-`). A statement with several requirements is split into parts (for example `S-568-halfway` and `S-568-negzero` for `math/round`).
 - `scope: out-*` targets stay in the registry so the coverage report can list them with a reason (§12 item 3).
 - `generator` names exactly one owner, so two generators cannot both claim a target.
 
@@ -355,7 +354,7 @@ One entry per operation (135), transcribed from the Specification: input and out
 ### 8.3 Existing coverage mapping (`data/existing-coverage.yaml`)
 
 ```yaml
-suiteRevision: 0f24a49
+suiteRevision: 9ffd30e
 subTests:
   - asset: math/abs
     subTest: "[a] -10 = 10"
@@ -379,10 +378,11 @@ The reader builds an inventory of the existing suite, and gap determination comb
 
 ### 9.1 Reading
 
-1. Walk `Tests/Interactivity` with sorted directory listings. Collect every `test-Json/*.json`, `glTF-Binary/*.glb`, `*.md` and the index files.
+1. Walk `Tests/Interactivity` with sorted directory listings. Collect every `test-Json/*.json`, `glTF-Binary/*.glb`, `*.md` and the index files (`test-index.json` and `mathtests-index.json`, both at the top of `Tests/Interactivity` since revision `9ffd30e`). Skip the aggregate assets `Overview.glb` and `mathtests.glb`, which have no oracle files.
 2. Parse each GLB: 12-byte header (magic `glTF`, version 2), JSON chunk, optional BIN chunk. Extract `extensions.KHR_interactivity.graphs[0]`: types, variables (name, type, value), declarations and nodes.
 3. Parse each oracle file **as it exists on disk**. It nests sub-tests under `tests[].subTests[]` and adds `description` and `entryPoints`, which are not in §7.4's flat field list. The reader accepts both shapes.
 4. For each sub-test, record `ExistingSubTest { asset, name, resultVar {id, name, type}, successVar, expected, usedSchemas }` and check that the variable ids and names match the GLB.
+5. Read `invalid/invalid-index.json` and record each case as `InvalidCase { id, file, expectedOutcome, specSection }`. These `.gltf` files have no buffers and no sub-tests. They are used only to credit rejection targets in the coverage report and for the name inventory (§11).
 
 ### 9.2 Name inventory
 
@@ -396,6 +396,8 @@ for each target T with scope = in:
   for each credit: assert sub-test exists in inventory          (else fatal: stale mapping)
   T.status = credited ? 'covered-existing' : 'gap'
 ```
+
+Rejection targets (`scope: out-rejection`) are never generated, but the mapping may credit them with an invalid-graph case id (`invalid: [G1b]`), so the coverage report shows which rejection rules the existing suite covers.
 
 The mapping author applies §11's "could detect a violation" rule. For example, a tolerance comparison never credits `precision` or `negzero` targets, and an engine-specific expected value such as `UnityGLTF.Interactivity.StaticRefPointer` never credits a `ref` value target. The loader enforces two mechanical checks: an entry crediting a target whose `covers.comparison` is `exact` must name a sub-test whose expected values are all int, bool, or exactly representable, and a credit is refused if the sub-test's `resultVarType` is not in the target's `covers.types`.
 
@@ -412,12 +414,13 @@ Generators describe sub-tests with a typed builder. The builder owns everything 
 ```ts
 const g = new GraphBuilder(catalogue);                 // catalogue = data/operations.yaml
 const x   = g.input(sample.a);                          // literal, or math/NaN|Inf|neg nodes for special values
-const out = g.pure('math/round', { a: x });            // typed: socket names and types checked against catalogue
+const y   = g.input(sample.b);
+const out = g.pure('math/div', { a: x, b: y });        // typed: socket names and types checked against catalogue
 const st  = g.subTest({
-  name: 'round(-0.4) is -0',
-  targets: ['S-568-negzero'],
+  name: 'div(-7, 2) is -3',
+  targets: ['S-2626-inexact'],
   result: out.value,                                    // socket handle
-  expected: f64(-0),
+  expected: int(-3),
   comparison: { mode: 'exact' },
 });
 ```
@@ -466,7 +469,7 @@ event/onStart ─▶ event/send test/onStart {expectedDuration}
 
 Vector and matrix results are compared component by component. Any component that is NaN, ±Infinity or ±0 uses exact mode (§7.3).
 
-**Open issue: component extraction.** The harness operation set in §7.2 has no `math/extract2`, `extract3`, `extract4`, `extract2x2`, `extract3x3` or `extract4x4`, so a graph cannot reach individual components. `math/eq` on vectors would cover exact comparison of finite non-zero components but not NaN, ±0 or tolerance checks. This project assumes the working group adds the extract operations to the harness set and that the supplemental prerequisites asset verifies them (section 18, R1).
+**Open issue: component extraction.** The harness operation set in §7.2 has no `math/extract2`, `extract3`, `extract4`, `extract2x2`, `extract3x3` or `extract4x4`, so a graph cannot reach individual components. `math/eq` on vectors would cover exact comparison of finite non-zero components but not NaN, ±0 or tolerance checks. The existing suite's own harness already uses `math/extract3` in the assets added at revision `9ffd30e`. This project assumes the working group adds the extract operations to the harness set and that the supplemental prerequisites asset verifies them (section 18, R1).
 
 **Self-verification rule** (§7.2): `compare.ts` takes the operation under test and its input types. If the requested comparison would use that same operation on those types, it switches to an alternative: for example, `math/eq` results are checked with `flow/branch` setting distinct variables, and `math/isNaN` results are checked with `math/eq(r, r)` negated.
 
@@ -498,27 +501,27 @@ The oracle uses the **on-disk** schema of the existing suite (section 9.1), whic
 
 ```json
 {
-  "glbFileName": "round-negzero.glb",
-  "name": "math/round-negzero",
+  "glbFileName": "div-boundary.glb",
+  "name": "math/div-boundary",
   "supplemental": true,
-  "generator": { "name": "khr-itest-gen", "version": "1.0.0", "specRevision": "166ed85", "seed": "0x4B48525F494E5445" },
-  "tests": [ { "name": "math/round-negzero", "description": "…", "usedSchemas": […], "entryPoints": […],
+  "generator": { "name": "khr-itest-gen", "version": "1.0.0", "specRevision": "c5d1e1e8", "seed": "0x4B48525F494E5445" },
+  "tests": [ { "name": "math/div-boundary", "description": "…", "usedSchemas": […], "entryPoints": […],
       "subTests": [ {
-        "name": "round(-0.4) is -0",
-        "resultVarName": "TestResult_math/round-negzero_round(-0.4) is -0", "resultVarId": 1, "resultVarType": "float",
-        "expectedResultValue": ["-0"],
-        "successResultVarId": 0, "successResultVarName": "TestResult_HasPassed_math/round-negzero_round(-0.4) is -0",
+        "name": "div(-7, 2) is -3",
+        "resultVarName": "TestResult_math/div-boundary_div(-7, 2) is -3", "resultVarId": 1, "resultVarType": "int",
+        "expectedResultValue": [-3],
+        "successResultVarId": 0, "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-7, 2) is -3",
         "comparison": { "mode": "exact" },
-        "targets": ["S-568-negzero"],
-        "specRefs": [ { "revision": "166ed85", "line": 568, "section": "math/round" } ],
-        "valueClasses": ["halfway"],
-        "inputs": [ { "socket": "a", "type": "float", "value": [-0.4] } ]
+        "targets": ["S-2626-inexact"],
+        "specRefs": [ { "revision": "c5d1e1e8", "line": 2626, "section": "math/div" } ],
+        "valueClasses": ["unit", "scatter"],
+        "inputs": [ { "socket": "a", "type": "int", "value": [-7] }, { "socket": "b", "type": "int", "value": [2] } ]
       } ] } ],
   "usedSchemas": […]
 }
 ```
 
-- `expectedResultValue` is always an array, as in the existing suite. Special values are strings (`"NaN"`, `"Infinity"`, `"-Infinity"`, `"-0"`).
+- `expectedResultValue` is always an array, as in the existing suite. Special values are strings (`"NaN"`, `"Infinity"`, `"-Infinity"`, `"-0"`). The existing suite avoids `"-0"` by storing `1 / x` in the result variable and expecting `"Infinity"` or `"-Infinity"`; the writer supports that convention behind a `negZeroAsReciprocal` option, in case the working group adopts it (requirements doc Appendix A item 3).
 - `set` comparisons write the first permitted value in `expectedResultValue` (so legacy runners have something to show) and the full list in `comparison.values`.
 - Optional keys (`reviewRequired`, `conditional`, `expectedLogOutput`, `requiredRunnerCapabilities`) are omitted, not written as `null`, when they don't apply.
 
@@ -550,17 +553,17 @@ A generator **MUST** emit at least one sub-test whose `targets` includes each ta
 
 | Category | Typical assets | Key techniques | Requirements |
 | --- | --- | --- | --- |
-| `math` (≈105 assets) | `<op>-types`, `<op>-special`, `<op>-boundary`, `<op>-scalar`, `round-negzero` | One table-driven generator for component-wise ops, using section 6 sampling and packing; hand-written generators for `select`, `switch`, `random`, `matDecompose`, quaternion and colour operations | §8, §9, §10.2, §1.6.2–1.6.5 |
-| `type` (6) | `intToFloat-precision`, `floatToInt-boundary` | Exact conversion per spec; ±0 via `1/x` | §8.5, §10.3, §10.4 |
+| `math` (≈105 assets) | `<op>-types`, `<op>-special`, `<op>-boundary`, `<op>-scalar`, `div-boundary` | One table-driven generator for component-wise ops, using section 6 sampling and packing; hand-written generators for `select`, `switch`, `random`, `matDecompose`, quaternion and colour operations | §8, §9, §10.2, §1.6.2–1.6.5 |
+| `type` (4) | `intToFloat-precision`, `floatToInt-boundary` | Exact conversion per spec; ±0 via `1/x` | §8.5, §10.3, §10.4 |
 | `ref` (1) | `refEq-types` | Null, same object, same index with different object type | §1.9 |
-| `flow` (≈14) | `for-boundary`, `doN-state`, `waitAll-state`, `setDelay-timing`, `cancelDelay-errors` | Loop ranges at int32 limits, each ≤ 64 iterations; a flow under test sets distinct marker variables; delay and timing tests are async | §10.6, §1.5.2 |
-| `variable` (4) | `set-types`, `default-types`, `interpolate-types` | All 10 value types; indices ≥ 10 for multi-digit ids; Bézier control points chosen so the midpoint differs from linear by ≥ 20 × tolerance | §10.7 |
-| `pointer` (≈12) | `get-errors`, `set-errors`, `interpolate-timing`, `template-syntax`, `activeCamera-objectModel` | Base scenes with camera, lights, morph targets, skins and animations; the expected rotation midpoint comes from MPFR slerp | §10.8, §1.5.3 |
-| `animation` (≈8) | `start-timing`, `autoplay-state` (isolated), `stopAt-timing` | Sampler curves chosen so 0.05 s of change is measurable; expected positions from the known curve | §10.9 |
-| `event` (≈8) | `onStart-order` (isolated), `onTick-order` (isolated), `sendReceive-types` | JSON-index logging into an int variable (`v = v * 10 + i`) to record order | §10.10 |
+| `flow` (≈8) | `for-boundary`, `doN-state`, `waitAll-config`, `setDelay-timing`, `while-state` | Loop ranges at int32 limits, each ≤ 64 iterations; a flow under test sets distinct marker variables; delay and timing tests are async | §10.6, §1.5.2 |
+| `variable` (3) | `set-types`, `default-types`, `interpolate-types` | All 10 value types; indices ≥ 10 for multi-digit ids; Bézier control points chosen so the midpoint differs from linear by ≥ 20 × tolerance | §10.7 |
+| `pointer` (≈8) | `get-errors`, `interpolate-types`, `template-syntax`, `activeCamera-objectModel`, `animationState-objectModel` | Base scenes with camera, lights, morph targets, skins and animations; the expected rotation midpoint comes from MPFR slerp | §10.8, §1.5.3 |
+| `animation` (≈2) | `start-boundary`, `start-state` (isolated, `maxActiveAnimations`) | Sampler curves chosen so 0.05 s of change is measurable; expected positions from the known curve | §10.9 |
+| `event` (≈3) | `sendReceive-types`, `receive-state` | JSON-index logging into an int variable (`v = v * 10 + i`) to record order | §10.10 |
 | `debug` (1–2) | `log-syntax`, `log-config` | Asserts `out` fires; writes `expectedLogOutput`; declares `logCapture` | §10.10 |
-| `concepts` (≈5) | `socketRetention-state`, `typeDefault-types`, `precision-precision` | `g.raw()` for runnable edge cases; extension-declaration sub-tests conditional on `asset/extensions/<name>/enabled` | §10.3, §10.11 |
-| `config` (≈10) | `for-config`, `waitAll-config`, `multiGate-config`, `quatFromAngles-config` | Each invalid case paired with a valid control; behaviour chosen so default and as-written differ observably | §10.5 |
+| `concepts` (≈4) | `socketRetention-state`, `typeDefault-types`, `precision-precision` | `g.raw()` for runnable edge cases; extension-declaration sub-tests conditional on `asset/extensions/<name>/enabled` | §10.3, §10.11 |
+| `config` (≈6) | `for-config`, `waitAll-config`, `multiGate-config`, `quatFromAngles-config` | Each invalid case paired with a valid control; behaviour chosen so default and as-written differ observably | §10.5 |
 | `prerequisites` (1) | `harness-prerequisites` | Verifies each harness op × type the supplemental assets use, including `isNaN`, `div` to ±Infinity, `neg` to −0, `le`, `max`, `not` | §7.2 |
 
 ### 12.1 Generator-specific rules
@@ -718,7 +721,7 @@ The work runs in six milestones that follow the module dependency order. A miles
 flowchart TD
   M1["M1 · Foundations<br/>numeric/, prng/, canonical JSON, GLB writer, CLI, lint, CI"] --> G1{{"Gate: 100% branch cover in numeric/; SplitMix64 fixtures pass"}}
   G1 --> M2["M2 · Data and reference<br/>operations.yaml, registry, coverage map, existing/ reader, MPFR backend"] --> G2{{"Gate: check-registry clean; R1 and R2 decided by the WG"}}
-  G2 --> M3["M3 · Vertical slice<br/>graph/, harness, compare, asset/, validate/, prerequisites + round-negzero"] --> G3{{"Gate: V1–V9 pass; golden test set; slice passes on one engine"}}
+  G2 --> M3["M3 · Vertical slice<br/>graph/, harness, compare, asset/, validate/, prerequisites + div-boundary"] --> G3{{"Gate: V1–V9 pass; golden test set; slice passes on one engine"}}
   G3 --> M4["M4 · Math and type<br/>all math/ and type/ generators, packing, full audit"] --> G4{{"Gate: math and type targets covered; audit zero mismatches"}}
   G3 --> M5["M5 · Flow, state, events<br/>flow, variable, event, debug, config, concepts, first adapter"] --> G5{{"Gate: async tests stable under fixed and jittered ticks"}}
   G4 --> M6["M6 · Pointers, animation, release<br/>pointer and animation generators, reports, cross-OS determinism"]
@@ -732,12 +735,12 @@ Hexagons mark each gate and its criteria. M2's gate includes the two working-gro
 | --- | --- | --- | --- |
 | M1 Foundations | `numeric/` (int32, f64, format, json), `prng/`, `asset/glb.ts`, CLI skeleton, lint rules, CI matrix | — | 3 |
 | M2 Data and reference | `operations.yaml`, registry bootstrap and curation, `existing/` reader, `existing-coverage.yaml`, `reference/` with golden table | M1 | 5 |
-| M3 Vertical slice | `graph/` builder, harness, `compare.ts`, oracle, description and index writers, `validate/` V1–V9, prerequisites asset, `math/round` and `type/intToFloat` generators, golden test | M2 | 5 |
+| M3 Vertical slice | `graph/` builder, harness, `compare.ts`, oracle, description and index writers, `validate/` V1–V9, prerequisites asset, `math/div` and `type/intToFloat` generators, golden test | M2 | 5 |
 | M4 Math and type | Table-driven component-wise generator, special generators (`select`, `switch`, `random`, `matDecompose`, quaternion, colour), packing, expected-value audit | M3 | 6 |
-| M5 Flow, state, events | `flow`, `variable`, `event`, `debug`, `config`, `concepts` generators, async harness, conditional sub-tests, first adapter | M3 | 6 |
-| M6 Pointers, animation, release | Base scenes, `pointer` and `animation` generators, `report/`, cross-OS determinism, documentation, release | M4, M5 | 5 |
+| M5 Flow, state, events | `flow`, `variable`, `event`, `debug`, `config`, `concepts` generators, async harness, conditional sub-tests, first adapter | M3 | 4 |
+| M6 Pointers, animation, release | Base scenes, `pointer` and `animation` generators, `report/`, cross-OS determinism, documentation, release | M4, M5 | 4 |
 
-The effort figures are planning estimates for one engineer familiar with TypeScript and glTF, about 30 engineer-weeks in total. M4 and M5 can run in parallel with two engineers, which shortens the calendar by about six weeks.
+The effort figures are planning estimates for one engineer familiar with TypeScript and glTF, about 27 engineer-weeks in total. M4 and M5 can run in parallel with two engineers, which shortens the calendar by about four weeks. M5 and M6 are smaller than in Draft 0.1 because suite revision `9ffd30e` already covers most flow, event, animation and interpolation targets.
 
 **Project acceptance criteria (release 1.0)**
 
@@ -755,11 +758,11 @@ Two items need a working-group decision before M3 starts (R1, R2). The rest have
 
 | ID | Risk or open issue | Impact | Mitigation or decision needed |
 | --- | --- | --- | --- |
-| R1 | The §7.2 harness set has no component-extraction operations (section 10.4) | Vector and matrix results cannot be compared component by component, which §7.3 requires; NaN, ±0 and tolerance checks on vectors are impossible | **Decision:** add `math/extract2/3/4` and `math/extract2x2/3x3/4x4` to the harness set, verified by the supplemental prerequisites asset. Fallback: restrict vector sub-tests to finite non-zero exact values compared with `math/eq`, and test special values in scalar form only |
-| R2 | §7.4 lists a flat oracle schema; the files on disk nest sub-tests under `tests[].subTests[]` with `entryPoints` | A writer that follows §7.4 literally would break existing runners | **Decision:** confirm that the on-disk schema is normative (this document assumes so, section 11.3) and update §7.4 |
+| R1 | The §7.2 harness set has no component-extraction operations (section 10.4; requirements doc Appendix A item 8) | Vector and matrix results cannot be compared component by component, which §7.3 requires; NaN, ±0 and tolerance checks on vectors are impossible | **Decision:** add `math/extract2/3/4` and `math/extract2x2/3x3/4x4` to the harness set, verified by the supplemental prerequisites asset. The existing suite's harness already uses `math/extract3`. Fallback: restrict vector sub-tests to finite non-zero exact values compared with `math/eq`, and test special values in scalar form only |
+| R2 | §7.4 lists a flat oracle schema; the files on disk nest sub-tests under `tests[].subTests[]` with `entryPoints`, unchanged at revision `9ffd30e` (requirements doc Appendix A item 9) | A writer that follows §7.4 literally would break existing runners | **Decision:** confirm that the on-disk schema is normative (this document assumes so, section 11.3) and update §7.4 |
 | R3 | `gmp-wasm` API, maintenance or WebAssembly performance falls short | Section 7 blocks M2 | Keep the `RefBackend` interface narrow; fallback backend on `decimal.js` with the Ziv check from section 7.2 and exact binary64 neighbour comparison instead of `Number(str)` |
 | R4 | Hand-transcribing 135 operations into `operations.yaml` introduces errors | Wrong signatures or special-case rows lead to wrong expected values | Two-person review per category; cross-check against the KHR\_interactivity JSON schemas and against `usedSchemas` and socket names in existing GLBs |
-| R5 | The existing-coverage mapping is large (831 sub-tests) and hand-curated | Gaps are missed, or duplicates emitted | `suggest-coverage` tool (section 9.4); report lists every credit for review; V5 duplicate check |
+| R5 | The existing-coverage mapping is large (1,073 sub-tests and 179 invalid-graph cases) and hand-curated | Gaps are missed, or duplicates emitted | `suggest-coverage` tool (section 9.4); report lists every credit for review; V5 duplicate check |
 | R6 | Asynchronous and timing tests behave differently across engines' tick models | False failures | Tolerance in time, not value (§7.9); adapter jittered-tick runs (section 16) catch frame-rate assumptions before release |
 | R7 | `"-0"` in `expectedResultValue` is unknown to existing runners (Appendix A item 3) | Runners that compare oracle values directly misreport | In-graph pass variables are unaffected; publish a one-paragraph runner note with the first release |
 | R8 | Single-precision engines fail every precision sub-test (Appendix A item 2) | Noisy results for maintainers | Precision sub-tests carry facet `precision` and can be filtered by name; consider a separate tag in the index if the working group wants it |

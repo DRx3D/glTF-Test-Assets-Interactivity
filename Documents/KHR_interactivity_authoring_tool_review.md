@@ -84,7 +84,7 @@ The engine is Apache-2.0. Using it as an optional or development dependency of t
 
 | Section | Change |
 | --- | --- |
-| §7.2 item 3, §7.9 | Add: an asset whose results are not final when its `event/onStart` sequence ends **SHOULD** contain a `flow/setDelay` with an inline `duration` no less than `expectedDuration`, and `expectedDuration` **SHOULD NOT** exceed 5.5 s. This keeps assets runnable in the authoring tool's harness, which ignores `expectedDuration` (Section 2.4). A harness change has also been requested from the tool maintainers (Section 5); 10 s remains the hard limit. |
+| §7.2 item 3, §7.9 | Add: an asset whose results are not final when its `event/onStart` sequence ends **SHOULD** contain a `flow/setDelay` with an inline `duration` no less than `expectedDuration`, and `expectedDuration` **SHOULD NOT** exceed 5.5 s. This keeps assets runnable in the authoring tool's harness, which ignores `expectedDuration` (Section 2.4). A harness change has also been requested from the tool maintainers ([AuthoringTool #128](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/128), Section 5); 10 s remains the hard limit. |
 | §7.4 | Add that `entryPoints` is populated and `requiresUserInteraction` is never set, because the harness skips any test with an interaction entry point. |
 | §12 | Name the authoring tool engine (Core and Babylon decorators) as the first adapter. |
 | Appendix A, item 3 | Note that the authoring tool's runner is unaffected by `"-0"`. |
@@ -121,5 +121,5 @@ The engine is Apache-2.0. Using it as an optional or development dependency of t
 ## 5. Open questions and follow-up
 
 1. Is `@khronosgroup/gltf-interactivity-engine` published to npm, or only prepared for publication (PR #125 renamed it on 2026-09-29)?
-2. An issue asks the tool maintainers to make the harness read `expectedDuration` from `test/onStart`. If they do, the constraint in Section 3.2 can be relaxed.
+2. [AuthoringTool #128](https://github.com/KhronosGroup/glTF-InteractivityGraph-AuthoringTool/issues/128) asks the tool maintainers to make the harness read `expectedDuration` from `test/onStart`. If they do, the constraint in Section 3.2 can be relaxed.
 3. Defects are filed as issues in the repository that owns them: engine and harness defects (Section 2.6) in `glTF-InteractivityGraph-AuthoringTool`, test-asset defects in `glTF-Test-Assets-Interactivity`, and Specification text issues in `glTF`.

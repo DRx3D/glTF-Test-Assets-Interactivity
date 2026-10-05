@@ -1,0 +1,114 @@
+# Target registry: event. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: event
+targets:
+  - id: S-4475
+    kind: statement
+    specRef:
+      line: 4475
+      section: event/onStart
+    summary: "`event/onStart`: event reference MUST be set before `out` activates"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`event/Event_Refs`."
+  - id: S-4477
+    kind: statement
+    specRef:
+      line: 4477
+      section: event/onStart
+    summary: Multiple `event/onStart` nodes MUST activate in JSON order and MUST return the same reference
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Reference in `event/Event_Refs`; order in `event/activation_order_and_onTick`.
+  - id: S-4494
+    kind: statement
+    specRef:
+      line: 4494
+      section: event/onTick
+    summary: "`event/onTick`: time values and reference MUST be set before `out` activates"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: First-tick time values in `event/activation_order_and_onTick`.
+  - id: S-4496
+    kind: statement
+    specRef:
+      line: 4496
+      section: event/onTick
+    summary: First `event/onTick` activation MUST come after all `event/onStart` activations
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '"1st tick after onStart".'
+  - id: S-4498
+    kind: statement
+    specRef:
+      line: 4498
+      section: Events
+    summary: "First tick: `timeSinceStart` MUST be 0 and `timeSinceLastTick` MUST remain NaN"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+  - id: S-4500
+    kind: statement
+    specRef:
+      line: 4500
+      section: event/onTick
+    summary: Multiple `event/onTick` nodes MUST activate in JSON order with identical outputs within a tick
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Order and identical values within a tick.
+  - id: S-4581
+    kind: statement
+    specRef:
+      line: 4581
+      section: event/receive
+    summary: "`event/receive`: invalid `event` index MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G8a`–`G8c`."
+  - id: S-4583
+    kind: statement
+    specRef:
+      line: 4583
+      section: event/receive
+    summary: "`event/receive`: values not set by an external sender MUST be reset to defaults on each activation"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Requires an external event source.
+  - id: S-4591
+    kind: statement
+    specRef:
+      line: 4591
+      section: event/receive
+    summary: Multiple `event/receive` nodes for the same event MUST activate in JSON order with identical outputs
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`event/activation_order_and_onTick`."
+  - id: S-4626
+    kind: statement
+    specRef:
+      line: 4626
+      section: event/send
+    summary: "`event/send`: invalid `event` index MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G9a`–`G9d`."

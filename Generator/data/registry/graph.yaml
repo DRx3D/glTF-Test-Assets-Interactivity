@@ -1,0 +1,450 @@
+# Target registry: graph. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: graph
+targets:
+  - id: S-4894
+    kind: statement
+    specRef:
+      line: 4894
+      section: JSON syntax and validation
+    summary: "`graphs` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-4898
+    kind: statement
+    specRef:
+      line: 4898
+      section: JSON syntax and validation
+    summary: Empty JSON arrays MUST be omitted
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`A1a`, `B3a`, `C7d`."
+  - id: S-4942
+    kind: statement
+    specRef:
+      line: 4942
+      section: JSON syntax and validation
+    summary: "`types` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-4958
+    kind: statement
+    specRef:
+      line: 4958
+      section: JSON syntax and validation
+    summary: '`signature` MUST be a defined type or `"custom"`; custom semantics MUST come from another extension'
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`B1a`, `B1b`; two custom types in `graph/json_syntax`."
+  - id: S-4962
+    kind: statement
+    specRef:
+      line: 4962
+      section: JSON syntax and validation
+    summary: Duplicate non-custom signatures MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`B2a`, `B2b`."
+  - id: S-4975
+    kind: statement
+    specRef:
+      line: 4975
+      section: JSON syntax and validation
+    summary: "`variables` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-4998
+    kind: statement
+    specRef:
+      line: 4998
+      section: JSON syntax and validation
+    summary: Variable `type` is REQUIRED and MUST be a valid index
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C1`, `C8a`–`C8c`."
+  - id: S-5031
+    kind: statement
+    specRef:
+      line: 5031
+      section: JSON syntax and validation
+    summary: Variable `value` length MUST match the type
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C2a`–`C2c`."
+  - id: S-5033
+    kind: statement
+    specRef:
+      line: 5033
+      section: JSON syntax and validation
+    summary: "`bool` variable value MUST be a JSON boolean"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C3a`, `C3b`."
+  - id: S-5035
+    kind: statement
+    specRef:
+      line: 5035
+      section: JSON syntax and validation
+    summary: Float variable values MUST be JSON numbers
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C4a`–`C4c`."
+  - id: S-5037
+    kind: statement
+    specRef:
+      line: 5037
+      section: JSON syntax and validation
+    summary: "`int` variable value MUST be exactly representable as int32"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C5a`, `C5b`."
+  - id: S-5039
+    kind: statement
+    specRef:
+      line: 5039
+      section: JSON syntax and validation
+    summary: "`ref` variable value MUST be a valid JSON Pointer string"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C6a`–`C6c`."
+  - id: S-5043
+    kind: statement
+    specRef:
+      line: 5043
+      section: JSON syntax and validation
+    summary: Variable `name`, if present, MUST be a string
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`C7c`."
+  - id: S-5050
+    kind: statement
+    specRef:
+      line: 5050
+      section: JSON syntax and validation
+    summary: "`events` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-5076
+    kind: statement
+    specRef:
+      line: 5076
+      section: JSON syntax and validation
+    summary: Duplicate event ids MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`D1`; an event without an id is accepted in `graph/json_syntax`."
+  - id: S-5080
+    kind: statement
+    specRef:
+      line: 5080
+      section: JSON syntax and validation
+    summary: Event `values` MUST NOT contain an `event` property
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`D2`."
+  - id: S-5082
+    kind: statement
+    specRef:
+      line: 5082
+      section: JSON syntax and validation
+    summary: Event value `type` is REQUIRED and MUST be a valid index
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`D3a`, `D3b`."
+  - id: S-5086
+    kind: statement
+    specRef:
+      line: 5086
+      section: JSON syntax and validation
+    summary: Event `name`, if present, MUST be a string
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`D5c`."
+  - id: S-5093
+    kind: statement
+    specRef:
+      line: 5093
+      section: JSON syntax and validation
+    summary: "`declarations` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-5108
+    kind: statement
+    specRef:
+      line: 5108
+      section: JSON syntax and validation
+    summary: Declaration `op` is REQUIRED
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`E1a`, `E1b`."
+  - id: S-5112
+    kind: statement
+    specRef:
+      line: 5112
+      section: JSON syntax and validation
+    summary: Non-core operations MUST specify `extension`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`E2a`–`E2c`; valid case in `UserInteractions` and `graph/unsupported_operations_and_graphs`."
+  - id: S-5116
+    kind: statement
+    specRef:
+      line: 5116
+      section: JSON syntax and validation
+    summary: Extension operations with inputs MUST define `inputValueSockets`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Invalid socket definitions are rejected (`E4a`, `E4c`, `E4d`); an extension operation with inputs but no `inputValueSockets` is not tested.
+  - id: S-5118
+    kind: statement
+    specRef:
+      line: 5118
+      section: JSON syntax and validation
+    summary: Extension operations with outputs MUST define `outputValueSockets`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: "`E4b` covers an invalid output socket type; a missing `outputValueSockets` is not tested."
+  - id: S-5122
+    kind: statement
+    specRef:
+      line: 5122
+      section: JSON syntax and validation
+    summary: Core operations MUST NOT define `inputValueSockets`/`outputValueSockets`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`E3a`, `E3b`."
+  - id: S-5149
+    kind: statement
+    specRef:
+      line: 5149
+      section: JSON syntax and validation
+    summary: Declaration socket `type` is REQUIRED and MUST be a valid index
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`E4a`–`E4c`."
+  - id: S-5151
+    kind: statement
+    specRef:
+      line: 5151
+      section: JSON syntax and validation
+    summary: Duplicate declarations MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`E5a`–`E5c`."
+  - id: S-5221
+    kind: statement
+    specRef:
+      line: 5221
+      section: JSON syntax and validation
+    summary: "`nodes` array MUST NOT exceed 2^31 elements"
+    scope: out-impractical
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-5225
+    kind: statement
+    specRef:
+      line: 5225
+      section: JSON syntax and validation
+    summary: Node `declaration` is REQUIRED and MUST be a valid index
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F1a`–`F1d`."
+  - id: S-5244
+    kind: statement
+    specRef:
+      line: 5244
+      section: JSON syntax and validation
+    summary: "`values` MUST contain every input socket id; extra properties MUST conform to schema"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F8a`–`F8c`, `F13a`, `F13b`; an extra input that has no effect in `graph/extra_and_unknown_sockets`."
+  - id: S-5248
+    kind: statement
+    specRef:
+      line: 5248
+      section: JSON syntax and validation
+    summary: Missing value source or mismatched type MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F5`, `F8a`, `F9a`, `F9b`."
+  - id: S-5254
+    kind: statement
+    specRef:
+      line: 5254
+      section: JSON syntax and validation
+    summary: Unsupported input types MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F9c`."
+  - id: S-5266
+    kind: statement
+    specRef:
+      line: 5266
+      section: JSON syntax and validation
+    summary: Inline value `type` MUST be defined and valid
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F6a`, `F6b`, `F6d`."
+  - id: S-5294
+    kind: statement
+    specRef:
+      line: 5294
+      section: JSON syntax and validation
+    summary: Defining both `node` and `value` MUST cause rejection
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F2`."
+  - id: S-5298
+    kind: statement
+    specRef:
+      line: 5298
+      section: JSON syntax and validation
+    summary: "`node` reference MUST be less than the current node index"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F3a`–`F3c`."
+  - id: S-5306
+    kind: statement
+    specRef:
+      line: 5306
+      section: JSON syntax and validation
+    summary: "`socket` MUST exist on the referenced node; MUST be given if no `value` socket exists"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F4a`–`F4c`."
+  - id: S-5310
+    kind: statement
+    specRef:
+      line: 5310
+      section: JSON syntax and validation
+    summary: "`type` given with `node` MUST match the referenced socket type"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F5`; the valid case is in `graph/extra_and_unknown_sockets`."
+  - id: S-5348
+    kind: statement
+    specRef:
+      line: 5348
+      section: JSON syntax and validation
+    summary: Type-default sockets MUST define a valid `type`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F6c`; a type-default float input asserted as NaN in `graph/extra_and_unknown_sockets`."
+  - id: S-5381
+    kind: statement
+    specRef:
+      line: 5381
+      section: JSON syntax and validation
+    summary: Extra `flows` properties MUST still be validated
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F13c`."
+  - id: S-5383
+    kind: statement
+    specRef:
+      line: 5383
+      section: JSON syntax and validation
+    summary: Flow `node` is REQUIRED
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F11a`."
+  - id: S-5387
+    kind: statement
+    specRef:
+      line: 5387
+      section: JSON syntax and validation
+    summary: Flow `node` MUST be greater than the current index and less than the node count
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`F10a`–`F10d`."
+  - id: S-5397
+    kind: statement
+    specRef:
+      line: 5397
+      section: JSON syntax and validation
+    summary: Activating a flow connected to a non-existent input flow socket MUST have no effect
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`graph/extra_and_unknown_sockets`."

@@ -1,0 +1,1213 @@
+# Target registry: math. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: math
+targets:
+  - id: S-568
+    kind: statement
+    specRef:
+      line: 568
+      section: math/round
+    summary: "`math/round`: half-way cases MUST round away from zero; values in (-0.5, 0) MUST round to -0"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`math/round` now has ±0.5, 1.5, ±2.5; `Extras/Float_Precision` checks `round(-0.3)` is -0 and `round(0.49999999999999994)` is 0."
+  - id: S-966
+    kind: statement
+    specRef:
+      line: 966
+      section: math/select
+    summary: "`math/select`: `T` MUST be the same for `a`, `b`, and the output"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: No invalid case. `select` is still tested with `float` only (see Section 2).
+  - id: S-1009
+    kind: statement
+    specRef:
+      line: 1009
+      section: math/switch
+    summary: "`math/switch`: case values MUST be converted to decimal strings without leading zeros"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Negative cases, `[0.5, 1]` (fallback), duplicates `[1, 2, 2]`, and a selection without a case are covered. The float-literal examples (`-1.0`, `0.1e1`) are not.
+  - id: S-1011
+    kind: statement
+    specRef:
+      line: 1011
+      section: math/switch
+    summary: "`math/switch`: graph MUST be rejected if generated sockets exceed the input socket limit"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-1023
+    kind: statement
+    specRef:
+      line: 1023
+      section: math/switch
+    summary: "`math/switch`: graph MUST be rejected if any generated socket is missing or has a type different from `default`"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`H1d`, `H1e`."
+  - id: S-1035
+    kind: statement
+    specRef:
+      line: 1035
+      section: math/switch
+    summary: "`math/switch`: extra sockets MUST still have valid types and sources"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: An extra socket `"2"` is ignored (`math/switch`); invalid extra sockets are rejected (`F13a`, `F13b`).
+  - id: S-1075
+    kind: statement
+    specRef:
+      line: 1075
+      section: math/random
+    summary: "`math/random`: value MUST be initialized on first access and MUST stay the same between accesses without intervening flow activations"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+  - id: S-1083
+    kind: statement
+    specRef:
+      line: 1083
+      section: math/random
+    summary: "`math/random`: value MUST be updated on access after a new flow activation"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Now also across `flow/for` iterations.
+  - id: S-1560
+    kind: statement
+    specRef:
+      line: 1560
+      section: math/dot
+    summary: "`math/dot`: both inputs MUST have the same type"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Rejection test needed.
+  - id: S-1813
+    kind: statement
+    specRef:
+      line: 1813
+      section: math/matMul
+    summary: "`math/matMul`: both inputs MUST have the same type"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Rejection test needed.
+  - id: S-2218
+    kind: statement
+    specRef:
+      line: 2218
+      section: math/quatFromAngles
+    summary: "`math/quatFromAngles`: invalid or missing `order` MUST fall back to the default"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: All six valid orders are tested. No invalid or missing `order`.
+  - id: S-2510
+    kind: statement
+    specRef:
+      line: 2510
+      section: Math operations
+    summary: Integer negation of `-2147483648` MUST return `-2147483648`
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`math/neg` and `math/abs`."
+  - id: S-2534
+    kind: statement
+    specRef:
+      line: 2534
+      section: Math operations
+    summary: Integer addition overflow MUST wrap
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`2147483647 + 1`."
+  - id: S-2563
+    kind: statement
+    specRef:
+      line: 2563
+      section: Math operations
+    summary: Integer subtraction overflow MUST wrap
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`-2147483648 - 1`."
+  - id: S-2592
+    kind: statement
+    specRef:
+      line: 2592
+      section: Math operations
+    summary: Integer multiplication overflow MUST wrap
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`46341 * 46341`, `2147483647 * 2147483647`, `-2147483648 * -1`."
+  - id: S-2626
+    kind: statement
+    specRef:
+      line: 2626
+      section: Math operations
+    summary: Integer division MUST truncate toward zero
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Only exact quotients, division by zero, and `INT_MIN / -1`. No inexact negative quotient such as `-7 / 2` (expected -3, not -4).
+  - id: S-2841
+    kind: statement
+    specRef:
+      line: 2841
+      section: math/asr
+    summary: "`math/asr`: result truncated to 32 bits; sign bit MUST be propagated"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Includes shift counts 0, 31, 32, 33, and -1.
+  - id: S-2855
+    kind: statement
+    specRef:
+      line: 2855
+      section: math/lsl
+    summary: "`math/lsl`: result MUST be truncated to 32 bits"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+  - id: T-math/abs-float2x2
+    kind: type
+    summary: math/abs with float2x2 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float2x2
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/abs-float3x3
+    kind: type
+    summary: math/abs with float3x3 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float3x3
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/abs-float4x4
+    kind: type
+    summary: math/abs with float4x4 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float4x4
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/abs-float2
+    kind: type
+    summary: math/abs with float2 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float2
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/abs-float3
+    kind: type
+    summary: math/abs with float3 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float3
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/abs-float4
+    kind: type
+    summary: math/abs with float4 inputs
+    scope: in
+    covers:
+      op: math/abs
+      types:
+        - float4
+    generator: math/abs
+    reviewStatus: none
+  - id: T-math/add-float2x2
+    kind: type
+    summary: math/add with float2x2 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float2x2
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/add-float3x3
+    kind: type
+    summary: math/add with float3x3 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float3x3
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/add-float4x4
+    kind: type
+    summary: math/add with float4x4 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float4x4
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/add-float2
+    kind: type
+    summary: math/add with float2 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float2
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/add-float3
+    kind: type
+    summary: math/add with float3 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float3
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/add-float4
+    kind: type
+    summary: math/add with float4 inputs
+    scope: in
+    covers:
+      op: math/add
+      types:
+        - float4
+    generator: math/add
+    reviewStatus: none
+  - id: T-math/sub-float2x2
+    kind: type
+    summary: math/sub with float2x2 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float2x2
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/sub-float3x3
+    kind: type
+    summary: math/sub with float3x3 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float3x3
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/sub-float4x4
+    kind: type
+    summary: math/sub with float4x4 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float4x4
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/sub-float2
+    kind: type
+    summary: math/sub with float2 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float2
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/sub-float3
+    kind: type
+    summary: math/sub with float3 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float3
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/sub-float4
+    kind: type
+    summary: math/sub with float4 inputs
+    scope: in
+    covers:
+      op: math/sub
+      types:
+        - float4
+    generator: math/sub
+    reviewStatus: none
+  - id: T-math/mul-float2x2
+    kind: type
+    summary: math/mul with float2x2 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float2x2
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/mul-float3x3
+    kind: type
+    summary: math/mul with float3x3 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float3x3
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/mul-float4x4
+    kind: type
+    summary: math/mul with float4x4 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float4x4
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/mul-float2
+    kind: type
+    summary: math/mul with float2 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float2
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/mul-float3
+    kind: type
+    summary: math/mul with float3 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float3
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/mul-float4
+    kind: type
+    summary: math/mul with float4 inputs
+    scope: in
+    covers:
+      op: math/mul
+      types:
+        - float4
+    generator: math/mul
+    reviewStatus: none
+  - id: T-math/div-float2x2
+    kind: type
+    summary: math/div with float2x2 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float2x2
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float3x3
+    kind: type
+    summary: math/div with float3x3 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float3x3
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float4x4
+    kind: type
+    summary: math/div with float4x4 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float4x4
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float2
+    kind: type
+    summary: math/div with float2 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float2
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float3
+    kind: type
+    summary: math/div with float3 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float3
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float4
+    kind: type
+    summary: math/div with float4 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float4
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/rem-float2x2
+    kind: type
+    summary: math/rem with float2x2 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float2x2
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/rem-float3x3
+    kind: type
+    summary: math/rem with float3x3 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float3x3
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/rem-float4x4
+    kind: type
+    summary: math/rem with float4x4 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float4x4
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/rem-float2
+    kind: type
+    summary: math/rem with float2 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float2
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/rem-float3
+    kind: type
+    summary: math/rem with float3 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float3
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/rem-float4
+    kind: type
+    summary: math/rem with float4 inputs
+    scope: in
+    covers:
+      op: math/rem
+      types:
+        - float4
+    generator: math/rem
+    reviewStatus: none
+  - id: T-math/min-float2x2
+    kind: type
+    summary: math/min with float2x2 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float2x2
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/min-float3x3
+    kind: type
+    summary: math/min with float3x3 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float3x3
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/min-float4x4
+    kind: type
+    summary: math/min with float4x4 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float4x4
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/min-float2
+    kind: type
+    summary: math/min with float2 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float2
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/min-float3
+    kind: type
+    summary: math/min with float3 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float3
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/min-float4
+    kind: type
+    summary: math/min with float4 inputs
+    scope: in
+    covers:
+      op: math/min
+      types:
+        - float4
+    generator: math/min
+    reviewStatus: none
+  - id: T-math/max-float2x2
+    kind: type
+    summary: math/max with float2x2 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float2x2
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/max-float3x3
+    kind: type
+    summary: math/max with float3x3 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float3x3
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/max-float4x4
+    kind: type
+    summary: math/max with float4x4 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float4x4
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/max-float2
+    kind: type
+    summary: math/max with float2 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float2
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/max-float3
+    kind: type
+    summary: math/max with float3 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float3
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/max-float4
+    kind: type
+    summary: math/max with float4 inputs
+    scope: in
+    covers:
+      op: math/max
+      types:
+        - float4
+    generator: math/max
+    reviewStatus: none
+  - id: T-math/clamp-float2x2
+    kind: type
+    summary: math/clamp with float2x2 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float2x2
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/clamp-float3x3
+    kind: type
+    summary: math/clamp with float3x3 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float3x3
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/clamp-float4x4
+    kind: type
+    summary: math/clamp with float4x4 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float4x4
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/clamp-float2
+    kind: type
+    summary: math/clamp with float2 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float2
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/clamp-float3
+    kind: type
+    summary: math/clamp with float3 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float3
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/clamp-float4
+    kind: type
+    summary: math/clamp with float4 inputs
+    scope: in
+    covers:
+      op: math/clamp
+      types:
+        - float4
+    generator: math/clamp
+    reviewStatus: none
+  - id: T-math/sign-float2x2
+    kind: type
+    summary: math/sign with float2x2 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float2x2
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/sign-float3x3
+    kind: type
+    summary: math/sign with float3x3 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float3x3
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/sign-float4x4
+    kind: type
+    summary: math/sign with float4x4 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float4x4
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/sign-float2
+    kind: type
+    summary: math/sign with float2 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float2
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/sign-float3
+    kind: type
+    summary: math/sign with float3 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float3
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/sign-float4
+    kind: type
+    summary: math/sign with float4 inputs
+    scope: in
+    covers:
+      op: math/sign
+      types:
+        - float4
+    generator: math/sign
+    reviewStatus: none
+  - id: T-math/neg-float2x2
+    kind: type
+    summary: math/neg with float2x2 inputs
+    scope: in
+    covers:
+      op: math/neg
+      types:
+        - float2x2
+    generator: math/neg
+    reviewStatus: none
+  - id: T-math/neg-float3x3
+    kind: type
+    summary: math/neg with float3x3 inputs
+    scope: in
+    covers:
+      op: math/neg
+      types:
+        - float3x3
+    generator: math/neg
+    reviewStatus: none
+  - id: T-math/eq-float3
+    kind: type
+    summary: math/eq with float3 inputs
+    scope: in
+    covers:
+      op: math/eq
+      types:
+        - float3
+    generator: math/eq
+    reviewStatus: none
+  - id: T-math/eq-float4
+    kind: type
+    summary: math/eq with float4 inputs
+    scope: in
+    covers:
+      op: math/eq
+      types:
+        - float4
+    generator: math/eq
+    reviewStatus: none
+  - id: T-math/eq-float2x2
+    kind: type
+    summary: math/eq with float2x2 inputs
+    scope: in
+    covers:
+      op: math/eq
+      types:
+        - float2x2
+    generator: math/eq
+    reviewStatus: none
+  - id: T-math/eq-float3x3
+    kind: type
+    summary: math/eq with float3x3 inputs
+    scope: in
+    covers:
+      op: math/eq
+      types:
+        - float3x3
+    generator: math/eq
+    reviewStatus: none
+  - id: T-math/ceil-float2x2
+    kind: type
+    summary: math/ceil with float2x2 inputs
+    scope: in
+    covers:
+      op: math/ceil
+      types:
+        - float2x2
+    generator: math/ceil
+    reviewStatus: none
+  - id: T-math/ceil-float3x3
+    kind: type
+    summary: math/ceil with float3x3 inputs
+    scope: in
+    covers:
+      op: math/ceil
+      types:
+        - float3x3
+    generator: math/ceil
+    reviewStatus: none
+  - id: T-math/floor-float2x2
+    kind: type
+    summary: math/floor with float2x2 inputs
+    scope: in
+    covers:
+      op: math/floor
+      types:
+        - float2x2
+    generator: math/floor
+    reviewStatus: none
+  - id: T-math/floor-float3x3
+    kind: type
+    summary: math/floor with float3x3 inputs
+    scope: in
+    covers:
+      op: math/floor
+      types:
+        - float3x3
+    generator: math/floor
+    reviewStatus: none
+  - id: T-math/fract-float2x2
+    kind: type
+    summary: math/fract with float2x2 inputs
+    scope: in
+    covers:
+      op: math/fract
+      types:
+        - float2x2
+    generator: math/fract
+    reviewStatus: none
+  - id: T-math/fract-float3x3
+    kind: type
+    summary: math/fract with float3x3 inputs
+    scope: in
+    covers:
+      op: math/fract
+      types:
+        - float3x3
+    generator: math/fract
+    reviewStatus: none
+  - id: T-math/round-float2x2
+    kind: type
+    summary: math/round with float2x2 inputs
+    scope: in
+    covers:
+      op: math/round
+      types:
+        - float2x2
+    generator: math/round
+    reviewStatus: none
+  - id: T-math/round-float3x3
+    kind: type
+    summary: math/round with float3x3 inputs
+    scope: in
+    covers:
+      op: math/round
+      types:
+        - float3x3
+    generator: math/round
+    reviewStatus: none
+  - id: T-math/trunc-float2x2
+    kind: type
+    summary: math/trunc with float2x2 inputs
+    scope: in
+    covers:
+      op: math/trunc
+      types:
+        - float2x2
+    generator: math/trunc
+    reviewStatus: none
+  - id: T-math/trunc-float3x3
+    kind: type
+    summary: math/trunc with float3x3 inputs
+    scope: in
+    covers:
+      op: math/trunc
+      types:
+        - float3x3
+    generator: math/trunc
+    reviewStatus: none
+  - id: T-math/saturate-float2x2
+    kind: type
+    summary: math/saturate with float2x2 inputs
+    scope: in
+    covers:
+      op: math/saturate
+      types:
+        - float2x2
+    generator: math/saturate
+    reviewStatus: none
+  - id: T-math/saturate-float3x3
+    kind: type
+    summary: math/saturate with float3x3 inputs
+    scope: in
+    covers:
+      op: math/saturate
+      types:
+        - float3x3
+    generator: math/saturate
+    reviewStatus: none
+  - id: T-math/mix-float2x2
+    kind: type
+    summary: math/mix with float2x2 inputs
+    scope: in
+    covers:
+      op: math/mix
+      types:
+        - float2x2
+    generator: math/mix
+    reviewStatus: none
+  - id: T-math/mix-float3x3
+    kind: type
+    summary: math/mix with float3x3 inputs
+    scope: in
+    covers:
+      op: math/mix
+      types:
+        - float3x3
+    generator: math/mix
+    reviewStatus: none
+  - id: T-math/deg-float4
+    kind: type
+    summary: math/deg with float4 inputs
+    scope: in
+    covers:
+      op: math/deg
+      types:
+        - float4
+    generator: math/deg
+    reviewStatus: none
+  - id: T-math/dot-float
+    kind: type
+    summary: math/dot with float inputs
+    scope: in
+    covers:
+      op: math/dot
+      types:
+        - float
+    generator: math/dot
+    reviewStatus: none
+  - id: T-math/length-float
+    kind: type
+    summary: math/length with float inputs
+    scope: in
+    covers:
+      op: math/length
+      types:
+        - float
+    generator: math/length
+    reviewStatus: none
+  - id: T-math/normalize-float
+    kind: type
+    summary: math/normalize with float inputs
+    scope: in
+    covers:
+      op: math/normalize
+      types:
+        - float
+    generator: math/normalize
+    reviewStatus: none
+  - id: T-math/transform-float2
+    kind: type
+    summary: math/transform with float2 inputs
+    scope: in
+    covers:
+      op: math/transform
+      types:
+        - float2
+    generator: math/transform
+    reviewStatus: none
+  - id: T-math/transform-float2x2
+    kind: type
+    summary: math/transform with float2x2 inputs
+    scope: in
+    covers:
+      op: math/transform
+      types:
+        - float2x2
+    generator: math/transform
+    reviewStatus: none
+  - id: T-math/transform-float3
+    kind: type
+    summary: math/transform with float3 inputs
+    scope: in
+    covers:
+      op: math/transform
+      types:
+        - float3
+    generator: math/transform
+    reviewStatus: none
+  - id: T-math/transform-float3x3
+    kind: type
+    summary: math/transform with float3x3 inputs
+    scope: in
+    covers:
+      op: math/transform
+      types:
+        - float3x3
+    generator: math/transform
+    reviewStatus: none
+  - id: T-math/select-float
+    kind: type
+    summary: math/select with float inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/switch-int
+    kind: type
+    summary: math/switch with int inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - int
+    generator: math/switch
+    reviewStatus: none
+  - id: P-math/matDecompose-remaining
+    kind: procedure
+    summary: Matrices with a negative determinant (mirroring), where step 8 allows four alternative outputs, are not.
+    scope: in
+    covers: TODO
+    generator: math/matDecompose
+    reviewStatus: partial
+    notes: Drafted from report section 2.2; split into one target per behaviour.
+  - id: E-boundary-mathDiv723And
+    kind: edge
+    summary: "`math/div(-7, 2) = -3` and `math/rem(-7, 2) = -1` for `int`. Only the float `rem(-7, 3)` is tested."
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: E-boundary-mathRem21474836481
+    kind: edge
+    summary: "`math/rem(-2147483648, -1)`."
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: E-boundary-mathClampWithBC
+    kind: edge
+    summary: "`math/clamp` with `b == c`."
+    scope: in
+    covers: TODO
+    generator: math/clamp
+    reviewStatus: none
+  - id: E-special-mathSinCosInfinityNanExpected
+    kind: edge
+    summary: "`math/sin`, `cos`: ±Infinity (NaN expected)."
+    scope: in
+    covers: TODO
+    generator: math/sin
+    reviewStatus: none
+  - id: E-special-mathSinhCoshTanhAsinh0
+    kind: edge
+    summary: "`math/sinh`, `cosh`, `tanh`, `asinh`: ±0, ±Infinity, NaN."
+    scope: in
+    covers: TODO
+    generator: math/sinh
+    reviewStatus: none
+  - id: E-special-mathLog2Log100NegativeInfinity
+    kind: edge
+    summary: "`math/log2`, `log10`: 0, negative, +Infinity."
+    scope: in
+    covers: TODO
+    generator: math/log2
+    reviewStatus: none
+  - id: E-special-mathCbrt0Infinity
+    kind: edge
+    summary: "`math/cbrt`: ±0, ±Infinity."
+    scope: in
+    covers: TODO
+    generator: math/cbrt
+    reviewStatus: none
+  - id: E-special-mathPowTheRemainingCasesIn
+    kind: edge
+    summary: "`math/pow`: the remaining cases in the specification's list of changes from IEEE-754 `pow`."
+    scope: in
+    covers: TODO
+    generator: math/pow
+    reviewStatus: none
+  - id: E-special-mathFloorCeilInfinityAndNan
+    kind: edge
+    summary: "`math/floor`, `ceil`: ±Infinity and NaN."
+    scope: in
+    covers: TODO
+    generator: math/floor
+    reviewStatus: none
+  - id: E-special-mathQuatslerpAndMathSlerpAntipodal
+    kind: edge
+    summary: "`math/quatSlerp` and `math/slerp`: antipodal and nearly identical inputs."
+    scope: in
+    covers: TODO
+    generator: math/quatSlerp
+    reviewStatus: none
+  - id: E-special-mathQuatfromaxisangleZeroLengthAxis
+    kind: edge
+    summary: "`math/quatFromAxisAngle`: zero-length axis."
+    scope: in
+    covers: TODO
+    generator: math/quatFromAxisAngle
+    reviewStatus: none
+  - id: E-special-mathRotate2dAnglesOutside22
+    kind: edge
+    summary: "`math/rotate2D`: angles outside [-2π, 2π]."
+    scope: in
+    covers: TODO
+    generator: math/rotate2D
+    reviewStatus: none
+  - id: E-special-mathMatcomposeNonUnitRotationQuaternion
+    kind: edge
+    summary: "`math/matCompose`: non-unit rotation quaternion."
+    scope: in
+    covers: TODO
+    generator: math/matCompose
+    reviewStatus: none
+  - id: E-special-mathRgbtooklchRgbfromoklchOutOfGamut
+    kind: edge
+    summary: "`math/rgbToOkLCh` / `rgbFromOkLCh`: out-of-gamut input and hue wrap-around."
+    scope: in
+    covers: TODO
+    generator: math/rgbToOkLCh
+    reviewStatus: none
+  - id: E-scalar-floatNOperations
+    kind: edge
+    summary: Unchanged. Because `floatN` includes `float`, `math/length(-3.0)` should return 3, `math/normalize(-3.0)` should return -1 with `isValid` true, `math/normalize(0.0)` should be invalid, and `math/dot(2.0, 3.0)` should return 6. None is tested.
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none

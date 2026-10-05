@@ -1,0 +1,46 @@
+# Target registry: animation. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: animation
+targets:
+  - id: S-4352
+    kind: statement
+    specRef:
+      line: 4352
+      section: Animation control
+    summary: Restarting an already playing animation MUST NOT activate the previous `done` flows
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`animation/start_playback_modes`: "Restart: 1st [done] not fired".'
+  - id: S-4353
+    kind: statement
+    specRef:
+      line: 4353
+      section: Animation control
+    summary: "New animation entry: stop time MUST equal end time; stop completion MUST be null"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`animation/stop_and_stopAt_edge_cases`: `stopAt` followed by a new `start`, including `stopTime` equal to and beyond `endTime`."
+  - id: S-4423
+    kind: statement
+    specRef:
+      line: 4423
+      section: animation/stop
+    summary: "`animation/stop`: animated properties MUST keep current values; `done` MUST NOT fire"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Position frozen near 50%, `done` not fired; also `stop` on an animation that is not playing.
+  - id: P-animation/start-remaining
+    kind: procedure
+    summary: An animation with a maximum time of 0, and exceeding `maxActiveAnimations`, are not.
+    scope: in
+    covers: TODO
+    generator: animation/start
+    reviewStatus: partial
+    notes: Drafted from report section 2.2; split into one target per behaviour.

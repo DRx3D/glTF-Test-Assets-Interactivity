@@ -4,6 +4,7 @@
 // M1 provides the command surface and option validation; the commands' work arrives in M2 and M3.
 
 import { Command, CommanderError } from 'commander';
+import { describeCheck, loadDataSet } from '../registry/check.js';
 import { parseGenerateOptions, UsageError, type RawGenerateOptions } from './options.js';
 
 const EXIT_FAILED = 1;
@@ -43,7 +44,11 @@ program
 program
   .command('check-registry')
   .description('schema and cross-reference checks on data/; writes no output')
-  .action(() => notYet('check-registry', 'M2'));
+  .action(() => {
+    const { text, ok } = describeCheck(loadDataSet());
+    process.stdout.write(text);
+    if (!ok) process.exitCode = EXIT_FAILED;
+  });
 
 program
   .command('gaps')

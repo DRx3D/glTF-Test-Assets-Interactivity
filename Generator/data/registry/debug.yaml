@@ -1,0 +1,69 @@
+# Target registry: debug. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: debug
+targets:
+  - id: S-4665
+    kind: statement
+    specRef:
+      line: 4665
+      section: debug/log
+    summary: "`debug/log`: literal curly brackets in the template MUST be doubled"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Templates with doubled brackets now appear, but log output is never checked.
+  - id: S-4671
+    kind: statement
+    specRef:
+      line: 4671
+      section: debug/log
+    summary: "`debug/log`: invalid `severity` MUST fall back to default"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Every `severity` in the suite is 0.
+  - id: S-4683
+    kind: statement
+    specRef:
+      line: 4683
+      section: debug/log
+    summary: "`debug/log`: invalid `message` MUST fall back to default"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: "`graph/ignored_configuration` asserts that `out` fires with an invalid message; the log text is not checked."
+  - id: S-4712
+    kind: statement
+    specRef:
+      line: 4712
+      section: debug/log
+    summary: "`debug/log`: missing generated sockets MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`H3`."
+  - id: S-4714
+    kind: statement
+    specRef:
+      line: 4714
+      section: debug/log
+    summary: "`debug/log`: extra sockets MUST still have valid sources"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-4725
+    kind: statement
+    specRef:
+      line: 4725
+      section: debug/log
+    summary: "`debug/log`: curly brackets in substituted values MUST be doubled"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none

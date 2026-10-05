@@ -1,0 +1,147 @@
+# Target registry: concepts. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: concepts
+targets:
+  - id: S-184
+    kind: statement
+    specRef:
+      line: 184
+      section: Concepts
+    summary: Animations MUST NOT play automatically when the asset contains a behavior graph
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`animation/state`: "Not started: translation unchanged" and `isPlaying` false before start.'
+  - id: S-209
+    kind: statement
+    specRef:
+      line: 209
+      section: Concepts
+    summary: Output value sockets MUST retain their values until a node with flow sockets executes
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Only `math/random` checks this (now also across `flow/for` iterations). No test checks value stability for a pure node read twice across non-flow evaluations of other kinds.
+  - id: S-217
+    kind: statement
+    specRef:
+      line: 217
+      section: Concepts
+    summary: Each input value socket MUST have an inline value or a connection; runtime MUST guarantee all inputs are defined when execution starts
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Missing inputs are rejected (`F8a`, `F8c`); type-default inputs are asserted in `graph/extra_and_unknown_sockets`.
+  - id: S-238
+    kind: statement
+    specRef:
+      line: 238
+      section: Concepts
+    summary: Socket order procedure MUST be used to compare ids
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`flow/sequence` checks numeric, length-based, and case ordering."
+  - id: S-272
+    kind: statement
+    specRef:
+      line: 272
+      section: Concepts
+    summary: Implementations MUST support all listed type signatures (including double-precision `float`)
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Double precision is now asserted in `Extras/Float_Precision`. `float2x2` and `float3x3` are still used by only a few matrix tests and never as variable or event types.
+  - id: S-309
+    kind: statement
+    specRef:
+      line: 309
+      section: Concepts
+    summary: Configuration on non-configurable operations MUST be ignored
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`graph/ignored_configuration`: `math/add` with a configuration. Only one operation is checked."
+  - id: S-311
+    kind: statement
+    specRef:
+      line: 311
+      section: Concepts
+    summary: Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Fallback is asserted for `flow/switch`, `math/switch`, `flow/waitAll`, and `flow/multiGate`. Rejection is asserted for missing configuration on `variable/get`, `variable/set`, `event/receive`, `event/send`, and `pointer/get` (`G1a`, `G2a`, `G8a`, `G9a`, `G4a`).
+  - id: S-313
+    kind: statement
+    specRef:
+      line: 313
+      section: Concepts
+    summary: All defined configuration properties MUST be present and valid, otherwise fall back to default; undefined configuration properties MUST be ignored
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`flow/multiGate` with `isRandom: "yes"`; `flow/switch` with an unknown property.'
+  - id: S-359
+    kind: statement
+    specRef:
+      line: 359
+      section: Concepts
+    summary: Variables without an initial value MUST be initialized to the type default
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: "`float`, `float2`, `float3`, and `float4` variables are now declared without a value in `variable/set_and_get`, but no test asserts the resulting `bool` false, `int` 0, or NaN defaults."
+  - id: S-361
+    kind: statement
+    specRef:
+      line: 361
+      section: Concepts
+    summary: Variables MUST retain their values until execution terminates
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Implicit in every test, since results are stored in variables and read back.
+  - id: S-400
+    kind: statement
+    specRef:
+      line: 400
+      section: Concepts
+    summary: Graph MUST be rejected if it exceeds implementation static limits
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Limits are implementation-specific; no invalid case exceeds one.
+  - id: E-precision-negativeZeroForMathSign0
+    kind: edge
+    summary: Negative zero for `math/sign(-0.0)`, `math/trunc(-0.5)`, `math/ceil(-0.5)`, `math/mul`, and `math/fract`.
+    scope: in
+    covers: TODO
+    generator: math/mul
+    reviewStatus: none
+  - id: E-precision-doublePrecisionChecksForTranscendentalFunctions
+    kind: edge
+    summary: Double-precision checks for transcendental functions; their tests still use single-precision expected values with tolerances.
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: E-precision-exactComparisonAnywhereOutsideExtrasFloat
+    kind: edge
+    summary: Exact comparison anywhere outside `Extras/Float_Precision`.
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: none

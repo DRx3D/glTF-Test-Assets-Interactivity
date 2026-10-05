@@ -1,0 +1,174 @@
+# Target registry: variable. Drafted by tools/bootstrap-registry.ts from the coverage report;
+# finish each TODO by hand (project spec section 8.5).
+specRevision: c5d1e1e8
+area: variable
+targets:
+  - id: S-3705
+    kind: statement
+    specRef:
+      line: 3705
+      section: variable/get
+    summary: "`variable/get`: invalid variable index MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G1a`–`G1f`."
+  - id: S-3738
+    kind: statement
+    specRef:
+      line: 3738
+      section: variable/set
+    summary: "`variable/set`: missing or empty `variables` configuration MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Missing configuration is covered (`G2a`); an empty `variables` array is not.
+  - id: S-3740
+    kind: statement
+    specRef:
+      line: 3740
+      section: variable/set
+    summary: "`variable/set`: invalid index in `variables` MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G2b`, `G2c`, `G2d`."
+  - id: S-3741
+    kind: statement
+    specRef:
+      line: 3741
+      section: variable/set
+    summary: "`variable/set`: socket ids MUST be decimal without leading zeros"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Multiple variables and a duplicate index are covered (`variable/setMultiple`), but ids are not tested against alternative encodings.
+  - id: S-3743
+    kind: statement
+    specRef:
+      line: 3743
+      section: variable/set
+    summary: "`variable/set`: graph MUST be rejected if generated sockets exceed the limit"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+  - id: S-3746
+    kind: statement
+    specRef:
+      line: 3746
+      section: variable/set
+    summary: "`variable/set`: missing or mistyped generated sockets MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G2e`, `G2f`."
+  - id: S-3748
+    kind: statement
+    specRef:
+      line: 3748
+      section: variable/set
+    summary: "`variable/set`: extra sockets MUST still be valid"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: partial
+    notes: Invalid extra sockets are rejected on `math/add` (`F13a`, `F13b`), not on `variable/set`.
+  - id: S-3793
+    kind: statement
+    specRef:
+      line: 3793
+      section: variable/interpolate
+    summary: "`variable/interpolate`: invalid variable index MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G3f`."
+  - id: S-3795
+    kind: statement
+    specRef:
+      line: 3795
+      section: variable/interpolate
+    summary: "`variable/interpolate`: `int` or `bool` variables MUST cause rejection"
+    scope: out-rejection
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G3a`, `G3b`."
+  - id: S-3797
+    kind: statement
+    specRef:
+      line: 3797
+      section: variable/interpolate
+    summary: "`variable/interpolate`: `useSlerp` MUST be a boolean literal and MUST NOT be true unless `T` is `float4`"
+    scope: in
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: "`G3c`, `G3d`, `G3e`; the slerp path is exercised on a `float4` variable."
+  - id: T-variable/interpolate-float2x2
+    kind: type
+    summary: variable/interpolate with float2x2 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float2x2
+    generator: variable/interpolate
+    reviewStatus: none
+  - id: T-variable/interpolate-float3x3
+    kind: type
+    summary: variable/interpolate with float3x3 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float3x3
+    generator: variable/interpolate
+    reviewStatus: none
+  - id: T-variable/interpolate-float4x4
+    kind: type
+    summary: variable/interpolate with float4x4 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float4x4
+    generator: variable/interpolate
+    reviewStatus: none
+  - id: T-variable/interpolate-float2
+    kind: type
+    summary: variable/interpolate with float2 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float2
+    generator: variable/interpolate
+    reviewStatus: none
+  - id: T-variable/interpolate-float3
+    kind: type
+    summary: variable/interpolate with float3 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float3
+    generator: variable/interpolate
+    reviewStatus: none
+  - id: T-variable/interpolate-float4
+    kind: type
+    summary: variable/interpolate with float4 inputs
+    scope: in
+    covers:
+      op: variable/interpolate
+      types:
+        - float4
+    generator: variable/interpolate
+    reviewStatus: none

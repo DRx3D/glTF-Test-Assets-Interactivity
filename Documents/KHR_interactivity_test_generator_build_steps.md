@@ -7,7 +7,7 @@
 | Project specification | `Documents/KHR_interactivity_test_generator_typescript_spec.md` |
 | Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` |
 
-This is the build order for the supplemental test generator, updated for test suite revision `9ffd30e` (branch `fix/spec-and-json-conform-fixes`). That revision already covers most flow, event, animation, interpolation and rejection targets, so Steps 10 and 11 are smaller than in Draft 0.1. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
+This is the build order for the supplemental test generator, updated for test suite revision `9ffd30e` (now on `main`, merged by PR #22). That revision already covers most flow, event, animation, interpolation and rejection targets, so Steps 10 and 11 are smaller than in Draft 0.1. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
 
 "Section N" refers to the TypeScript project specification. "§N" refers to the requirements document.
 

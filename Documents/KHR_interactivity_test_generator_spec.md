@@ -5,7 +5,7 @@
 | Document status | Draft 0.3 |
 | Date | 2026-10-05 |
 | Target specification | `KHR_interactivity`, `Specification.adoc` at `KhronosGroup/glTF` revision `c5d1e1e8` |
-| Target test suite | `KhronosGroup/glTF-Test-Assets-Interactivity` branch `fix/spec-and-json-conform-fixes`, revision `9ffd30e` |
+| Target test suite | `KhronosGroup/glTF-Test-Assets-Interactivity` `main`; test content as of revision `9ffd30e`, merged by PR #22 (`fc073cf`) |
 
 This document specifies software (the _generator_) that produces supplemental `KHR_interactivity` test assets. The assets fill the coverage gaps identified in Section 1 without modifying the existing test suite.
 
@@ -17,7 +17,7 @@ Section 1 is informative. Section 2 defines how the rest of the document is to b
 
 ### 1.1 Purpose
 
-The `KHR_interactivity` extension is ratified, and its test suite has at least one test for every operation it defines. A requirement-level review of the suite at revision `0f24a49` found that most of the specification's normative statements, many operation type signatures, and a large set of edge cases had no test coverage. The suite has since been extended substantially (branch `fix/spec-and-json-conform-fixes`, revision `9ffd30e`), including a new set of invalid-graph cases. This section records the review repeated against that revision and the estimate of how many assets are needed to close the gaps that remain. The rest of this document specifies a generator that produces those assets.
+The `KHR_interactivity` extension is ratified, and its test suite has at least one test for every operation it defines. A requirement-level review of the suite at revision `0f24a49` found that most of the specification's normative statements, many operation type signatures, and a large set of edge cases had no test coverage. The suite has since been extended substantially (revision `9ffd30e`, merged to `main` by PR #22), including a new set of invalid-graph cases. This section records the review repeated against that revision and the estimate of how many assets are needed to close the gaps that remain. The rest of this document specifies a generator that produces those assets.
 
 Two scope decisions made after the original review apply to this version of the generator:
 
@@ -31,7 +31,7 @@ The review compared the `KHR_interactivity` specification against the test asset
 | Source | Revision |
 | --- | --- |
 | `KhronosGroup/glTF`, `extensions/2.0/Khronos/KHR_interactivity/Specification.adoc` (status: Complete, Ratified) | `c5d1e1e8` (2026-09-28) |
-| `KhronosGroup/glTF-Test-Assets-Interactivity`, branch `fix/spec-and-json-conform-fixes`, `Tests/Interactivity` | `9ffd30e` (2026-10-05) |
+| `KhronosGroup/glTF-Test-Assets-Interactivity`, `main`, `Tests/Interactivity` | `9ffd30e` (2026-10-05), merged to `main` by PR #22 (`fc073cf`) |
 
 Line numbers in this document refer to `Specification.adoc` at the revision above. Revision `c5d1e1e8` differs from `166ed85`, used by the original review, only by four typo fixes, so every line number is unchanged.
 

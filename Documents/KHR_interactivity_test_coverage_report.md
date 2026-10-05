@@ -7,7 +7,9 @@ This report compares the `KHR_interactivity` specification against the test asse
 | Source | Revision |
 | --- | --- |
 | `KhronosGroup/glTF`, `extensions/2.0/Khronos/KHR_interactivity/Specification.adoc` (status: Complete, Ratified) | `c5d1e1e8` (2026-09-28) |
-| `KhronosGroup/glTF-Test-Assets-Interactivity`, branch `fix/spec-and-json-conform-fixes`, `Tests/Interactivity` | `9ffd30e` (2026-10-05) |
+| `KhronosGroup/glTF-Test-Assets-Interactivity`, `main`, `Tests/Interactivity` | `9ffd30e` (2026-10-05), merged to `main` by PR #22 (`fc073cf`) |
+
+The tests were analysed on branch `fix/spec-and-json-conform-fixes` before it was merged. Later commits on `main` add only showcase models under `Models/`, so the `Tests/Interactivity` content is unchanged.
 
 Line numbers in this report refer to `Specification.adoc` at the revision above. Revision `c5d1e1e8` differs from the previously used `166ed85` only by four typo fixes, so every line number is unchanged.
 

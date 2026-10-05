@@ -1,0 +1,41 @@
+{
+  "name": "khr-itest-gen",
+  "version": "0.1.0",
+  "description": "Generator for supplemental KHR_interactivity test assets",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "khr-itest-gen": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "cli": "tsx src/cli/index.ts",
+    "ci": "npm run typecheck && npm run lint && npm run format:check && npm run test:coverage"
+  },
+  "dependencies": {
+    "commander": "15.0.0",
+    "gltf-validator": "2.0.0-dev.3.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.4",
+    "@vitest/coverage-v8": "5.0.3",
+    "eslint": "10.12.0",
+    "fast-check": "4.10.2",
+    "prettier": "3.9.9",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vitest": "5.0.3"
+  }
+}

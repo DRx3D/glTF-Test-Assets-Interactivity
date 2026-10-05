@@ -1,0 +1,41 @@
+{
+  "source": "tools/make-splitmix64-fixture.py (independent Python implementation)",
+  "outputs": {
+    "0": [
+      "0xe220a8397b1dcdaf",
+      "0x6e789e6aa1b965f4",
+      "0x06c45d188009454f",
+      "0xf88bb8a8724c81ec",
+      "0x1b39896a51a8749b",
+      "0x53cb9f0c747ea2ea",
+      "0x2c829abe1f4532e1",
+      "0xc584133ac916ab3c",
+      "0x3ee5789041c98ac3",
+      "0xf3b8488c368cb0a6",
+      "0x657eecdd3cb13d09",
+      "0xc2d326e0055bdef6",
+      "0x8621a03fe0bbdb7b",
+      "0x8e1f7555983aa92f",
+      "0xb54e0f1600cc4d19",
+      "0x84bb3f97971d80ab"
+    ],
+    "default": [
+      "0x3b0c643e2af23fd8",
+      "0xc0514c79e7cb89c7",
+      "0x99324d04b492e80e",
+      "0x43e4183f66061ac4",
+      "0x0d0edfe263139ef6",
+      "0x30fbea1fec415f90",
+      "0x1ca360b588d5b50d",
+      "0xf465d312cc3c4e8a",
+      "0xf59f9c0acf00436c",
+      "0xa4c1904d04c8d9ef",
+      "0xa184d3038b32ced2",
+      "0x89233b12ec7215e0",
+      "0x6036e8a4beb7f73f",
+      "0xb4167f43d544cbc4",
+      "0x691949ffcdfc2843",
+      "0xd2ffe7441cca53d9"
+    ]
+  }
+}

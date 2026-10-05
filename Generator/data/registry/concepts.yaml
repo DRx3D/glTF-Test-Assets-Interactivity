@@ -9,121 +9,139 @@ targets:
       line: 184
       section: Concepts
     summary: Animations MUST NOT play automatically when the asset contains a behavior graph
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: '`animation/state`: "Not started: translation unchanged" and `isPlaying` false before start.'
+    scope: in
   - id: S-209
     kind: statement
     specRef:
       line: 209
       section: Concepts
     summary: Output value sockets MUST retain their values until a node with flow sockets executes
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Only `math/random` checks this (now also across `flow/for` iterations). No test checks value stability for a pure node read twice across non-flow evaluations of other kinds.
-  - id: S-217
+    scope: in
+  - id: S-217-reject
     kind: statement
-    specRef:
+    specRef: &a1
       line: 217
       section: Concepts
-    summary: Each input value socket MUST have an inline value or a connection; runtime MUST guarantee all inputs are defined when execution starts
-    scope: in
+    summary: Each input value socket MUST have an inline value or a connection; runtime MUST guarantee all inputs are defined when execution starts (rejection part)
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Missing inputs are rejected (`F8a`, `F8c`); type-default inputs are asserted in `graph/extra_and_unknown_sockets`.
+    scope: out-rejection
+  - id: S-217-runnable
+    kind: statement
+    specRef: *a1
+    summary: Each input value socket MUST have an inline value or a connection; runtime MUST guarantee all inputs are defined when execution starts (runnable part)
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Missing inputs are rejected (`F8a`, `F8c`); type-default inputs are asserted in `graph/extra_and_unknown_sockets`.
+    scope: in
   - id: S-238
     kind: statement
     specRef:
       line: 238
       section: Concepts
     summary: Socket order procedure MUST be used to compare ids
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`flow/sequence` checks numeric, length-based, and case ordering."
+    notes: '`flow/sequence` checks numeric, length-based, and case ordering.'
+    scope: in
   - id: S-272
     kind: statement
     specRef:
       line: 272
       section: Concepts
     summary: Implementations MUST support all listed type signatures (including double-precision `float`)
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Double precision is now asserted in `Extras/Float_Precision`. `float2x2` and `float3x3` are still used by only a few matrix tests and never as variable or event types.
+    scope: in
   - id: S-309
     kind: statement
     specRef:
       line: 309
       section: Concepts
     summary: Configuration on non-configurable operations MUST be ignored
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`graph/ignored_configuration`: `math/add` with a configuration. Only one operation is checked."
-  - id: S-311
+    notes: '`graph/ignored_configuration`: `math/add` with a configuration. Only one operation is checked.'
+    scope: in
+  - id: S-311-reject
     kind: statement
-    specRef:
+    specRef: &a2
       line: 311
       section: Concepts
-    summary: Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection
-    scope: in
+    summary: Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection (rejection part)
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Fallback is asserted for `flow/switch`, `math/switch`, `flow/waitAll`, and `flow/multiGate`. Rejection is asserted for missing configuration on `variable/get`, `variable/set`, `event/receive`, `event/send`, and `pointer/get` (`G1a`, `G2a`, `G8a`, `G9a`, `G4a`).
+    scope: out-rejection
+  - id: S-311-runnable
+    kind: statement
+    specRef: *a2
+    summary: Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection (runnable part)
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: Fallback is asserted for `flow/switch`, `math/switch`, `flow/waitAll`, and `flow/multiGate`. Rejection is asserted for missing configuration on `variable/get`, `variable/set`, `event/receive`, `event/send`, and `pointer/get` (`G1a`, `G2a`, `G8a`, `G9a`, `G4a`).
+    scope: in
   - id: S-313
     kind: statement
     specRef:
       line: 313
       section: Concepts
     summary: All defined configuration properties MUST be present and valid, otherwise fall back to default; undefined configuration properties MUST be ignored
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: '`flow/multiGate` with `isRandom: "yes"`; `flow/switch` with an unknown property.'
+    scope: in
   - id: S-359
     kind: statement
     specRef:
       line: 359
       section: Concepts
     summary: Variables without an initial value MUST be initialized to the type default
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "`float`, `float2`, `float3`, and `float4` variables are now declared without a value in `variable/set_and_get`, but no test asserts the resulting `bool` false, `int` 0, or NaN defaults."
+    notes: '`float`, `float2`, `float3`, and `float4` variables are now declared without a value in `variable/set_and_get`, but no test asserts the resulting `bool` false, `int` 0, or NaN defaults.'
+    scope: in
   - id: S-361
     kind: statement
     specRef:
       line: 361
       section: Concepts
     summary: Variables MUST retain their values until execution terminates
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Implicit in every test, since results are stored in variables and read back.
+    scope: in
   - id: S-400
     kind: statement
     specRef:
       line: 400
       section: Concepts
     summary: Graph MUST be rejected if it exceeds implementation static limits
-    scope: out-rejection
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Limits are implementation-specific; no invalid case exceeds one.
+    scope: out-rejection
   - id: E-precision-negativeZeroForMathSign0
     kind: edge
     summary: Negative zero for `math/sign(-0.0)`, `math/trunc(-0.5)`, `math/ceil(-0.5)`, `math/mul`, and `math/fract`.

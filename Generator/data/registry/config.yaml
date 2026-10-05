@@ -5,21 +5,21 @@ area: config
 targets:
   - id: E-config-flowForWithInitialindex15
     kind: edge
-    summary: "Configuration fallback: `flow/waitAll` with `inputFlows: 65` and `flow/multiGate` with a non-boolean `isRandom` are covered. Still missing: `flow/for` with `initialIndex: 1.5`, `math/quatFromAngles` with an invalid `order`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`."
+    summary: 'Configuration fallback: `flow/waitAll` with `inputFlows: 65` and `flow/multiGate` with a non-boolean `isRandom` are covered. Still missing: `flow/for` with `initialIndex: 1.5`, `math/quatFromAngles` with an invalid `order`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`.'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
   - id: E-config-100101e1
     kind: edge
-    summary: "Switch case encodings: `[0.5, 1]`, `[-2147483649, 0]` (flow only), and duplicates are covered. Still missing: `[-1.0, 0, 1]`, `[0.1e1, 2, 2]`, and `[-2147483649, 0]` for `math/switch`."
+    summary: 'Switch case encodings: `[0.5, 1]`, `[-2147483649, 0]` (flow only), and duplicates are covered. Still missing: `[-1.0, 0, 1]`, `[0.1e1, 2, 2]`, and `[-2147483649, 0]` for `math/switch`.'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
   - id: E-config-rejectionCasesStillMissingGraphsThat
     kind: edge
-    summary: "Rejection cases still missing: graphs that exceed static limits (generated socket and flow counts), type-equality violations for `math/select`, `math/dot`, and `math/matMul`, and `pointer/set` with an invalid `type`."
+    summary: 'Rejection cases still missing: graphs that exceed static limits (generated socket and flow counts), type-equality violations for `math/select`, `math/dot`, and `math/matMul`, and `pointer/set` with an invalid `type`.'
     scope: out-rejection
     covers: TODO
     generator: TODO

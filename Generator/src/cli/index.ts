@@ -4,7 +4,9 @@
 // M1 provides the command surface and option validation; the commands' work arrives in M2 and M3.
 
 import { Command, CommanderError } from 'commander';
-import { describeCheck, loadDataSet } from '../registry/check.js';
+import { determineGaps, describeGaps, loadCoverageMapping } from '../existing/coverage.js';
+import { defaultSuiteRoot, readSuite } from '../existing/reader.js';
+import { DEFAULT_DATA_DIR, describeCheck, loadDataSet } from '../registry/check.js';
 import { parseGenerateOptions, UsageError, type RawGenerateOptions } from './options.js';
 
 const EXIT_FAILED = 1;
@@ -53,7 +55,20 @@ program
 program
   .command('gaps')
   .description('print the gap list and existing credits; writes no output')
-  .action(() => notYet('gaps', 'M2'));
+  .option('--suite <path>', 'existing Tests/Interactivity directory')
+  .action((options: { suite?: string }) => {
+    const data = loadDataSet();
+    const inventory = readSuite(options.suite ?? defaultSuiteRoot(DEFAULT_DATA_DIR));
+    const report = determineGaps(
+      data.registry,
+      inventory,
+      loadCoverageMapping(`${DEFAULT_DATA_DIR}/existing-coverage.yaml`),
+    );
+    process.stdout.write(describeGaps(report, inventory));
+    if (data.problems.length > 0 || inventory.problems.length > 0 || report.problems.length > 0) {
+      process.exitCode = EXIT_FAILED;
+    }
+  });
 
 program
   .command('explain <target>')

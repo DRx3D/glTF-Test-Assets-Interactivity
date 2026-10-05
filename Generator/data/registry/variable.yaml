@@ -8,110 +8,110 @@ targets:
     specRef:
       line: 3705
       section: variable/get
-    summary: "`variable/get`: invalid variable index MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/get`: invalid variable index MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G1a`–`G1f`."
+    notes: '`G1a`–`G1f`.'
+    scope: out-rejection
   - id: S-3738
     kind: statement
     specRef:
       line: 3738
       section: variable/set
-    summary: "`variable/set`: missing or empty `variables` configuration MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/set`: missing or empty `variables` configuration MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Missing configuration is covered (`G2a`); an empty `variables` array is not.
+    scope: out-rejection
   - id: S-3740
     kind: statement
     specRef:
       line: 3740
       section: variable/set
-    summary: "`variable/set`: invalid index in `variables` MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/set`: invalid index in `variables` MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G2b`, `G2c`, `G2d`."
+    notes: '`G2b`, `G2c`, `G2d`.'
+    scope: out-rejection
   - id: S-3741
     kind: statement
     specRef:
       line: 3741
       section: variable/set
-    summary: "`variable/set`: socket ids MUST be decimal without leading zeros"
-    scope: in
+    summary: '`variable/set`: socket ids MUST be decimal without leading zeros'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Multiple variables and a duplicate index are covered (`variable/setMultiple`), but ids are not tested against alternative encodings.
+    scope: in
   - id: S-3743
     kind: statement
     specRef:
       line: 3743
       section: variable/set
-    summary: "`variable/set`: graph MUST be rejected if generated sockets exceed the limit"
-    scope: out-rejection
+    summary: '`variable/set`: graph MUST be rejected if generated sockets exceed the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-3746
     kind: statement
     specRef:
       line: 3746
       section: variable/set
-    summary: "`variable/set`: missing or mistyped generated sockets MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/set`: missing or mistyped generated sockets MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G2e`, `G2f`."
+    notes: '`G2e`, `G2f`.'
+    scope: out-rejection
   - id: S-3748
     kind: statement
     specRef:
       line: 3748
       section: variable/set
-    summary: "`variable/set`: extra sockets MUST still be valid"
-    scope: in
+    summary: '`variable/set`: extra sockets MUST still be valid'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Invalid extra sockets are rejected on `math/add` (`F13a`, `F13b`), not on `variable/set`.
+    scope: out-rejection
   - id: S-3793
     kind: statement
     specRef:
       line: 3793
       section: variable/interpolate
-    summary: "`variable/interpolate`: invalid variable index MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/interpolate`: invalid variable index MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G3f`."
+    notes: '`G3f`.'
+    scope: out-rejection
   - id: S-3795
     kind: statement
     specRef:
       line: 3795
       section: variable/interpolate
-    summary: "`variable/interpolate`: `int` or `bool` variables MUST cause rejection"
-    scope: out-rejection
+    summary: '`variable/interpolate`: `int` or `bool` variables MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G3a`, `G3b`."
+    notes: '`G3a`, `G3b`.'
+    scope: out-rejection
   - id: S-3797
     kind: statement
     specRef:
       line: 3797
       section: variable/interpolate
-    summary: "`variable/interpolate`: `useSlerp` MUST be a boolean literal and MUST NOT be true unless `T` is `float4`"
-    scope: in
+    summary: '`variable/interpolate`: `useSlerp` MUST be a boolean literal and MUST NOT be true unless `T` is `float4`'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G3c`, `G3d`, `G3e`; the slerp path is exercised on a `float4` variable."
+    notes: '`G3c`, `G3d`, `G3e`; the slerp path is exercised on a `float4` variable.'
+    scope: out-rejection
   - id: T-variable/interpolate-float2x2
     kind: type
     summary: variable/interpolate with float2x2 inputs

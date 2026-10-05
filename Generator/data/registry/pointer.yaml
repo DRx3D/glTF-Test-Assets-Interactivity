@@ -8,184 +8,184 @@ targets:
     specRef:
       line: 3881
       section: Object model access (pointers)
-    summary: "Pointer templates MUST be processed per the parsing rules: non-empty parameters, no duplicates, doubled literal brackets, `~0`/`~1` encoding"
-    scope: in
+    summary: 'Pointer templates MUST be processed per the parsing rules: non-empty parameters, no duplicates, doubled literal brackets, `~0`/`~1` encoding'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: All 22 invalid template examples are rejection cases (`G5-01`–`G5-22`), and a doubled-bracket template is checked in `graph/json_syntax`. The valid `~0`/`~1` examples are not.
+    scope: out-rejection
   - id: S-3891
     kind: statement
     specRef:
       line: 3891
       section: Object model access (pointers)
     summary: Active animation state MUST be applied before a pointer get or set on an animated property
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`animation/start_playback_modes` and `animation/state` read animated translation with `pointer/get` during and after playback."
+    notes: '`animation/start_playback_modes` and `animation/state` read animated translation with `pointer/get` during and after playback.'
+    scope: in
   - id: S-4060
     kind: statement
     specRef:
       line: 4060
       section: pointer/get
-    summary: "`pointer/get`: missing, non-string, or invalid `pointer` MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/get`: missing, non-string, or invalid `pointer` MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G4a`, `G4b`, `G5-*`."
+    notes: '`G4a`, `G4b`, `G5-*`.'
+    scope: out-rejection
   - id: S-4062
     kind: statement
     specRef:
       line: 4062
       section: pointer/get
-    summary: "`pointer/get`: invalid `type` MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/get`: invalid `type` MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G4c`–`G4f`."
+    notes: '`G4c`–`G4f`.'
+    scope: out-rejection
   - id: S-4064
     kind: statement
     specRef:
       line: 4064
       section: pointer/get
-    summary: "`pointer/get`: graph MUST be rejected if template sockets exceed the limit"
-    scope: out-rejection
+    summary: '`pointer/get`: graph MUST be rejected if template sockets exceed the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-4129
     kind: statement
     specRef:
       line: 4129
       section: pointer/set
-    summary: "`pointer/set`: invalid `pointer`, or one containing `[value]`/`{value}`, MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/set`: invalid `pointer`, or one containing `[value]`/`{value}`, MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G6a`, `G6b`; template parsing failures are covered through `pointer/get`."
+    notes: '`G6a`, `G6b`; template parsing failures are covered through `pointer/get`.'
+    scope: out-rejection
   - id: S-4131
     kind: statement
     specRef:
       line: 4131
       section: pointer/set
-    summary: "`pointer/set`: invalid `type` MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/set`: invalid `type` MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: none
-    notes: "`G6d` covers a mistyped value socket, not an invalid `type` configuration."
+    notes: '`G6d` covers a mistyped value socket, not an invalid `type` configuration.'
+    scope: out-rejection
   - id: S-4133
     kind: statement
     specRef:
       line: 4133
       section: pointer/set
-    summary: "`pointer/set`: graph MUST be rejected if sockets exceed the limit"
-    scope: out-rejection
+    summary: '`pointer/set`: graph MUST be rejected if sockets exceed the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-4201
     kind: statement
     specRef:
       line: 4201
       section: pointer/interpolate
-    summary: "`pointer/interpolate`: invalid `pointer`, or one containing reserved parameter names, MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/interpolate`: invalid `pointer`, or one containing reserved parameter names, MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G7a`–`G7d`."
+    notes: '`G7a`–`G7d`.'
+    scope: out-rejection
   - id: S-4203
     kind: statement
     specRef:
       line: 4203
       section: pointer/interpolate
-    summary: "`pointer/interpolate`: invalid `type`, or a `bool`/`int` type, MUST cause rejection"
-    scope: out-rejection
+    summary: '`pointer/interpolate`: invalid `type`, or a `bool`/`int` type, MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`G7e`, `G7f`."
+    notes: '`G7e`, `G7f`.'
+    scope: out-rejection
   - id: S-4205
     kind: statement
     specRef:
       line: 4205
       section: pointer/interpolate
-    summary: "`pointer/interpolate`: graph MUST be rejected if sockets exceed the limit"
-    scope: out-rejection
+    summary: '`pointer/interpolate`: graph MUST be rejected if sockets exceed the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-4264
     kind: statement
     specRef:
       line: 4264
       section: pointer/interpolate
-    summary: "`pointer/interpolate`: quaternion properties MUST use spherical linear interpolation"
-    scope: in
+    summary: '`pointer/interpolate`: quaternion properties MUST use spherical linear interpolation'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: '"Rotation uses slerp (value at 25%)" on `/nodes/[nodeIndex]/rotation`.'
+    scope: in
   - id: S-4738
     kind: statement
     specRef:
       line: 4738
       section: Object model extensions
-    summary: "`asset/majorVersion`/`minorVersion` MUST be the minimum of the asset version and the maximum supported version"
-    scope: in
+    summary: '`asset/majorVersion`/`minorVersion` MUST be the minimum of the asset version and the maximum supported version'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Only the common case (asset 2.0) can be tested with a normal asset.
+    scope: in
   - id: S-4740
     kind: statement
     specRef:
       line: 4740
       section: Object model extensions
     summary: Supported extensions in `extensionsUsed` MUST appear as `asset/extensions/<name>/enabled`
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Includes unknown and declared-but-unused extensions.
+    scope: in
   - id: S-4774
     kind: statement
     specRef:
       line: 4774
       section: Object model extensions
     summary: Runtime limit values MUST be at least 1
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
+    scope: in
   - id: S-4801
     kind: statement
     specRef:
       line: 4801
       section: Object model extensions
     summary: Unavailable active camera data MUST be reported as NaN
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: No test reads any `activeCamera` pointer.
+    scope: in
   - id: S-4826
     kind: statement
     specRef:
       line: 4826
       section: Object model extensions
     summary: Animation `minTime`/`maxTime` MUST come from sampler input accessor min/max, ignore unused samplers, and be NaN for invalid animations
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "`animation/state` covers min/max and an unused sampler. The NaN result for an invalid animation is not tested."
+    notes: '`animation/state` covers min/max and an unused sampler. The NaN result for an invalid animation is not tested.'
+    scope: in
   - id: T-pointer/interpolate-float2x2
     kind: type
     summary: pointer/interpolate with float2x2 inputs
@@ -262,28 +262,28 @@ targets:
     notes: Drafted from report section 2.2; split into one target per behaviour.
   - id: O-/extensions/KHR_interactivity/limits/*
     kind: pointer
-    summary: "/extensions/KHR_interactivity/limits/*: Covered (≥ 1 only)"
+    summary: '/extensions/KHR_interactivity/limits/*: Covered (≥ 1 only)'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
   - id: O-/extensions/KHR_interactivity/activeCamera/*
     kind: pointer
-    summary: "/extensions/KHR_interactivity/activeCamera/*: None"
+    summary: '/extensions/KHR_interactivity/activeCamera/*: None'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: none
   - id: O-/animations/{}/extensions/KHR_interactivity/isPlaying
     kind: pointer
-    summary: "/animations/{}/extensions/KHR_interactivity/isPlaying: Covered in the `[]` form; the `{}` form is not tested"
+    summary: '/animations/{}/extensions/KHR_interactivity/isPlaying: Covered in the `[]` form; the `{}` form is not tested'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
   - id: O-/extensions/KHR_interactivity/delays/{}
     kind: pointer
-    summary: "/extensions/KHR_interactivity/delays/{}: Covered (valid reference only)"
+    summary: '/extensions/KHR_interactivity/delays/{}: Covered (valid reference only)'
     scope: in
     covers: TODO
     generator: TODO

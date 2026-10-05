@@ -9,7 +9,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { stringify } from 'yaml';
 import { SPEC_REVISION } from '../src/registry/specTables.js';
-import type { RegistryFile, ReviewStatus, Scope, Target } from '../src/registry/targets.js';
+import type { RegistryFile, ReviewStatus, Target } from '../src/registry/targets.js';
 
 const reportPath = new URL('../../Documents/KHR_interactivity_test_coverage_report.md', import.meta.url);
 const outDir = new URL('../data/registry/', import.meta.url);
@@ -55,6 +55,10 @@ const STATEMENT_AREAS: Readonly<Record<string, string>> = {
   '1.10': 'pointer',
   '1.11': 'graph',
 };
+/** JSON syntax statements whose runnable parts are in scope (requirements §4.1). */
+const RUNNABLE_PARTS = new Set([5112, 5116, 5118, 5244, 5306, 5348]);
+/** JSON syntax statements with no rejection part at all. */
+const RUNNABLE_ONLY = new Set([5397]);
 const sec1 = section('## 1. Normative statements', '## 2. Specification content');
 let area = 'concepts';
 let subsection = '';
@@ -76,26 +80,51 @@ for (const line of sec1.split('\n')) {
   const notes = cells[3] ?? '';
   if (!/^(Covered|Partial|None)/.test(status)) throw new Error(`unexpected status in: ${line}`);
   const impractical = status.includes('impractical');
-  const rejectionOnly =
-    /reject/i.test(requirement) && !/default|fall back|ignored|retain|keep|no effect/i.test(requirement);
-  const scope: Scope = impractical ? 'out-impractical' : rejectionOnly ? 'out-rejection' : 'in';
   const reviewStatus: ReviewStatus = status.startsWith('Covered')
     ? 'covered'
     : status.startsWith('Partial')
       ? 'partial'
       : 'none';
   const op = firstOp(requirement);
-  add(area, {
-    id: `S-${lineNo}`,
-    kind: 'statement',
+  const base = {
+    kind: 'statement' as const,
     specRef: { line: lineNo, section: op ?? subsection },
     summary: requirement,
-    scope,
-    covers: 'TODO',
+    covers: 'TODO' as const,
     generator: 'TODO',
     reviewStatus,
     ...(notes !== '' ? { notes } : {}),
-  });
+  };
+  // A statement has a rejection part when its text says so, when its notes cite invalid-graph
+  // cases, or when it is a JSON syntax rule (report section 1.11, which is all rejection rules
+  // apart from the runnable parts requirements §4.1 lists).
+  const citesInvalid = /`[A-H]\d+(?:-\d+)?[a-z]?`/.test(notes);
+  const hasRejection =
+    !RUNNABLE_ONLY.has(lineNo) && (/reject/i.test(requirement) || citesInvalid || area === 'graph');
+  const hasRunnable =
+    RUNNABLE_PARTS.has(lineNo) ||
+    (area !== 'graph' &&
+      (!hasRejection ||
+        /default configuration|fall back|ignored|retain|keep|no effect|runtime/i.test(requirement)));
+  if (impractical) {
+    add(area, { id: `S-${lineNo}`, ...base, scope: 'out-impractical' });
+  } else if (hasRejection && hasRunnable) {
+    // Requirements §10.1: a statement with several requirements is split into parts.
+    add(area, {
+      id: `S-${lineNo}-reject`,
+      ...base,
+      summary: `${requirement} (rejection part)`,
+      scope: 'out-rejection',
+    });
+    add(area, {
+      id: `S-${lineNo}-runnable`,
+      ...base,
+      summary: `${requirement} (runnable part)`,
+      scope: 'in',
+    });
+  } else {
+    add(area, { id: `S-${lineNo}`, ...base, scope: hasRejection ? 'out-rejection' : 'in' });
+  }
 }
 
 // --- Type signatures: report section 2.1 -------------------------------------------------
@@ -109,11 +138,31 @@ for (const line of sec21.split('\n')) {
   const opsCell = row[1] ?? '';
   const ops = [...opsCell.matchAll(/`([a-z]+\/)?([A-Za-z0-9]+)`/g)].map((m) => m[2] ?? '');
   const category = /`([a-z]+)\//.exec(opsCell)?.[1] ?? 'math';
-  const typesCell = (row[2] ?? '').replace(/\(.*?\)/g, '');
+  const typesCell = (row[2] ?? '')
+    .replace(/\(.*?\)/g, '')
+    // "`float2` with `float2x2`": one signature, named by its vector type.
+    .replace(/(`[a-z0-9]+`) with `[a-z0-9]+`/g, '$1');
   const types = new Set<string>();
+  const except = /every type except `([a-z0-9]+)`/.exec(typesCell);
+  if (except !== null) {
+    const ALL = [
+      'bool',
+      'int',
+      'float',
+      'float2',
+      'float3',
+      'float4',
+      'float2x2',
+      'float3x3',
+      'float4x4',
+      'ref',
+    ];
+    ALL.filter((t) => t !== except[1]).forEach((t) => types.add(t));
+  }
   for (const [word, list] of Object.entries(TYPE_WORDS))
     if (typesCell.includes(word)) list.forEach((t) => types.add(t));
-  for (const m of typesCell.matchAll(/`(float\d?(?:x\d)?|int|bool|ref)`/g)) types.add(m[1] ?? '');
+  if (except === null)
+    for (const m of typesCell.matchAll(/`(float\d?(?:x\d)?|int|bool|ref)`/g)) types.add(m[1] ?? '');
   if (/scalar `float`/.test(row[2] ?? '')) types.add('float');
   for (const name of ops) {
     const op = `${category}/${name}`;

@@ -1,0 +1,888 @@
+# Existing-coverage mapping: which existing sub-tests and invalid-graph cases cover which targets.
+# The only source of credit for the existing suite (requirements §11). Drafted by
+# tools/bootstrap-coverage.ts from the coverage report; review every entry.
+suiteRevision: 9ffd30e
+subTests:
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(-2147483647) + 2147483646 == -1
+    credits:
+      - S-3203
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(0) is +0
+    credits:
+      - S-3205
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(2147483647) - 2147483646 == 1
+    credits:
+      - S-3203
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: round(-0.3) is -0
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: round(0.49999999999999994) == 0
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/start_playback_modes
+    subTest: |-
+      Restart: 1st
+      [done] not fired
+    credits:
+      - S-4352
+    note: Drafted from the coverage report; review.
+  - asset: animation/start_playback_modes
+    subTest: |-
+      Reverse (T..0):
+      position at 50%
+    credits:
+      - S-3891
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/state
+    subTest: |-
+      Not started:
+      translation unchanged
+    credits:
+      - S-184
+      - S-3891
+    note: Drafted from the coverage report; review.
+  - asset: animation/stop
+    subTest: |-
+      Position frozen 
+      at ~50%
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop
+    subTest: |-
+      Start [done] 
+      not fired
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stop, not playing:
+      [out]
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stopTime == endTime:
+      start [done]
+    credits:
+      - S-4353
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stopTime == endTime:
+      stopAt [done] not fired
+    credits:
+      - S-4353
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stopTime > endTime:
+      start [done]
+    credits:
+      - S-4353
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stopTime passed:
+      start [done] not fired
+    credits:
+      - S-4353
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/Event_Refs
+    subTest: |-
+      event/onStart
+       pointer/get isValid
+    credits:
+      - S-4475
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/Event_Refs
+    subTest: |-
+      event/onStart
+       two nodes same ref
+    credits:
+      - S-4477
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/Event_Refs
+    subTest: |-
+      event/onTick
+       pointer/get isValid
+    credits:
+      - S-4494
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      1st tick
+      after onStart
+    credits:
+      - S-4496
+    note: Drafted from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      1st tick:
+      timeSinceLastTick NaN
+    credits:
+      - S-4494
+      - S-4498
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      1st tick:
+      timeSinceStart 0
+    credits:
+      - S-4494
+      - S-4498
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      onStart:
+      JSON order
+    credits:
+      - S-4477
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      onTick:
+      JSON order
+    credits:
+      - S-4500
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      onTick: same
+      values in a tick
+    credits:
+      - S-4500
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      receive:
+      JSON order
+    credits:
+      - S-4591
+    note: Mapped by hand from the coverage report; review.
+  - asset: event/activation_order_and_onTick
+    subTest: |-
+      receive: all get
+      the sent value
+    credits:
+      - S-4591
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/multiGate
+    subTest: isRandom "yes" uses default configuration (in order)
+    credits:
+      - S-311-runnable
+      - S-313
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/sequence
+    subTest: Sequence Order (0,9,10) > (0,10,9)
+    credits:
+      - S-238
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/sequence
+    subTest: Sequence Order (b,B,a,A) > (A,B,a,b)
+    credits:
+      - S-238
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/sequence
+    subTest: Sequence Order (ccc,aaa,b) > (aaa,b,ccc)
+    credits:
+      - S-238
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/setDelay_and_cancelDelay
+    subTest: |-
+      cancelDelay fired ref
+      Flow [out]
+    credits:
+      - S-3676
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/setDelay_and_cancelDelay
+    subTest: |-
+      cancelDelay null ref
+      Flow [out]
+    credits:
+      - S-3676
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/switch
+    subTest: Cases [-2147483649, 0] use default configuration
+    credits:
+      - S-311-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/switch
+    subTest: Cases [0.5, 1] use default configuration
+    credits:
+      - S-311-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: flow/waitAll
+    subTest: '[inputFlows] 65 uses default configuration'
+    credits:
+      - S-311-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/extra_and_unknown_sockets
+    subTest: |-
+      flow to unknown
+      socket: next output
+    credits:
+      - S-5397
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/extra_and_unknown_sockets
+    subTest: |-
+      flow to unknown
+      socket: target not run
+    credits:
+      - S-5397
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/extra_and_unknown_sockets
+    subTest: |-
+      math/add with
+      extra input c
+    credits:
+      - S-5244-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/extra_and_unknown_sockets
+    subTest: |-
+      type-default float
+      input is NaN
+    credits:
+      - S-217-runnable
+      - S-5348-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/ignored_configuration
+    subTest: |-
+      flow/switch unknown
+      property: [default]
+    credits:
+      - S-313
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/ignored_configuration
+    subTest: |-
+      flow/switch unknown
+      property: case [1]
+    credits:
+      - S-313
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/ignored_configuration
+    subTest: |-
+      math/add with
+      configuration
+    credits:
+      - S-309
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/unsupported_operations_and_graphs
+    subTest: |-
+      unsupported op:
+      output flow
+    credits:
+      - S-5112-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: graph/unsupported_operations_and_graphs
+    subTest: |-
+      unsupported op:
+      type-default output
+    credits:
+      - S-5112-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/abs
+    subTest: '[a] -2147483648 = -2147483648'
+    credits:
+      - S-2510
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/add
+    subTest: '[a] 2147483647 [b] 1 = -2147483648'
+    credits:
+      - S-2534
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/asr
+    subTest: '[a] -16 [b] 32 = -16'
+    credits:
+      - S-2841
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/asr
+    subTest: '[a] -16 [b] 33 = -8'
+    credits:
+      - S-2841
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/asr
+    subTest: '[a] -2147483648 [b] -1 = -1'
+    credits:
+      - S-2841
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/asr
+    subTest: '[a] -2147483648 [b] 31 = -1'
+    credits:
+      - S-2841
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/lsl
+    subTest: '[a] 1 [b] 31 = -2147483648'
+    credits:
+      - S-2855
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/lsl
+    subTest: '[a] 252645135 [b] 8 = 252645120'
+    credits:
+      - S-2855
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/mul
+    subTest: '[a] -2147483648 [b] -1 = -2147483648'
+    credits:
+      - S-2592
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/mul
+    subTest: '[a] 2147483647 [b] 2147483647 = 1'
+    credits:
+      - S-2592
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/mul
+    subTest: '[a] 46341 [b] 46341 = -2147479015'
+    credits:
+      - S-2592
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/neg
+    subTest: '[a] -2147483648 = -2147483648'
+    credits:
+      - S-2510
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/random
+    subTest: Random (new number in each flow/for iteration, 10x)
+    credits:
+      - S-1083
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/random
+    subTest: Random (new number in new flow)
+    credits:
+      - S-1083
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/random
+    subTest: Random (same number in current flow)
+    credits:
+      - S-1075
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] -2.50 = -3.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 0.50 = 1.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 1.50 = 2.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 2.50 = 3.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/sub
+    subTest: '[a] -2147483648 [b] 1 = 2147483647'
+    credits:
+      - S-2563
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/switch
+    subTest: Cases [0.5, 1] use default configuration
+    credits:
+      - S-311-runnable
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: asset/extensions/KHR_interactivity/enabled
+    credits:
+      - S-4740
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: asset/extensions/KHR_this_extension_does_not_exist/enabled
+    credits:
+      - S-4740
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: asset/extensions/KHR_this_extension_is_not_used/enabled
+    credits:
+      - S-4740
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: asset/majorVersion
+    credits:
+      - S-4738
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: asset/minorVersion
+    credits:
+      - S-4738
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: limits/maxActiveAnimations >= 1
+    credits:
+      - S-4774
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: limits/maxActiveDelays >= 1
+    credits:
+      - S-4774
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: limits/maxActivePropertyInterpolations >= 1
+    credits:
+      - S-4774
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/AssetCapabilities_GetTests
+    subTest: limits/maxActiveVariableInterpolations >= 1
+    credits:
+      - S-4774
+    note: Mapped by hand from the coverage report; review.
+  - asset: pointer/interpolate
+    subTest: Rotation uses slerp (value at 25%)
+    credits:
+      - S-4264
+    note: Drafted from the coverage report; review.
+  - asset: variable/set_and_get
+    subTest: static float
+    credits:
+      - S-361
+    note: Mapped by hand from the coverage report; review.
+invalid:
+  - id: A1a
+    credits:
+      - S-4898
+  - id: B1a
+    credits:
+      - S-4958
+  - id: B1b
+    credits:
+      - S-4958
+  - id: B2a
+    credits:
+      - S-4962
+  - id: B2b
+    credits:
+      - S-4962
+  - id: B3a
+    credits:
+      - S-4898
+  - id: C1
+    credits:
+      - S-4998
+  - id: C2a
+    credits:
+      - S-5031
+  - id: C2b
+    credits:
+      - S-5031
+  - id: C2c
+    credits:
+      - S-5031
+  - id: C3a
+    credits:
+      - S-5033
+  - id: C3b
+    credits:
+      - S-5033
+  - id: C4a
+    credits:
+      - S-5035
+  - id: C4b
+    credits:
+      - S-5035
+  - id: C4c
+    credits:
+      - S-5035
+  - id: C5a
+    credits:
+      - S-5037
+  - id: C5b
+    credits:
+      - S-5037
+  - id: C6a
+    credits:
+      - S-5039
+  - id: C6b
+    credits:
+      - S-5039
+  - id: C6c
+    credits:
+      - S-5039
+  - id: C7c
+    credits:
+      - S-5043
+  - id: C7d
+    credits:
+      - S-4898
+  - id: C8a
+    credits:
+      - S-4998
+  - id: C8b
+    credits:
+      - S-4998
+  - id: C8c
+    credits:
+      - S-4998
+  - id: D1
+    credits:
+      - S-5076
+  - id: D2
+    credits:
+      - S-5080
+  - id: D3a
+    credits:
+      - S-5082
+  - id: D3b
+    credits:
+      - S-5082
+  - id: D5c
+    credits:
+      - S-5086
+  - id: E1a
+    credits:
+      - S-5108
+  - id: E1b
+    credits:
+      - S-5108
+  - id: E2a
+    credits:
+      - S-5112-reject
+  - id: E2b
+    credits:
+      - S-5112-reject
+  - id: E2c
+    credits:
+      - S-5112-reject
+  - id: E3a
+    credits:
+      - S-5122
+  - id: E3b
+    credits:
+      - S-5122
+  - id: E4a
+    credits:
+      - S-5116-reject
+      - S-5149
+  - id: E4b
+    credits:
+      - S-5118-reject
+      - S-5149
+  - id: E4c
+    credits:
+      - S-5116-reject
+      - S-5149
+  - id: E4d
+    credits:
+      - S-5116-reject
+  - id: E5a
+    credits:
+      - S-5151
+  - id: E5b
+    credits:
+      - S-5151
+  - id: E5c
+    credits:
+      - S-5151
+  - id: F10a
+    credits:
+      - S-5387
+  - id: F10b
+    credits:
+      - S-5387
+  - id: F10c
+    credits:
+      - S-5387
+  - id: F10d
+    credits:
+      - S-5387
+  - id: F11a
+    credits:
+      - S-5383
+  - id: F13a
+    credits:
+      - S-1035
+      - S-3748
+      - S-5244-reject
+  - id: F13b
+    credits:
+      - S-1035
+      - S-3748
+      - S-5244-reject
+  - id: F13c
+    credits:
+      - S-5381
+  - id: F1a
+    credits:
+      - S-5225
+  - id: F1b
+    credits:
+      - S-5225
+  - id: F1c
+    credits:
+      - S-5225
+  - id: F1d
+    credits:
+      - S-5225
+  - id: F2
+    credits:
+      - S-5294
+  - id: F3a
+    credits:
+      - S-5298
+  - id: F3b
+    credits:
+      - S-5298
+  - id: F3c
+    credits:
+      - S-5298
+  - id: F4a
+    credits:
+      - S-5306-reject
+  - id: F4b
+    credits:
+      - S-5306-reject
+  - id: F4c
+    credits:
+      - S-5306-reject
+  - id: F5
+    credits:
+      - S-5248
+      - S-5310
+  - id: F6a
+    credits:
+      - S-5266
+  - id: F6b
+    credits:
+      - S-5266
+  - id: F6c
+    credits:
+      - S-5348-reject
+  - id: F6d
+    credits:
+      - S-5266
+  - id: F8a
+    credits:
+      - S-217-reject
+      - S-5244-reject
+      - S-5248
+  - id: F8b
+    credits:
+      - S-5244-reject
+  - id: F8c
+    credits:
+      - S-217-reject
+      - S-5244-reject
+  - id: F9a
+    credits:
+      - S-5248
+  - id: F9b
+    credits:
+      - S-5248
+  - id: F9c
+    credits:
+      - S-5254
+  - id: G1a
+    credits:
+      - S-311-reject
+      - S-3705
+  - id: G1b
+    credits:
+      - S-3705
+  - id: G1c
+    credits:
+      - S-3705
+  - id: G1d
+    credits:
+      - S-3705
+  - id: G1e
+    credits:
+      - S-3705
+  - id: G1f
+    credits:
+      - S-3705
+  - id: G2a
+    credits:
+      - S-311-reject
+      - S-3738
+  - id: G2b
+    credits:
+      - S-3740
+  - id: G2c
+    credits:
+      - S-3740
+  - id: G2d
+    credits:
+      - S-3740
+  - id: G2e
+    credits:
+      - S-3746
+  - id: G2f
+    credits:
+      - S-3746
+  - id: G3a
+    credits:
+      - S-3795
+  - id: G3b
+    credits:
+      - S-3795
+  - id: G3c
+    credits:
+      - S-3797
+  - id: G3d
+    credits:
+      - S-3797
+  - id: G3e
+    credits:
+      - S-3797
+  - id: G3f
+    credits:
+      - S-3793
+  - id: G4a
+    credits:
+      - S-311-reject
+      - S-4060
+  - id: G4b
+    credits:
+      - S-4060
+  - id: G4c
+    credits:
+      - S-4062
+  - id: G4d
+    credits:
+      - S-4062
+  - id: G4e
+    credits:
+      - S-4062
+  - id: G4f
+    credits:
+      - S-4062
+  - id: G5-01
+    credits:
+      - S-3881
+  - id: G5-02
+    credits:
+      - S-3881
+  - id: G5-03
+    credits:
+      - S-3881
+  - id: G5-04
+    credits:
+      - S-3881
+  - id: G5-05
+    credits:
+      - S-3881
+  - id: G5-06
+    credits:
+      - S-3881
+  - id: G5-07
+    credits:
+      - S-3881
+  - id: G5-08
+    credits:
+      - S-3881
+  - id: G5-09
+    credits:
+      - S-3881
+  - id: G5-10
+    credits:
+      - S-3881
+  - id: G5-11
+    credits:
+      - S-3881
+  - id: G5-12
+    credits:
+      - S-3881
+  - id: G5-13
+    credits:
+      - S-3881
+  - id: G5-14
+    credits:
+      - S-3881
+  - id: G5-15
+    credits:
+      - S-3881
+  - id: G5-16
+    credits:
+      - S-3881
+  - id: G5-17
+    credits:
+      - S-3881
+  - id: G5-18
+    credits:
+      - S-3881
+  - id: G5-19
+    credits:
+      - S-3881
+  - id: G5-20
+    credits:
+      - S-3881
+  - id: G5-21
+    credits:
+      - S-3881
+  - id: G5-22
+    credits:
+      - S-3881
+  - id: G6a
+    credits:
+      - S-4129
+  - id: G6b
+    credits:
+      - S-4129
+  - id: G6d
+    credits:
+      - S-4131
+  - id: G7a
+    credits:
+      - S-4201
+  - id: G7b
+    credits:
+      - S-4201
+  - id: G7c
+    credits:
+      - S-4201
+  - id: G7d
+    credits:
+      - S-4201
+  - id: G7e
+    credits:
+      - S-4203
+  - id: G7f
+    credits:
+      - S-4203
+  - id: G8a
+    credits:
+      - S-311-reject
+      - S-4581
+  - id: G8b
+    credits:
+      - S-4581
+  - id: G8c
+    credits:
+      - S-4581
+  - id: G9a
+    credits:
+      - S-311-reject
+      - S-4626
+  - id: G9b
+    credits:
+      - S-4626
+  - id: G9c
+    credits:
+      - S-4626
+  - id: G9d
+    credits:
+      - S-4626
+  - id: H1d
+    credits:
+      - S-1023
+  - id: H1e
+    credits:
+      - S-1023
+  - id: H3
+    credits:
+      - S-4712

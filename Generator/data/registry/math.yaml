@@ -8,196 +8,196 @@ targets:
     specRef:
       line: 568
       section: math/round
-    summary: "`math/round`: half-way cases MUST round away from zero; values in (-0.5, 0) MUST round to -0"
-    scope: in
+    summary: '`math/round`: half-way cases MUST round away from zero; values in (-0.5, 0) MUST round to -0'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`math/round` now has ±0.5, 1.5, ±2.5; `Extras/Float_Precision` checks `round(-0.3)` is -0 and `round(0.49999999999999994)` is 0."
+    notes: '`math/round` now has ±0.5, 1.5, ±2.5; `Extras/Float_Precision` checks `round(-0.3)` is -0 and `round(0.49999999999999994)` is 0.'
+    scope: in
   - id: S-966
     kind: statement
     specRef:
       line: 966
       section: math/select
-    summary: "`math/select`: `T` MUST be the same for `a`, `b`, and the output"
-    scope: in
+    summary: '`math/select`: `T` MUST be the same for `a`, `b`, and the output'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: No invalid case. `select` is still tested with `float` only (see Section 2).
+    scope: in
   - id: S-1009
     kind: statement
     specRef:
       line: 1009
       section: math/switch
-    summary: "`math/switch`: case values MUST be converted to decimal strings without leading zeros"
-    scope: in
+    summary: '`math/switch`: case values MUST be converted to decimal strings without leading zeros'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Negative cases, `[0.5, 1]` (fallback), duplicates `[1, 2, 2]`, and a selection without a case are covered. The float-literal examples (`-1.0`, `0.1e1`) are not.
+    scope: in
   - id: S-1011
     kind: statement
     specRef:
       line: 1011
       section: math/switch
-    summary: "`math/switch`: graph MUST be rejected if generated sockets exceed the input socket limit"
-    scope: out-rejection
+    summary: '`math/switch`: graph MUST be rejected if generated sockets exceed the input socket limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-1023
     kind: statement
     specRef:
       line: 1023
       section: math/switch
-    summary: "`math/switch`: graph MUST be rejected if any generated socket is missing or has a type different from `default`"
-    scope: in
+    summary: '`math/switch`: graph MUST be rejected if any generated socket is missing or has a type different from `default`'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`H1d`, `H1e`."
+    notes: '`H1d`, `H1e`.'
+    scope: out-rejection
   - id: S-1035
     kind: statement
     specRef:
       line: 1035
       section: math/switch
-    summary: "`math/switch`: extra sockets MUST still have valid types and sources"
-    scope: in
+    summary: '`math/switch`: extra sockets MUST still have valid types and sources'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: An extra socket `"2"` is ignored (`math/switch`); invalid extra sockets are rejected (`F13a`, `F13b`).
+    scope: out-rejection
   - id: S-1075
     kind: statement
     specRef:
       line: 1075
       section: math/random
-    summary: "`math/random`: value MUST be initialized on first access and MUST stay the same between accesses without intervening flow activations"
-    scope: in
+    summary: '`math/random`: value MUST be initialized on first access and MUST stay the same between accesses without intervening flow activations'
     covers: TODO
     generator: TODO
     reviewStatus: covered
+    scope: in
   - id: S-1083
     kind: statement
     specRef:
       line: 1083
       section: math/random
-    summary: "`math/random`: value MUST be updated on access after a new flow activation"
-    scope: in
+    summary: '`math/random`: value MUST be updated on access after a new flow activation'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Now also across `flow/for` iterations.
+    scope: in
   - id: S-1560
     kind: statement
     specRef:
       line: 1560
       section: math/dot
-    summary: "`math/dot`: both inputs MUST have the same type"
-    scope: in
+    summary: '`math/dot`: both inputs MUST have the same type'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Rejection test needed.
+    scope: in
   - id: S-1813
     kind: statement
     specRef:
       line: 1813
       section: math/matMul
-    summary: "`math/matMul`: both inputs MUST have the same type"
-    scope: in
+    summary: '`math/matMul`: both inputs MUST have the same type'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Rejection test needed.
+    scope: in
   - id: S-2218
     kind: statement
     specRef:
       line: 2218
       section: math/quatFromAngles
-    summary: "`math/quatFromAngles`: invalid or missing `order` MUST fall back to the default"
-    scope: in
+    summary: '`math/quatFromAngles`: invalid or missing `order` MUST fall back to the default'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: All six valid orders are tested. No invalid or missing `order`.
+    scope: in
   - id: S-2510
     kind: statement
     specRef:
       line: 2510
       section: Math operations
     summary: Integer negation of `-2147483648` MUST return `-2147483648`
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`math/neg` and `math/abs`."
+    notes: '`math/neg` and `math/abs`.'
+    scope: in
   - id: S-2534
     kind: statement
     specRef:
       line: 2534
       section: Math operations
     summary: Integer addition overflow MUST wrap
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`2147483647 + 1`."
+    notes: '`2147483647 + 1`.'
+    scope: in
   - id: S-2563
     kind: statement
     specRef:
       line: 2563
       section: Math operations
     summary: Integer subtraction overflow MUST wrap
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`-2147483648 - 1`."
+    notes: '`-2147483648 - 1`.'
+    scope: in
   - id: S-2592
     kind: statement
     specRef:
       line: 2592
       section: Math operations
     summary: Integer multiplication overflow MUST wrap
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`46341 * 46341`, `2147483647 * 2147483647`, `-2147483648 * -1`."
+    notes: '`46341 * 46341`, `2147483647 * 2147483647`, `-2147483648 * -1`.'
+    scope: in
   - id: S-2626
     kind: statement
     specRef:
       line: 2626
       section: Math operations
     summary: Integer division MUST truncate toward zero
-    scope: in
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Only exact quotients, division by zero, and `INT_MIN / -1`. No inexact negative quotient such as `-7 / 2` (expected -3, not -4).
+    scope: in
   - id: S-2841
     kind: statement
     specRef:
       line: 2841
       section: math/asr
-    summary: "`math/asr`: result truncated to 32 bits; sign bit MUST be propagated"
-    scope: in
+    summary: '`math/asr`: result truncated to 32 bits; sign bit MUST be propagated'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Includes shift counts 0, 31, 32, 33, and -1.
+    scope: in
   - id: S-2855
     kind: statement
     specRef:
       line: 2855
       section: math/lsl
-    summary: "`math/lsl`: result MUST be truncated to 32 bits"
-    scope: in
+    summary: '`math/lsl`: result MUST be truncated to 32 bits'
     covers: TODO
     generator: TODO
     reviewStatus: covered
+    scope: in
   - id: T-math/abs-float2x2
     kind: type
     summary: math/abs with float2x2 inputs
@@ -1048,16 +1048,6 @@ targets:
         - float2
     generator: math/transform
     reviewStatus: none
-  - id: T-math/transform-float2x2
-    kind: type
-    summary: math/transform with float2x2 inputs
-    scope: in
-    covers:
-      op: math/transform
-      types:
-        - float2x2
-    generator: math/transform
-    reviewStatus: none
   - id: T-math/transform-float3
     kind: type
     summary: math/transform with float3 inputs
@@ -1068,34 +1058,184 @@ targets:
         - float3
     generator: math/transform
     reviewStatus: none
-  - id: T-math/transform-float3x3
+  - id: T-math/select-bool
     kind: type
-    summary: math/transform with float3x3 inputs
-    scope: in
-    covers:
-      op: math/transform
-      types:
-        - float3x3
-    generator: math/transform
-    reviewStatus: none
-  - id: T-math/select-float
-    kind: type
-    summary: math/select with float inputs
+    summary: math/select with bool inputs
     scope: in
     covers:
       op: math/select
       types:
-        - float
+        - bool
     generator: math/select
     reviewStatus: none
-  - id: T-math/switch-int
+  - id: T-math/select-int
     kind: type
-    summary: math/switch with int inputs
+    summary: math/select with int inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - int
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float2
+    kind: type
+    summary: math/select with float2 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float2
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float3
+    kind: type
+    summary: math/select with float3 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float3
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float4
+    kind: type
+    summary: math/select with float4 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float4
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float2x2
+    kind: type
+    summary: math/select with float2x2 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float2x2
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float3x3
+    kind: type
+    summary: math/select with float3x3 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float3x3
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-float4x4
+    kind: type
+    summary: math/select with float4x4 inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - float4x4
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/select-ref
+    kind: type
+    summary: math/select with ref inputs
+    scope: in
+    covers:
+      op: math/select
+      types:
+        - ref
+    generator: math/select
+    reviewStatus: none
+  - id: T-math/switch-bool
+    kind: type
+    summary: math/switch with bool inputs
     scope: in
     covers:
       op: math/switch
       types:
-        - int
+        - bool
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float
+    kind: type
+    summary: math/switch with float inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float2
+    kind: type
+    summary: math/switch with float2 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float2
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float3
+    kind: type
+    summary: math/switch with float3 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float3
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float4
+    kind: type
+    summary: math/switch with float4 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float4
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float2x2
+    kind: type
+    summary: math/switch with float2x2 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float2x2
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float3x3
+    kind: type
+    summary: math/switch with float3x3 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float3x3
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-float4x4
+    kind: type
+    summary: math/switch with float4x4 inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - float4x4
+    generator: math/switch
+    reviewStatus: none
+  - id: T-math/switch-ref
+    kind: type
+    summary: math/switch with ref inputs
+    scope: in
+    covers:
+      op: math/switch
+      types:
+        - ref
     generator: math/switch
     reviewStatus: none
   - id: P-math/matDecompose-remaining
@@ -1108,49 +1248,49 @@ targets:
     notes: Drafted from report section 2.2; split into one target per behaviour.
   - id: E-boundary-mathDiv723And
     kind: edge
-    summary: "`math/div(-7, 2) = -3` and `math/rem(-7, 2) = -1` for `int`. Only the float `rem(-7, 3)` is tested."
+    summary: '`math/div(-7, 2) = -3` and `math/rem(-7, 2) = -1` for `int`. Only the float `rem(-7, 3)` is tested.'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: none
   - id: E-boundary-mathRem21474836481
     kind: edge
-    summary: "`math/rem(-2147483648, -1)`."
+    summary: '`math/rem(-2147483648, -1)`.'
     scope: in
     covers: TODO
     generator: TODO
     reviewStatus: none
   - id: E-boundary-mathClampWithBC
     kind: edge
-    summary: "`math/clamp` with `b == c`."
+    summary: '`math/clamp` with `b == c`.'
     scope: in
     covers: TODO
     generator: math/clamp
     reviewStatus: none
   - id: E-special-mathSinCosInfinityNanExpected
     kind: edge
-    summary: "`math/sin`, `cos`: ±Infinity (NaN expected)."
+    summary: '`math/sin`, `cos`: ±Infinity (NaN expected).'
     scope: in
     covers: TODO
     generator: math/sin
     reviewStatus: none
   - id: E-special-mathSinhCoshTanhAsinh0
     kind: edge
-    summary: "`math/sinh`, `cosh`, `tanh`, `asinh`: ±0, ±Infinity, NaN."
+    summary: '`math/sinh`, `cosh`, `tanh`, `asinh`: ±0, ±Infinity, NaN.'
     scope: in
     covers: TODO
     generator: math/sinh
     reviewStatus: none
   - id: E-special-mathLog2Log100NegativeInfinity
     kind: edge
-    summary: "`math/log2`, `log10`: 0, negative, +Infinity."
+    summary: '`math/log2`, `log10`: 0, negative, +Infinity.'
     scope: in
     covers: TODO
     generator: math/log2
     reviewStatus: none
   - id: E-special-mathCbrt0Infinity
     kind: edge
-    summary: "`math/cbrt`: ±0, ±Infinity."
+    summary: '`math/cbrt`: ±0, ±Infinity.'
     scope: in
     covers: TODO
     generator: math/cbrt
@@ -1164,42 +1304,42 @@ targets:
     reviewStatus: none
   - id: E-special-mathFloorCeilInfinityAndNan
     kind: edge
-    summary: "`math/floor`, `ceil`: ±Infinity and NaN."
+    summary: '`math/floor`, `ceil`: ±Infinity and NaN.'
     scope: in
     covers: TODO
     generator: math/floor
     reviewStatus: none
   - id: E-special-mathQuatslerpAndMathSlerpAntipodal
     kind: edge
-    summary: "`math/quatSlerp` and `math/slerp`: antipodal and nearly identical inputs."
+    summary: '`math/quatSlerp` and `math/slerp`: antipodal and nearly identical inputs.'
     scope: in
     covers: TODO
     generator: math/quatSlerp
     reviewStatus: none
   - id: E-special-mathQuatfromaxisangleZeroLengthAxis
     kind: edge
-    summary: "`math/quatFromAxisAngle`: zero-length axis."
+    summary: '`math/quatFromAxisAngle`: zero-length axis.'
     scope: in
     covers: TODO
     generator: math/quatFromAxisAngle
     reviewStatus: none
   - id: E-special-mathRotate2dAnglesOutside22
     kind: edge
-    summary: "`math/rotate2D`: angles outside [-2π, 2π]."
+    summary: '`math/rotate2D`: angles outside [-2π, 2π].'
     scope: in
     covers: TODO
     generator: math/rotate2D
     reviewStatus: none
   - id: E-special-mathMatcomposeNonUnitRotationQuaternion
     kind: edge
-    summary: "`math/matCompose`: non-unit rotation quaternion."
+    summary: '`math/matCompose`: non-unit rotation quaternion.'
     scope: in
     covers: TODO
     generator: math/matCompose
     reviewStatus: none
   - id: E-special-mathRgbtooklchRgbfromoklchOutOfGamut
     kind: edge
-    summary: "`math/rgbToOkLCh` / `rgbFromOkLCh`: out-of-gamut input and hue wrap-around."
+    summary: '`math/rgbToOkLCh` / `rgbFromOkLCh`: out-of-gamut input and hue wrap-around.'
     scope: in
     covers: TODO
     generator: math/rgbToOkLCh

@@ -8,20 +8,20 @@ targets:
     specRef:
       line: 3203
       section: type/intToFloat
-    summary: "`type/intToFloat` MUST be lossless"
-    scope: in
+    summary: '`type/intToFloat` MUST be lossless'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`Extras/Float_Precision`: `intToFloat(2147483647)` and `intToFloat(-2147483647)` checked by exact subtraction."
+    notes: '`Extras/Float_Precision`: `intToFloat(2147483647)` and `intToFloat(-2147483647)` checked by exact subtraction.'
+    scope: in
   - id: S-3205
     kind: statement
     specRef:
       line: 3205
       section: type/intToFloat
-    summary: "`type/intToFloat` MUST NOT produce negative zero"
-    scope: in
+    summary: '`type/intToFloat` MUST NOT produce negative zero'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`Extras/Float_Precision`: `intToFloat(0) is +0`."
+    notes: '`Extras/Float_Precision`: `intToFloat(0) is +0`.'
+    scope: in

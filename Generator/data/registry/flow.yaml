@@ -8,108 +8,108 @@ targets:
     specRef:
       line: 3281
       section: flow/sequence
-    summary: "`flow/sequence`: graph MUST be rejected if output flow count exceeds the limit"
-    scope: out-rejection
+    summary: '`flow/sequence`: graph MUST be rejected if output flow count exceeds the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-3341
     kind: statement
     specRef:
       line: 3341
       section: flow/switch
-    summary: "`flow/switch`: case values MUST be converted to decimal strings without leading zeros"
-    scope: in
+    summary: '`flow/switch`: case values MUST be converted to decimal strings without leading zeros'
     covers: TODO
     generator: TODO
     reviewStatus: partial
     notes: Negative and empty case arrays, `[0.5, 1]`, `[-2147483649, 0]`, and duplicates `[1, 2, 2]` are covered. The float-literal examples (`-1.0`, `0.1e1`) are not.
+    scope: in
   - id: S-3343
     kind: statement
     specRef:
       line: 3343
       section: flow/switch
-    summary: "`flow/switch`: graph MUST be rejected if generated flows exceed the limit"
-    scope: out-rejection
+    summary: '`flow/switch`: graph MUST be rejected if generated flows exceed the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-3411
     kind: statement
     specRef:
       line: 3411
       section: flow/for
-    summary: "`flow/for`: invalid or missing `initialIndex` MUST fall back to the default"
-    scope: in
+    summary: '`flow/for`: invalid or missing `initialIndex` MUST fall back to the default'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Only valid values (0 and 1) are used.
+    scope: in
   - id: S-3473
     kind: statement
     specRef:
       line: 3473
       section: flow/multiGate
-    summary: "`flow/multiGate`: graph MUST be rejected if output flow count exceeds the limit"
-    scope: out-rejection
+    summary: '`flow/multiGate`: graph MUST be rejected if output flow count exceeds the limit'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: out-rejection
   - id: S-3477
     kind: statement
     specRef:
       line: 3477
       section: flow/multiGate
-    summary: "`flow/multiGate`: if either configuration property is missing or non-boolean, the default MUST be used for both"
-    scope: in
+    summary: '`flow/multiGate`: if either configuration property is missing or non-boolean, the default MUST be used for both'
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "A non-boolean `isRandom` is covered. A missing property, a non-boolean `isLoop`, and `isLoop: true` with `isRandom: true` are not."
+    notes: 'A non-boolean `isRandom` is covered. A missing property, a non-boolean `isLoop`, and `isLoop: true` with `isRandom: true` are not.'
+    scope: in
   - id: S-3538
     kind: statement
     specRef:
       line: 3538
       section: flow/waitAll
-    summary: "`flow/waitAll`: invalid `inputFlows` (missing, non-integer, negative, >64) MUST fall back to the default"
-    scope: in
+    summary: '`flow/waitAll`: invalid `inputFlows` (missing, non-integer, negative, >64) MUST fall back to the default'
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "`inputFlows: 65` is covered. Missing, non-integer, and negative values are not."
+    notes: '`inputFlows: 65` is covered. Missing, non-integer, and negative values are not.'
+    scope: in
   - id: S-3628
     kind: statement
     specRef:
       line: 3628
       section: flow/setDelay
-    summary: "`flow/setDelay`: exceeding the maximum supported duration MUST activate `err`"
-    scope: in
+    summary: '`flow/setDelay`: exceeding the maximum supported duration MUST activate `err`'
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "`err` is now tested for negative, NaN, and +Infinity durations. A very large finite duration is not."
+    notes: '`err` is now tested for negative, NaN, and +Infinity durations. A very large finite duration is not.'
+    scope: in
   - id: S-3640
     kind: statement
     specRef:
       line: 3640
       section: flow/setDelay
-    summary: "`flow/setDelay`: `lastDelay` MUST be unique across all `setDelay` nodes"
-    scope: in
+    summary: '`flow/setDelay`: `lastDelay` MUST be unique across all `setDelay` nodes'
     covers: TODO
     generator: TODO
     reviewStatus: none
-    notes: "`lastDelay` validity and reset to null are checked; uniqueness is not."
+    notes: '`lastDelay` validity and reset to null are checked; uniqueness is not.'
+    scope: in
   - id: S-3676
     kind: statement
     specRef:
       line: 3676
       section: flow/cancelDelay
-    summary: "`flow/cancelDelay`: null or invalid delay references MUST NOT cause runtime errors"
-    scope: in
+    summary: '`flow/cancelDelay`: null or invalid delay references MUST NOT cause runtime errors'
     covers: TODO
     generator: TODO
     reviewStatus: covered
     notes: Null reference and an already-fired reference.
+    scope: in
   - id: P-flow/for-remaining
     kind: procedure
     summary: Loop ranges near `INT_MAX` are not.
@@ -144,7 +144,7 @@ targets:
     notes: Drafted from report section 2.2; split into one target per behaviour.
   - id: P-flow/waitAll-remaining
     kind: procedure
-    summary: "`inputFlows: 0` and `inputFlows: 64` are not."
+    summary: '`inputFlows: 0` and `inputFlows: 64` are not.'
     scope: in
     covers: TODO
     generator: flow/waitAll

@@ -8,62 +8,62 @@ targets:
     specRef:
       line: 4665
       section: debug/log
-    summary: "`debug/log`: literal curly brackets in the template MUST be doubled"
-    scope: in
+    summary: '`debug/log`: literal curly brackets in the template MUST be doubled'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Templates with doubled brackets now appear, but log output is never checked.
+    scope: in
   - id: S-4671
     kind: statement
     specRef:
       line: 4671
       section: debug/log
-    summary: "`debug/log`: invalid `severity` MUST fall back to default"
-    scope: in
+    summary: '`debug/log`: invalid `severity` MUST fall back to default'
     covers: TODO
     generator: TODO
     reviewStatus: none
     notes: Every `severity` in the suite is 0.
+    scope: in
   - id: S-4683
     kind: statement
     specRef:
       line: 4683
       section: debug/log
-    summary: "`debug/log`: invalid `message` MUST fall back to default"
-    scope: in
+    summary: '`debug/log`: invalid `message` MUST fall back to default'
     covers: TODO
     generator: TODO
     reviewStatus: partial
-    notes: "`graph/ignored_configuration` asserts that `out` fires with an invalid message; the log text is not checked."
+    notes: '`graph/ignored_configuration` asserts that `out` fires with an invalid message; the log text is not checked.'
+    scope: in
   - id: S-4712
     kind: statement
     specRef:
       line: 4712
       section: debug/log
-    summary: "`debug/log`: missing generated sockets MUST cause rejection"
-    scope: out-rejection
+    summary: '`debug/log`: missing generated sockets MUST cause rejection'
     covers: TODO
     generator: TODO
     reviewStatus: covered
-    notes: "`H3`."
+    notes: '`H3`.'
+    scope: out-rejection
   - id: S-4714
     kind: statement
     specRef:
       line: 4714
       section: debug/log
-    summary: "`debug/log`: extra sockets MUST still have valid sources"
-    scope: in
+    summary: '`debug/log`: extra sockets MUST still have valid sources'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: in
   - id: S-4725
     kind: statement
     specRef:
       line: 4725
       section: debug/log
-    summary: "`debug/log`: curly brackets in substituted values MUST be doubled"
-    scope: in
+    summary: '`debug/log`: curly brackets in substituted values MUST be doubled'
     covers: TODO
     generator: TODO
     reviewStatus: none
+    scope: in

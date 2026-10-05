@@ -26,11 +26,15 @@ describe('committed data/', () => {
   it('passes check-registry with no problems', () => {
     const data = loadDataSet();
     expect(data.problems).toEqual([]);
-    expect(data.registry.targets.size).toBeGreaterThanOrEqual(128);
+    // All 128 statements of the coverage report, some split into parts (requirements §10.1).
+    const statementLines = new Set(
+      [...data.registry.targets.values()].filter((t) => t.kind === 'statement').map((t) => t.specRef?.line),
+    );
+    expect(statementLines.size).toBe(128);
     const { text, ok } = describeCheck(data);
     expect(ok).toBe(true);
     expect(text).toMatch(
-      /135 operations; \d+ targets \(edge \d+, pointer \d+, procedure \d+, statement 128, type \d+\)/,
+      /135 operations; \d+ targets \(edge \d+, pointer \d+, procedure \d+, statement \d+, type \d+\)/,
     );
   });
 });

@@ -23,8 +23,10 @@
     "ci": "npm run typecheck && npm run lint && npm run format:check && npm run test:coverage"
   },
   "dependencies": {
+    "ajv": "8.20.0",
     "commander": "15.0.0",
-    "gltf-validator": "2.0.0-dev.3.10"
+    "gltf-validator": "2.0.0-dev.3.10",
+    "yaml": "2.9.1"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

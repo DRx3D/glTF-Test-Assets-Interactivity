@@ -31,7 +31,7 @@ Generator/
   data/  src/  test/  tools/
 ```
 
-- Node.js LTS 22 or later, TypeScript 5.x, with `strict`, `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
+- Node.js LTS 22 or later, TypeScript 5.x or later, with `strict`, `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
 - Runtime dependencies, pinned to exact versions: `gmp-wasm`, `gltf-validator`, `ajv`, `yaml`, `commander`.
 - Development dependencies: `vitest`, `fast-check`, `eslint`, `@typescript-eslint/*`, `prettier`, `tsx`.
 - Set up ESLint first, with the banned-API rules from section 5.6:
@@ -55,7 +55,7 @@ Build these in `src/numeric/` and `src/prng/`, in this order.
    - `mul`: `Math.imul(a, b)`
    - `neg`, `abs`: `(-a) | 0`, so that −2147483648 maps to itself (spec line 2510)
    - `div`, `rem`: truncate toward zero; handle INT_MIN / −1, divisor 0 as the Specification defines, and normalise the `-0` that JavaScript's `%` produces
-   - `asr`, `lsl`, `lsr`: per the Specification for shift counts outside 0–31; never rely on JavaScript's 5-bit masking
+   - `asr`, `lsl`: JavaScript `>>` and `<<`, because the Specification also uses only the low 5 bits of the shift count (lines 2841, 2855)
 2. **`f64.ts`**
    - `round`: away from zero at half-way; −0 for inputs in (−0.5, 0) (spec line 568)
    - `min`, `max`, `sign`, `fract`, `clamp`, `saturate`, `mix` from the Specification's definition tables, including the NaN and ±0 rows

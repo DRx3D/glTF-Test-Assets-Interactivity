@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.2 |
+| Document status | Draft 0.3 |
 | Date | 2026-10-05 |
 | Target specification | `KHR_interactivity`, `Specification.adoc` at `KhronosGroup/glTF` revision `c5d1e1e8` |
 | Target test suite | `KhronosGroup/glTF-Test-Assets-Interactivity` branch `fix/spec-and-json-conform-fixes`, revision `9ffd30e` |
@@ -672,7 +672,9 @@ Each asset **MUST** implement the harness conventions of the existing suite:
 
 1. Each sub-test has a result variable named `TestResult_<asset>_<sub-test>` holding the actual result, and a `bool` variable named `TestResult_HasPassed_<asset>_<sub-test>` initialized to `false`. All variable names within an asset **MUST** be unique.
 2. Sub-tests are started from `event/onStart`. The failure of one sub-test **MUST NOT** prevent any other sub-test from running or reporting.
-3. At startup, the graph sends the custom event `test/onStart` with an `expectedDuration` value (in seconds). `expectedDuration` **MUST** be an upper bound on the time the runner needs to tick the graph before all results are final.
+3. At startup, the graph sends the custom event `test/onStart` with an `expectedDuration` value (in seconds). `expectedDuration` **MUST** be an upper bound on the time the runner needs to tick the graph before all results are final. If any result is not final when the `event/onStart` sequence ends, the graph **SHOULD** also contain a `flow/setDelay` node whose `duration` is an inline value no less than `expectedDuration`.
+
+_Informative:_ The sample-asset harness of the Khronos authoring tool (`glTF-InteractivityGraph-AuthoringTool`, `tst/assets/`) does not read `expectedDuration`. It waits for the largest inline `duration` of the `flow/setDelay`, `flow/throttle`, `variable/interpolate` and `pointer/interpolate` nodes, plus 0.35 s, up to 6 s. The `flow/setDelay` rule above keeps supplemental assets runnable there. A request to read `expectedDuration` instead has been raised with the tool maintainers; once it is resolved, the rule and the 5.5 s limit in Section 7.9 can be relaxed.
 4. When all sub-tests have finished, the graph sends exactly one of `test/onSuccess` (all passed) or `test/onFailed` (any failed).
 
 **Harness operation set.** The harness **MUST** use only the following operations, except for operations that set up a sub-test's inputs: `event/onStart`, `event/onTick`, `event/send`, `flow/sequence`, `flow/branch`, `flow/setDelay`, `variable/get`, `variable/set`, `math/eq`, `math/and`, `math/not`, `math/lt`, `math/le`, `math/abs`, `math/sub`, `math/mul`, `math/max`, `math/div`, `math/neg`, `math/isNaN`, `math/Inf`, `math/NaN`, and `pointer/set` (for indicators only).
@@ -704,7 +706,7 @@ Additional rules:
 
 ### 7.4 Oracle file
 
-The oracle file **MUST** use the existing schema (`glbFileName`, `name`, `tests`, `usedSchemas`, and for each sub-test `name`, `resultVarName`, `resultVarId`, `resultVarType`, `expectedResultValue`, `successResultVarId`, `successResultVarName`). Existing runners **MUST** be able to read it without changes.
+The oracle file **MUST** use the existing schema (`glbFileName`, `name`, `tests`, `usedSchemas`, and for each sub-test `name`, `resultVarName`, `resultVarId`, `resultVarType`, `expectedResultValue`, `successResultVarId`, `successResultVarName`). Existing runners **MUST** be able to read it without changes. Each test **MUST** list its `entryPoints`, and entry points **MUST NOT** set `requiresUserInteraction`, because the authoring tool's harness skips every sub-test of a test with an interaction entry point.
 
 Special values in `expectedResultValue` **MUST** be written as the strings `"NaN"`, `"Infinity"`, and `"-Infinity"`, as in the existing suite. Negative zero **MUST** be written as the string `"-0"`. _Informative:_ Existing runners do not know the `"-0"` string; see Appendix A.
 
@@ -756,7 +758,7 @@ Timing-dependent sub-tests (Section 7.9) **MUST NOT** share an asset with sub-te
 
 - A timing-dependent sub-test **MUST** measure elapsed time using `event/onTick` time values or the Specification's own timing semantics. It **MUST NOT** assume a frame rate.
 - The default tolerance for `absolute` comparisons on time values **MUST** be 0.05 seconds, and for positions derived from animation or interpolation at a given time **MUST** be the change in the value over 0.05 seconds, computed by the generator from the known curve.
-- The `expectedDuration` of any asset **SHOULD NOT** exceed 10 seconds.
+- The `expectedDuration` of any asset **SHOULD NOT** exceed 5.5 seconds, and **MUST NOT** exceed 10 seconds. The lower bound keeps assets within the authoring tool harness's default wait limit of 6 seconds (Section 7.2).
 
 _Informative:_ The existing suite uses tolerances of up to 0.4 for animation positions and 0.1 for interpolation midpoints. These are too loose to distinguish easing curves (Section 1.7). A tolerance defined in time rather than value keeps the check meaningful for any curve.
 
@@ -1062,7 +1064,7 @@ Before completing, the generator **MUST** check that:
 4. no supplemental sub-test duplicates an existing one (Section 11);
 5. a second run with the same inputs produces identical output (Section 5.3), when invoked with a verification option.
 
-The generator **SHOULD** provide adapters to run the supplemental assets on one or more existing `KHR_interactivity` implementations. Where an implementation's result differs from the expected value, the generator **MUST** record the difference in the coverage report and **MUST NOT** change the expected value because of it.
+The generator **SHOULD** provide adapters to run the supplemental assets on one or more existing `KHR_interactivity` implementations. The first adapter **SHOULD** use the engine of the Khronos authoring tool (`@khronosgroup/gltf-interactivity-engine`), which runs headless. Where an implementation's result differs from the expected value, the generator **MUST** record the difference in the coverage report and **MUST NOT** change the expected value because of it. Each confirmed disagreement is reported as an issue in that implementation's repository.
 
 ## 13. Reports
 
@@ -1089,8 +1091,8 @@ These points need a decision by the working group or the test-asset maintainers.
 
 1. **Transcendental accuracy.** The Specification does not state accuracy requirements for transcendental functions. The default tolerance in Section 9.3 is a proposal.
 2. **Precision in existing implementations.** Implementations that use binary32 internally will fail the precision sub-tests (Section 10.3). This is correct under spec line 278, but maintainers may want those sub-tests in a separately tagged asset so their results can be reported apart from the rest.
-3. **`"-0"` in oracle files.** Existing runners that compare `expectedResultValue` directly will not recognize `"-0"`. Runners that use the in-graph pass/fail variables are unaffected. The existing suite avoids the problem in `Extras/Float_Precision` by storing `1 / x` in the result variable and expecting `"Infinity"` or `"-Infinity"`. Adopting that convention instead of `"-0"` would keep every oracle readable by existing runners.
-4. **Index merging.** Whether `supplemental-index.json` is merged into `test-index.json` and `mathtests-index.json`, or kept separate, is for the maintainers to decide.
+3. **`"-0"` in oracle files.** Existing runners that compare `expectedResultValue` directly will not recognize `"-0"`. Runners that use the in-graph pass/fail variables are unaffected. The existing suite avoids the problem in `Extras/Float_Precision` by storing `1 / x` in the result variable and expecting `"Infinity"` or `"-Infinity"`. Adopting that convention instead of `"-0"` would keep every oracle readable by existing runners. The authoring tool's harness is not affected either way: it takes the in-graph pass variable as the result and only logs a warning when `expectedResultValue` disagrees.
+4. **Index merging.** Whether `supplemental-index.json` is merged into `test-index.json` and `mathtests-index.json`, or kept separate, is for the maintainers to decide. The authoring tool's harness also runs any `test-Json/*.json` file that no index lists, so supplemental assets written under `Tests/Interactivity` run there whether or not the indexes are merged.
 5. **Conditional sub-tests.** Reporting a skipped sub-test as passed keeps existing runners working but hides skips from them. The alternative is a third result state, which existing runners do not support.
 6. **Extension-dependent sub-tests.** Section 10.11 uses an operation from another Khronos extension to test declaration handling. The maintainers may prefer that these sub-tests live with that extension's tests.
 7. **Existing suite issues.** Section 1.7 lists issues in the existing assets, such as engine-specific expected values and sub-test labels that state the opposite of the expected value. This generator does not correct them (Section 4.3); they need to be fixed in the existing generator.
@@ -1098,3 +1100,4 @@ These points need a decision by the working group or the test-asset maintainers.
 9. **Oracle file shape.** Section 7.4 lists the oracle properties as a flat set, but the existing oracle files, which existing runners read, nest sub-tests under `tests[].subTests[]` and add `description` and `entryPoints`. The nested shape is unchanged at revision `9ffd30e`. Section 7.4 should be updated to describe the nested shape.
 10. **Remaining rejection gaps.** Rejection tests are out of scope for this generator (Section 1.1). Section 1.6.1 lists the rejection cases the existing `invalid/` set does not yet include; they need to be added there.
 11. **Graph versus extension rejection.** For 38 invalid-graph cases the Specification's normative text requires rejecting the graph while its Validation section requires rejecting the extension (Section 1.8). This does not affect the generator, but the Specification should resolve it.
+12. **Defect reporting.** Defects found while building or running the generator are filed as issues in the repository that owns them: test-asset defects (Section 1.7) in `glTF-Test-Assets-Interactivity`, engine and harness defects in `glTF-InteractivityGraph-AuthoringTool` or the relevant implementation, and Specification text issues (Section 1.8) in `glTF`.

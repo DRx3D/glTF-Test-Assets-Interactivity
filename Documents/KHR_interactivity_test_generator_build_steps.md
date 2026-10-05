@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.2 |
+| Document status | Draft 0.3 |
 | Date | 2026-10-05 |
 | Project specification | `Documents/KHR_interactivity_test_generator_typescript_spec.md` |
 | Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` |
@@ -89,7 +89,7 @@ Tests:
 
 This step carries the most schedule risk (R4 and R5 in section 18).
 
-1. **`data/operations.yaml`**: transcribe all 135 operations from the Specification. For each: input and output sockets with types, flow sockets, configuration properties with defaults and validity rules, and the special-case rows of its definition table. Have a second person review each category, and cross-check against the KHR_interactivity JSON schemas and the socket names used in existing GLBs.
+1. **`data/operations.yaml`**: transcribe all 135 operations from the Specification. For each: input and output sockets with types, flow sockets, configuration properties with defaults and validity rules, and the special-case rows of its definition table. Have a second person review each category, and cross-check against the KHR_interactivity JSON schemas, the socket names used in existing GLBs, and the authoring tool's operation specs (`src/authoring/spec/nodes.ts`). Treat every difference with the tool as a question for the Specification, not a correction.
 2. **`tools/bootstrap-registry.ts`**: parse the tables in §1.4–§1.6 into a first draft of `data/registry/*.yaml`, then finish each target's `covers` block by hand.
 3. **`data/existing-coverage.yaml`**: map existing sub-tests to the targets they credit. Build `tools/suggest-coverage.ts` first to propose candidates, then confirm each one by hand. A sub-test compared with a tolerance never earns precision or negative-zero credit.
 4. **`data/interpretations.yaml`**: starts empty; add an entry whenever a generator needs a judgment the Specification does not state directly (§9.5).
@@ -144,7 +144,7 @@ Build the whole pipeline end to end for just two targets before writing any more
 6. **Two generators**: `prerequisites/` (verifies the harness operations) and `math/div` (`div-boundary`, for example `div(-7, 2) = -3`, spec line 2626). The earlier example, `math/round` negative zero, is now covered by the existing suite.
 7. **Golden test**: a reduced registry of about 15 targets, with the generated output committed and compared byte for byte.
 
-**M3 gate:** V1–V9 pass, the golden test is in place, and the slice runs correctly on one engine. Babylon.js with `NullEngine` is the first adapter target.
+**M3 gate:** V1–V9 pass, the golden test is in place, and the slice runs correctly on one engine. The first adapter target is the authoring tool's engine with its Core decorator, driven by fake timers. Also run the slice through the tool's own sample-asset harness, unmodified, to confirm runner compatibility.
 
 ---
 
@@ -195,8 +195,10 @@ M5 depends only on M3, so it can run in parallel with M4.
 - [ ] Every asset passes the glTF Validator and the KHR_interactivity schemas, and every self-check passes.
 - [ ] The expected-value audit and the MPFR golden table both match exactly.
 - [ ] At least one engine adapter has run the full output, and every disagreement is in the report.
-- [ ] An unmodified existing runner loads and runs a sample of 20 supplemental assets.
+- [ ] The authoring tool's sample-asset harness, unmodified, loads and runs every supplemental asset.
 - [ ] The working group has reviewed the registry, the coverage mapping and the interpretations, using `supplemental-coverage.md` as the review artifact.
+
+Every confirmed engine disagreement and every defect found in the existing suite is filed as an issue in the repository that owns it.
 
 After acceptance, the maintainers decide whether to merge `supplemental-index.json` into the existing index files (Appendix A item 4 of the requirements document).
 

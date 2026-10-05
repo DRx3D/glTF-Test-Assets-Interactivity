@@ -400,7 +400,7 @@ These are properties of the current assets that limit what they can verify, inde
 
 **Float inputs are single precision.** Outside `Extras/Float_Precision`, inline values such as `345.234436` and expected values such as `62.9999962` are still float32 values printed as decimals. Combined with tolerance-based comparison, this means double precision is verified only for the operations in that one asset.
 
-**Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift.
+**Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift. The authoring tool's sample-asset harness does not loosen this further: it takes the in-graph pass variable as the result and uses its own 0.05 / 3% tolerance only for a warning.
 
 **Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations.
 

@@ -2,7 +2,9 @@
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { parse } from 'yaml';
 import { loadCatalogue, type OperationCatalogue } from './catalogue.js';
+import { checkInterpretations, type Interpretation } from './interpretations.js';
 import { SPEC_REVISION } from './specTables.js';
 import {
   checkRegistry,
@@ -18,6 +20,7 @@ export const DEFAULT_DATA_DIR = fileURLToPath(new URL('../../data/', import.meta
 export interface DataSet {
   readonly catalogue: OperationCatalogue;
   readonly registry: Registry;
+  readonly interpretations: readonly Interpretation[];
   readonly problems: readonly RegistryProblem[];
   readonly specLineCount: number;
 }
@@ -26,12 +29,19 @@ export function loadDataSet(dataDir: string = DEFAULT_DATA_DIR): DataSet {
   const specText = readFileSync(`${dataDir}/spec/Specification.adoc`, 'utf8');
   const specLineCount = specText.split(/\r?\n/).length;
   const catalogue = loadCatalogue(`${dataDir}/operations.yaml`);
-  const { registry, problems } = checkRegistry(loadRegistryFiles(`${dataDir}/registry`), {
-    specRevision: SPEC_REVISION,
-    specLineCount,
-    catalogue,
+  const ctx = { specRevision: SPEC_REVISION, specLineCount, catalogue };
+  const { registry, problems } = checkRegistry(loadRegistryFiles(`${dataDir}/registry`), ctx);
+  const checked = checkInterpretations(parse(readFileSync(`${dataDir}/interpretations.yaml`, 'utf8')), {
+    ...ctx,
+    registry,
   });
-  return { catalogue, registry, problems, specLineCount };
+  return {
+    catalogue,
+    registry,
+    interpretations: checked.interpretations,
+    problems: [...problems, ...checked.problems],
+    specLineCount,
+  };
 }
 
 /** Human-readable summary for the CLI; returns the text and whether the data is valid. */
@@ -45,7 +55,8 @@ export function describeCheck(data: DataSet): { text: string; ok: boolean } {
     .join(', ');
   lines.push(
     `${data.catalogue.size} operations; ${data.registry.targets.size} targets (${kinds}); ` +
-      `${countTodo(data.registry)} still marked TODO; ${data.problems.length} problem(s)`,
+      `${countTodo(data.registry)} still marked TODO; ${data.interpretations.length} interpretation(s); ` +
+      `${data.problems.length} problem(s)`,
   );
   return { text: `${lines.join('\n')}\n`, ok: data.problems.length === 0 };
 }

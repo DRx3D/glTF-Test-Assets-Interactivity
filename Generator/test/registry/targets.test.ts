@@ -81,6 +81,7 @@ describe('checkRegistry', () => {
     const failing = describeCheck({
       catalogue,
       registry,
+      interpretations: [],
       problems: [{ file: 'a.yaml', message: 'bad' }],
       specLineCount: 1,
     });

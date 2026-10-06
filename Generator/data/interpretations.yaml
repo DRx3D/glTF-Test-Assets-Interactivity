@@ -1,0 +1,12 @@
+# Readings of the Specification that a generator relies on but the text does not state
+# directly (requirements §9.5; project spec section 8.4). Sub-tests that cite an entry get
+# reviewRequired: true. Starts empty; generators add entries from M3 on.
+#
+# Entry form:
+#   - id: I-<short-name>
+#     affects: [<target id or operation>, ...]
+#     specLine: <line in data/spec/Specification.adoc>
+#     specText: "<quoted text>"
+#     reading: "<the reading chosen>"
+specRevision: c5d1e1e8
+interpretations: []

@@ -1,0 +1,454 @@
+{
+  "inputs": {
+    "generator": {
+      "name": "khr-itest-gen",
+      "version": "0.1.0"
+    },
+    "specRevision": "c5d1e1e8",
+    "suiteRevision": "9ffd30e",
+    "seed": "0x4B48525F494E5445",
+    "copyright": "Copyright (c) 2026, The Khronos Group Inc.",
+    "partial": false,
+    "limits": {
+      "maxSubTests": 100,
+      "maxNodes": 2000,
+      "maxEnumeration": 64,
+      "preferredExpectedDuration": 5.5,
+      "maxExpectedDuration": 10.0,
+      "timeTolerance": 0.05,
+      "referenceBits": 128
+    },
+    "tolerances": {
+      "transcendental": {
+        "r": 1e-12,
+        "a": 1e-300
+      },
+      "composite": {
+        "r": 1e-12,
+        "a": 1e-12
+      }
+    }
+  },
+  "counts": {
+    "assets": 2,
+    "subTests": 54,
+    "byCategory": {
+      "math": {
+        "assets": 1,
+        "subTests": 13
+      },
+      "prerequisites": {
+        "assets": 1,
+        "subTests": 41
+      }
+    }
+  },
+  "targets": [
+    {
+      "id": "S-184",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "animation/state / Not started:\ntranslation unchanged"
+      ]
+    },
+    {
+      "id": "S-2626",
+      "scope": "in",
+      "status": "covered-supplemental",
+      "coveredBy": [
+        "math/div-boundary / div(-7, 2) is -3",
+        "math/div-boundary / div(7, -2) is -3",
+        "math/div-boundary / div(-7, -2) is 3",
+        "math/div-boundary / div(7, 2) is 3",
+        "math/div-boundary / div(-1, 2) is 0",
+        "math/div-boundary / div(1, -2) is 0",
+        "math/div-boundary / div(-2147483648, 3) is -715827882",
+        "math/div-boundary / div(2147483647, -2) is -1073741823",
+        "math/div-boundary / div(-2147483647, 2) is -1073741823",
+        "math/div-boundary / div(2147483647, 2147483646) is 1",
+        "math/div-boundary / div(720519128, 7) is 102931304",
+        "math/div-boundary / div(-406091321, -3) is 135363773",
+        "math/div-boundary / div(-1265440754, 1711676100) is 0"
+      ]
+    },
+    {
+      "id": "S-3203",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "Extras/Float_Precision / intToFloat(-2147483647) + 2147483646 == -1",
+        "Extras/Float_Precision / intToFloat(2147483647) - 2147483646 == 1"
+      ]
+    },
+    {
+      "id": "S-3205",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "Extras/Float_Precision / intToFloat(0) is +0"
+      ]
+    },
+    {
+      "id": "S-3891",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "animation/start_playback_modes / Reverse (T..0):\nposition at 50%",
+        "animation/state / Not started:\ntranslation unchanged"
+      ]
+    },
+    {
+      "id": "S-400",
+      "scope": "out-rejection",
+      "status": "not-covered",
+      "coveredBy": [],
+      "reason": "rejection target, out of scope (requirements §1.1); not in the invalid-graph set"
+    },
+    {
+      "id": "S-4352",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "animation/start_playback_modes / Restart: 1st\n[done] not fired"
+      ]
+    },
+    {
+      "id": "S-4423",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "animation/stop / Position frozen \nat ~50%",
+        "animation/stop / Start [done] \nnot fired",
+        "animation/stop_and_stopAt_edge_cases / stop, not playing:\n[out]"
+      ]
+    },
+    {
+      "id": "S-4894",
+      "scope": "out-impractical",
+      "status": "not-covered",
+      "coveredBy": [],
+      "reason": "impractical to test"
+    },
+    {
+      "id": "S-4898",
+      "scope": "out-rejection",
+      "status": "not-covered",
+      "coveredBy": [
+        "A1a",
+        "B3a",
+        "C7d"
+      ],
+      "reason": "rejection target, out of scope (requirements §1.1); covered by invalid-graph cases"
+    },
+    {
+      "id": "S-568",
+      "scope": "in",
+      "status": "covered-existing",
+      "coveredBy": [
+        "Extras/Float_Precision / round(-0.3) is -0",
+        "Extras/Float_Precision / round(0.49999999999999994) == 0",
+        "math/round / [a] -2.50 = -3.00",
+        "math/round / [a] 0.50 = 1.00",
+        "math/round / [a] 1.50 = 2.00",
+        "math/round / [a] 2.50 = 3.00"
+      ]
+    },
+    {
+      "id": "T-math/div-float2",
+      "scope": "in",
+      "status": "not-covered",
+      "coveredBy": [],
+      "reason": "vector and matrix results need component extraction in the harness (R1); planned for M4"
+    },
+    {
+      "id": "T-math/div-float4x4",
+      "scope": "in",
+      "status": "not-covered",
+      "coveredBy": [],
+      "reason": "vector and matrix results need component extraction in the harness (R1); planned for M4"
+    }
+  ],
+  "typeValueClassMatrix": [
+    {
+      "op": "math/Inf",
+      "inputTypes": "-",
+      "cells": {
+        "infinity": "S"
+      }
+    },
+    {
+      "op": "math/NaN",
+      "inputTypes": "-",
+      "cells": {
+        "nan": "S"
+      }
+    },
+    {
+      "op": "math/abs",
+      "inputTypes": "float",
+      "cells": {
+        "infinity": "S",
+        "ordinary": "S",
+        "zero": "S"
+      }
+    },
+    {
+      "op": "math/and",
+      "inputTypes": "bool,bool",
+      "cells": {
+        "bool": "S"
+      }
+    },
+    {
+      "op": "math/div",
+      "inputTypes": "float,float",
+      "cells": {
+        "nan": "S",
+        "zero": "S"
+      }
+    },
+    {
+      "op": "math/div",
+      "inputTypes": "int,int",
+      "cells": {
+        "inexact": "S",
+        "limit": "S",
+        "negative": "S",
+        "scatter": "S"
+      }
+    },
+    {
+      "op": "math/eq",
+      "inputTypes": "bool,bool",
+      "cells": {
+        "bool": "S"
+      }
+    },
+    {
+      "op": "math/eq",
+      "inputTypes": "float,float",
+      "cells": {
+        "infinity": "S",
+        "nan": "S",
+        "ordinary": "S",
+        "zero": "S"
+      }
+    },
+    {
+      "op": "math/eq",
+      "inputTypes": "int,int",
+      "cells": {
+        "limit": "S",
+        "ordinary": "S"
+      }
+    },
+    {
+      "op": "math/isNaN",
+      "inputTypes": "float",
+      "cells": {
+        "infinity": "S",
+        "nan": "S",
+        "ordinary": "S"
+      }
+    },
+    {
+      "op": "math/le",
+      "inputTypes": "float,float",
+      "cells": {
+        "infinity": "S",
+        "ordinary": "S",
+        "zero": "S"
+      }
+    },
+    {
+      "op": "math/lt",
+      "inputTypes": "float,float",
+      "cells": {
+        "infinity": "S"
+      }
+    },
+    {
+      "op": "math/max",
+      "inputTypes": "float,float",
+      "cells": {
+        "infinity": "S",
+        "ordinary": "S"
+      }
+    },
+    {
+      "op": "math/mul",
+      "inputTypes": "float,float",
+      "cells": {
+        "ordinary": "S",
+        "tolerance": "S"
+      }
+    },
+    {
+      "op": "math/neg",
+      "inputTypes": "float",
+      "cells": {
+        "infinity": "S",
+        "zero": "S"
+      }
+    },
+    {
+      "op": "math/not",
+      "inputTypes": "bool",
+      "cells": {
+        "bool": "S"
+      }
+    },
+    {
+      "op": "math/sub",
+      "inputTypes": "float,float",
+      "cells": {
+        "ordinary": "S",
+        "zero": "S"
+      }
+    }
+  ],
+  "existingCredits": [
+    {
+      "asset": "Extras/Float_Precision",
+      "subTest": "intToFloat(-2147483647) + 2147483646 == -1",
+      "credits": [
+        "S-3203"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "Extras/Float_Precision",
+      "subTest": "intToFloat(0) is +0",
+      "credits": [
+        "S-3205"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "Extras/Float_Precision",
+      "subTest": "intToFloat(2147483647) - 2147483646 == 1",
+      "credits": [
+        "S-3203"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "Extras/Float_Precision",
+      "subTest": "round(-0.3) is -0",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "Extras/Float_Precision",
+      "subTest": "round(0.49999999999999994) == 0",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "animation/start_playback_modes",
+      "subTest": "Restart: 1st\n[done] not fired",
+      "credits": [
+        "S-4352"
+      ],
+      "note": "Drafted from the coverage report; review."
+    },
+    {
+      "asset": "animation/start_playback_modes",
+      "subTest": "Reverse (T..0):\nposition at 50%",
+      "credits": [
+        "S-3891"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "animation/state",
+      "subTest": "Not started:\ntranslation unchanged",
+      "credits": [
+        "S-184",
+        "S-3891"
+      ],
+      "note": "Drafted from the coverage report; review."
+    },
+    {
+      "asset": "animation/stop",
+      "subTest": "Position frozen \nat ~50%",
+      "credits": [
+        "S-4423"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "animation/stop",
+      "subTest": "Start [done] \nnot fired",
+      "credits": [
+        "S-4423"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "animation/stop_and_stopAt_edge_cases",
+      "subTest": "stop, not playing:\n[out]",
+      "credits": [
+        "S-4423"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "math/round",
+      "subTest": "[a] -2.50 = -3.00",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "math/round",
+      "subTest": "[a] 0.50 = 1.00",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "math/round",
+      "subTest": "[a] 1.50 = 2.00",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "asset": "math/round",
+      "subTest": "[a] 2.50 = 3.00",
+      "credits": [
+        "S-568"
+      ],
+      "note": "Mapped by hand from the coverage report; review."
+    },
+    {
+      "invalidCase": "A1a",
+      "credits": [
+        "S-4898"
+      ]
+    },
+    {
+      "invalidCase": "B3a",
+      "credits": [
+        "S-4898"
+      ]
+    },
+    {
+      "invalidCase": "C7d",
+      "credits": [
+        "S-4898"
+      ]
+    }
+  ],
+  "reviewRequired": [],
+  "adapterDisagreements": []
+}

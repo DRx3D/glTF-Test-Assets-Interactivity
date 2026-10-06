@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // khr-itest-gen command-line entry point (project spec section 14).
 // Exit codes: 0 success, 1 a requirement failed, 2 a usage error.
-// M1 provides the command surface and option validation; the commands' work arrives in M2 and M3.
+// `explain` arrives with the M4 generators.
 
 import { Command, CommanderError } from 'commander';
 import { determineGaps, describeGaps, loadCoverageMapping } from '../existing/coverage.js';
 import { defaultSuiteRoot, readSuite } from '../existing/reader.js';
 import { DEFAULT_DATA_DIR, describeCheck, loadDataSet } from '../registry/check.js';
+import { generate } from './generate.js';
 import { parseGenerateOptions, UsageError, type RawGenerateOptions } from './options.js';
 
 const EXIT_FAILED = 1;
@@ -38,9 +39,10 @@ program
   .option('--only <ids>', 'comma-separated generator ids (development)')
   .option('--verify-determinism', 'run twice and compare output')
   .option('--adapter <name>', 'run an engine adapter after generation')
-  .action((raw: RawGenerateOptions) => {
-    parseGenerateOptions(raw);
-    notYet('generate', 'M3');
+  .action(async (raw: RawGenerateOptions & { config?: string }) => {
+    const outcome = await generate({ ...parseGenerateOptions(raw), config: raw.config }, DEFAULT_DATA_DIR);
+    for (const m of outcome.messages) process.stderr.write(`${m}\n`);
+    if (!outcome.ok) process.exitCode = EXIT_FAILED;
   });
 
 program
@@ -73,7 +75,7 @@ program
 program
   .command('explain <target>')
   .description('show the plan, sub-tests and expected values for one target')
-  .action(() => notYet('explain', 'M3'));
+  .action(() => notYet('explain', 'M4'));
 
 try {
   await program.parseAsync(process.argv);

@@ -1,0 +1,53 @@
+# Golden-test subset of data/registry/math.yaml; regenerate with tools/make-golden-inputs.ts.
+specRevision: c5d1e1e8
+area: math
+targets:
+  - id: S-568
+    kind: statement
+    specRef:
+      line: 568
+      section: math/round
+    summary: '`math/round`: half-way cases MUST round away from zero; values in
+      (-0.5, 0) MUST round to -0'
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`math/round` now has ±0.5, 1.5, ±2.5; `Extras/Float_Precision` checks
+      `round(-0.3)` is -0 and `round(0.49999999999999994)` is 0.'
+    scope: in
+  - id: S-2626
+    kind: statement
+    specRef:
+      line: 2626
+      section: Math operations
+    summary: Integer division MUST truncate toward zero
+    covers:
+      op: math/div
+      types:
+        - int
+      comparison: exact
+    generator: math/div
+    reviewStatus: partial
+    notes: Only exact quotients, division by zero, and `INT_MIN / -1`. No inexact
+      negative quotient such as `-7 / 2` (expected -3, not -4).
+    scope: in
+  - id: T-math/div-float4x4
+    kind: type
+    summary: math/div with float4x4 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float4x4
+    generator: math/div
+    reviewStatus: none
+  - id: T-math/div-float2
+    kind: type
+    summary: math/div with float2 inputs
+    scope: in
+    covers:
+      op: math/div
+      types:
+        - float2
+    generator: math/div
+    reviewStatus: none

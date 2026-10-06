@@ -1,0 +1,17 @@
+# Golden-test subset of data/registry/pointer.yaml; regenerate with tools/make-golden-inputs.ts.
+specRevision: c5d1e1e8
+area: pointer
+targets:
+  - id: S-3891
+    kind: statement
+    specRef:
+      line: 3891
+      section: Object model access (pointers)
+    summary: Active animation state MUST be applied before a pointer get or set on
+      an animated property
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`animation/start_playback_modes` and `animation/state` read animated
+      translation with `pointer/get` during and after playback.'
+    scope: in

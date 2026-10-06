@@ -1,0 +1,53 @@
+[
+  {
+    "label": "math/div-boundary",
+    "name": "math/div-boundary",
+    "tags": [
+      "event/onStart",
+      "event/send",
+      "flow/branch",
+      "flow/sequence",
+      "math/and",
+      "math/div",
+      "math/eq",
+      "pointer/set",
+      "variable/get",
+      "variable/set"
+    ],
+    "variants": {
+      "glTF-Binary": "div-boundary.glb",
+      "test-Json": "div-boundary.json"
+    }
+  },
+  {
+    "label": "prerequisites/harness-types",
+    "name": "prerequisites/harness-types",
+    "tags": [
+      "event/onStart",
+      "event/send",
+      "flow/branch",
+      "flow/sequence",
+      "math/Inf",
+      "math/NaN",
+      "math/abs",
+      "math/and",
+      "math/div",
+      "math/eq",
+      "math/isNaN",
+      "math/le",
+      "math/lt",
+      "math/max",
+      "math/mul",
+      "math/neg",
+      "math/not",
+      "math/sub",
+      "pointer/set",
+      "variable/get",
+      "variable/set"
+    ],
+    "variants": {
+      "glTF-Binary": "harness-types.glb",
+      "test-Json": "harness-types.json"
+    }
+  }
+]

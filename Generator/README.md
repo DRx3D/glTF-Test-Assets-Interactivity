@@ -8,7 +8,7 @@ Generator for supplemental `KHR_interactivity` test assets. It writes assets tha
 
 ## Status
 
-Milestones M1 (foundations) and M2 (data and reference) of six. M2's gate waits on two working-group decisions; see [`docs/M2-gate.md`](docs/M2-gate.md). In place:
+Milestones M1 (foundations) and M2 (data and reference) of six are done; M3 (vertical slice) is in progress. M2's gate waits on two working-group decisions; see [`docs/M2-gate.md`](docs/M2-gate.md). In place:
 
 | Module             | Contents                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------------------------------- |
@@ -19,7 +19,14 @@ Milestones M1 (foundations) and M2 (data and reference) of six. M2's gate waits 
 | `src/existing/`    | Existing-suite reader, coverage mapping, `gaps`                                                           |
 | `src/reference/`   | MPFR reference values through `gmp-wasm`                                                                  |
 | `src/sampling/`    | Value classes, combination rules, packing, scatter slots, domain-specific values                          |
-| `src/cli/`         | Command surface; `check-registry` and `gaps` work, `generate` and `explain` arrive in M3                  |
+| `src/graph/`       | Typed graph builder (forward-only order, socket ids, types), harness, comparison modes                    |
+| `src/asset/`       | GLB with indicator grid, oracle, description, index, naming and splitting                                 |
+| `src/generators/`  | `prerequisites` (harness operations) and `math/div` (M3 slice)                                            |
+| `src/validate/`    | Self-checks V1–V9 on the in-memory staging tree                                                           |
+| `src/report/`      | `supplemental-coverage.json` and `.md`                                                                    |
+| `src/generate/`    | Pipeline: plan, split, name, draw, resolve, build, check; flush and determinism check                     |
+| `src/adapters/`    | Authoring tool engine adapter (optional dependency)                                                       |
+| `src/cli/`         | `generate`, `check-registry` and `gaps`; `explain` arrives in M4                                          |
 | `data/`            | Vendored Specification and schemas, `operations.yaml`, `registry/`, `existing-coverage.yaml`              |
 
 ## Use
@@ -33,7 +40,19 @@ npm run build     # compile to dist/
 npm run cli -- --help
 ```
 
+Generate the M3 slice (only two generators exist, so a full run fails V4 by design):
+
+```
+npx tsx src/cli/index.ts generate --spec c5d1e1e8 --suite ../Tests/Interactivity \
+    --registry data/registry --out ./out --copyright-owner "The Khronos Group Inc." \
+    --copyright-year 2026 --only "prerequisites,math/div" --verify-determinism
+```
+
+Nothing is written unless every self-check passes. In PowerShell, quote the `--only` list, or the comma splits it into separate arguments.
+
 Exit codes: 0 success, 1 a requirement failed, 2 a usage error.
+
+The golden test compares a reduced registry's output (`test/golden/`) byte for byte. After a reviewed change, regenerate it with `UPDATE_GOLDEN=1 npx vitest run test/golden`. The engine tests run the output on `@khronosgroup/gltf-interactivity-engine`.
 
 ## Rules that keep output exact and deterministic
 

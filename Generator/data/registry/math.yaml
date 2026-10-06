@@ -172,8 +172,12 @@ targets:
       line: 2626
       section: Math operations
     summary: Integer division MUST truncate toward zero
-    covers: TODO
-    generator: TODO
+    covers:
+      op: math/div
+      types:
+        - int
+      comparison: exact
+    generator: math/div
     reviewStatus: partial
     notes: Only exact quotients, division by zero, and `INT_MIN / -1`. No inexact negative quotient such as `-7 / 2` (expected -3, not -4).
     scope: in

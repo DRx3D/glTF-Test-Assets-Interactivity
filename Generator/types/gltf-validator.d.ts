@@ -8,6 +8,8 @@ declare module 'gltf-validator' {
       readonly messages: readonly {
         readonly code: string;
         readonly message: string;
+        /** 0 error, 1 warning, 2 information, 3 hint. */
+        readonly severity: number;
         readonly pointer?: string;
       }[];
     };

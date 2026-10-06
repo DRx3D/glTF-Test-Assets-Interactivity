@@ -1,0 +1,1646 @@
+{
+  "glbFileName": "harness-types.glb",
+  "name": "prerequisites/harness-types",
+  "supplemental": true,
+  "generator": {
+    "name": "khr-itest-gen",
+    "version": "0.1.0",
+    "specRevision": "c5d1e1e8",
+    "seed": "0x4B48525F494E5445"
+  },
+  "tests": [
+    {
+      "name": "prerequisites/harness-types",
+      "description": "Harness operations the supplemental assets rely on, on each input type they use. Run before the other supplemental assets.",
+      "usedSchemas": [
+        "event/onStart",
+        "event/send",
+        "flow/branch",
+        "flow/sequence",
+        "math/Inf",
+        "math/NaN",
+        "math/abs",
+        "math/and",
+        "math/div",
+        "math/eq",
+        "math/isNaN",
+        "math/le",
+        "math/lt",
+        "math/max",
+        "math/mul",
+        "math/neg",
+        "math/not",
+        "math/sub",
+        "pointer/set",
+        "variable/get",
+        "variable/set"
+      ],
+      "entryPoints": [
+        {
+          "name": "prerequisites/harness-types",
+          "nodeId": 0
+        }
+      ],
+      "subTests": [
+        {
+          "name": "NaN() is NaN",
+          "resultVarName": "TestResult_prerequisites/harness-types_NaN() is NaN",
+          "resultVarId": 1,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "NaN"
+          ],
+          "successResultVarId": 0,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_NaN() is NaN",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 466,
+              "section": "math/NaN"
+            }
+          ],
+          "valueClasses": [
+            "nan"
+          ],
+          "inputs": []
+        },
+        {
+          "name": "Inf() is Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_Inf() is Infinity",
+          "resultVarId": 3,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "Infinity"
+          ],
+          "successResultVarId": 2,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_Inf() is Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 452,
+              "section": "math/Inf"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": []
+        },
+        {
+          "name": "isNaN(NaN) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_isNaN(NaN) is true",
+          "resultVarId": 5,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 4,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_isNaN(NaN) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 927,
+              "section": "math/isNaN"
+            }
+          ],
+          "valueClasses": [
+            "nan"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "NaN"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "isNaN(1.25) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_isNaN(1.25) is false",
+          "resultVarId": 7,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 6,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_isNaN(1.25) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 927,
+              "section": "math/isNaN"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "isNaN(Infinity) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_isNaN(Infinity) is false",
+          "resultVarId": 9,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 8,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_isNaN(Infinity) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 927,
+              "section": "math/isNaN"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "Infinity"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "not(true) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_not(true) is false",
+          "resultVarId": 11,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 10,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_not(true) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2934,
+              "section": "math/not"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "not(false) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_not(false) is true",
+          "resultVarId": 13,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 12,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_not(false) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2934,
+              "section": "math/not"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                false
+              ]
+            }
+          ]
+        },
+        {
+          "name": "and(true, true) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_and(true, true) is true",
+          "resultVarId": 15,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 14,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_and(true, true) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2945,
+              "section": "math/and"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "and(true, false) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_and(true, false) is false",
+          "resultVarId": 17,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 16,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_and(true, false) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2945,
+              "section": "math/and"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "bool",
+              "value": [
+                false
+              ]
+            }
+          ]
+        },
+        {
+          "name": "and(false, true) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_and(false, true) is false",
+          "resultVarId": 19,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 18,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_and(false, true) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2945,
+              "section": "math/and"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                false
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(7, 7) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(7, 7) is true",
+          "resultVarId": 21,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 20,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(7, 7) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2722,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(7, -7) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(7, -7) is false",
+          "resultVarId": 23,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 22,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(7, -7) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2722,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(-2147483648, -2147483648) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(-2147483648, -2147483648) is true",
+          "resultVarId": 25,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 24,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(-2147483648, -2147483648) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2722,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "limit"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -2147483648
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -2147483648
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(true, true) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(true, true) is true",
+          "resultVarId": 27,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 26,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(true, true) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2922,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(false, true) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(false, true) is false",
+          "resultVarId": 29,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 28,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(false, true) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2922,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "bool"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "bool",
+              "value": [
+                false
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "bool",
+              "value": [
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(1.25, 1.25) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(1.25, 1.25) is true",
+          "resultVarId": 31,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 30,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(1.25, 1.25) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 863,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(Infinity, Infinity) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(Infinity, Infinity) is true",
+          "resultVarId": 33,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 32,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(Infinity, Infinity) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 863,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "Infinity"
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                "Infinity"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(0.0, -0) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(0.0, -0) is true",
+          "resultVarId": 35,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 34,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(0.0, -0) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 863,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                "-0"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "eq(NaN, NaN) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_eq(NaN, NaN) is false",
+          "resultVarId": 37,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 36,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_eq(NaN, NaN) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 863,
+              "section": "math/eq"
+            }
+          ],
+          "valueClasses": [
+            "nan"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "NaN"
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                "NaN"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "le(1.25, 7.0) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_le(1.25, 7.0) is true",
+          "resultVarId": 39,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 38,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_le(1.25, 7.0) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 889,
+              "section": "math/le"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "le(7.0, 7.0) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_le(7.0, 7.0) is true",
+          "resultVarId": 41,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 40,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_le(7.0, 7.0) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 889,
+              "section": "math/le"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "le(7.0, 1.25) is false",
+          "resultVarName": "TestResult_prerequisites/harness-types_le(7.0, 1.25) is false",
+          "resultVarId": 43,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            false
+          ],
+          "successResultVarId": 42,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_le(7.0, 1.25) is false",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 889,
+              "section": "math/le"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "le(-0, 0.0) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_le(-0, 0.0) is true",
+          "resultVarId": 45,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 44,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_le(-0, 0.0) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 889,
+              "section": "math/le"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-0"
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "le(1.7976931348623157e+308, Infinity) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_le(1.7976931348623157e+308, Infinity) is true",
+          "resultVarId": 47,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 46,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_le(1.7976931348623157e+308, Infinity) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 889,
+              "section": "math/le"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.7976931348623157e+308
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                "Infinity"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "lt(-Infinity, -1.7976931348623157e+308) is true",
+          "resultVarName": "TestResult_prerequisites/harness-types_lt(-Infinity, -1.7976931348623157e+308) is true",
+          "resultVarId": 49,
+          "resultVarType": "bool",
+          "expectedResultValue": [
+            true
+          ],
+          "successResultVarId": 48,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_lt(-Infinity, -1.7976931348623157e+308) is true",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 877,
+              "section": "math/lt"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-Infinity"
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                -1.7976931348623157e+308
+              ]
+            }
+          ]
+        },
+        {
+          "name": "max(1.25, 7.0) is 7.0",
+          "resultVarName": "TestResult_prerequisites/harness-types_max(1.25, 7.0) is 7.0",
+          "resultVarId": 51,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            7.0
+          ],
+          "successResultVarId": 50,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_max(1.25, 7.0) is 7.0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 736,
+              "section": "math/max"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "max(-Infinity, 1.25) is 1.25",
+          "resultVarName": "TestResult_prerequisites/harness-types_max(-Infinity, 1.25) is 1.25",
+          "resultVarId": 53,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            1.25
+          ],
+          "successResultVarId": 52,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_max(-Infinity, 1.25) is 1.25",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 736,
+              "section": "math/max"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-Infinity"
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mul(1.25, 4.0) is 5.0",
+          "resultVarName": "TestResult_prerequisites/harness-types_mul(1.25, 4.0) is 5.0",
+          "resultVarId": 55,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            5.0
+          ],
+          "successResultVarId": 54,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_mul(1.25, 4.0) is 5.0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 642,
+              "section": "math/mul"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                4.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mul(1e-12, 7.0) is 7e-12",
+          "resultVarName": "TestResult_prerequisites/harness-types_mul(1e-12, 7.0) is 7e-12",
+          "resultVarId": 57,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            7e-12
+          ],
+          "successResultVarId": 56,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_mul(1e-12, 7.0) is 7e-12",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 642,
+              "section": "math/mul"
+            }
+          ],
+          "valueClasses": [
+            "tolerance"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1e-12
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sub(7.0, 1.25) is 5.75",
+          "resultVarName": "TestResult_prerequisites/harness-types_sub(7.0, 1.25) is 5.75",
+          "resultVarId": 59,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            5.75
+          ],
+          "successResultVarId": 58,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_sub(7.0, 1.25) is 5.75",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 627,
+              "section": "math/sub"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                7.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sub(1.25, 1.25) is 0.0",
+          "resultVarName": "TestResult_prerequisites/harness-types_sub(1.25, 1.25) is 0.0",
+          "resultVarId": 61,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            0.0
+          ],
+          "successResultVarId": 60,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_sub(1.25, 1.25) is 0.0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 627,
+              "section": "math/sub"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "abs(-1.25) is 1.25",
+          "resultVarName": "TestResult_prerequisites/harness-types_abs(-1.25) is 1.25",
+          "resultVarId": 63,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            1.25
+          ],
+          "successResultVarId": 62,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_abs(-1.25) is 1.25",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 480,
+              "section": "math/abs"
+            }
+          ],
+          "valueClasses": [
+            "ordinary"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                -1.25
+              ]
+            }
+          ]
+        },
+        {
+          "name": "abs(-0) is 0.0",
+          "resultVarName": "TestResult_prerequisites/harness-types_abs(-0) is 0.0",
+          "resultVarId": 65,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            0.0
+          ],
+          "successResultVarId": 64,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_abs(-0) is 0.0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 480,
+              "section": "math/abs"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-0"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "abs(-Infinity) is Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_abs(-Infinity) is Infinity",
+          "resultVarId": 67,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "Infinity"
+          ],
+          "successResultVarId": 66,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_abs(-Infinity) is Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 480,
+              "section": "math/abs"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-Infinity"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(1.0, 0.0) is Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_div(1.0, 0.0) is Infinity",
+          "resultVarId": 69,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "Infinity"
+          ],
+          "successResultVarId": 68,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_div(1.0, 0.0) is Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 665,
+              "section": "math/div"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-1.0, 0.0) is -Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_div(-1.0, 0.0) is -Infinity",
+          "resultVarId": 71,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "-Infinity"
+          ],
+          "successResultVarId": 70,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_div(-1.0, 0.0) is -Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 665,
+              "section": "math/div"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                -1.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(1.0, -0) is -Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_div(1.0, -0) is -Infinity",
+          "resultVarId": 73,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "-Infinity"
+          ],
+          "successResultVarId": 72,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_div(1.0, -0) is -Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 665,
+              "section": "math/div"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                1.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                "-0"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(0.0, 0.0) is NaN",
+          "resultVarName": "TestResult_prerequisites/harness-types_div(0.0, 0.0) is NaN",
+          "resultVarId": 75,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "NaN"
+          ],
+          "successResultVarId": 74,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_div(0.0, 0.0) is NaN",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 665,
+              "section": "math/div"
+            }
+          ],
+          "valueClasses": [
+            "zero",
+            "nan"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "neg(0.0) is -0",
+          "resultVarName": "TestResult_prerequisites/harness-types_neg(0.0) is -0",
+          "resultVarId": 77,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "-0"
+          ],
+          "successResultVarId": 76,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_neg(0.0) is -0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 599,
+              "section": "math/neg"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "name": "neg(-0) is 0.0",
+          "resultVarName": "TestResult_prerequisites/harness-types_neg(-0) is 0.0",
+          "resultVarId": 79,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            0.0
+          ],
+          "successResultVarId": 78,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_neg(-0) is 0.0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 599,
+              "section": "math/neg"
+            }
+          ],
+          "valueClasses": [
+            "zero"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "-0"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "neg(Infinity) is -Infinity",
+          "resultVarName": "TestResult_prerequisites/harness-types_neg(Infinity) is -Infinity",
+          "resultVarId": 81,
+          "resultVarType": "float",
+          "expectedResultValue": [
+            "-Infinity"
+          ],
+          "successResultVarId": 80,
+          "successResultVarName": "TestResult_HasPassed_prerequisites/harness-types_neg(Infinity) is -Infinity",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 599,
+              "section": "math/neg"
+            }
+          ],
+          "valueClasses": [
+            "infinity"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "float",
+              "value": [
+                "Infinity"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "usedSchemas": [
+    "event/onStart",
+    "event/send",
+    "flow/branch",
+    "flow/sequence",
+    "math/Inf",
+    "math/NaN",
+    "math/abs",
+    "math/and",
+    "math/div",
+    "math/eq",
+    "math/isNaN",
+    "math/le",
+    "math/lt",
+    "math/max",
+    "math/mul",
+    "math/neg",
+    "math/not",
+    "math/sub",
+    "pointer/set",
+    "variable/get",
+    "variable/set"
+  ]
+}

@@ -1,0 +1,617 @@
+{
+  "glbFileName": "div-boundary.glb",
+  "name": "math/div-boundary",
+  "supplemental": true,
+  "generator": {
+    "name": "khr-itest-gen",
+    "version": "0.1.0",
+    "specRevision": "c5d1e1e8",
+    "seed": "0x4B48525F494E5445"
+  },
+  "tests": [
+    {
+      "name": "math/div-boundary",
+      "description": "Integer division truncates toward zero, including inexact negative quotients and int32 limits.",
+      "usedSchemas": [
+        "event/onStart",
+        "event/send",
+        "flow/branch",
+        "flow/sequence",
+        "math/and",
+        "math/div",
+        "math/eq",
+        "pointer/set",
+        "variable/get",
+        "variable/set"
+      ],
+      "entryPoints": [
+        {
+          "name": "math/div-boundary",
+          "nodeId": 0
+        }
+      ],
+      "subTests": [
+        {
+          "name": "div(-7, 2) is -3",
+          "resultVarName": "TestResult_math/div-boundary_div(-7, 2) is -3",
+          "resultVarId": 1,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            -3
+          ],
+          "successResultVarId": 0,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-7, 2) is -3",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact",
+            "negative"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(7, -2) is -3",
+          "resultVarName": "TestResult_math/div-boundary_div(7, -2) is -3",
+          "resultVarId": 3,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            -3
+          ],
+          "successResultVarId": 2,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(7, -2) is -3",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact",
+            "negative"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-7, -2) is 3",
+          "resultVarName": "TestResult_math/div-boundary_div(-7, -2) is 3",
+          "resultVarId": 5,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            3
+          ],
+          "successResultVarId": 4,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-7, -2) is 3",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact",
+            "negative"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(7, 2) is 3",
+          "resultVarName": "TestResult_math/div-boundary_div(7, 2) is 3",
+          "resultVarId": 7,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            3
+          ],
+          "successResultVarId": 6,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(7, 2) is 3",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                7
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-1, 2) is 0",
+          "resultVarName": "TestResult_math/div-boundary_div(-1, 2) is 0",
+          "resultVarId": 9,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 8,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-1, 2) is 0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact",
+            "negative"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -1
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(1, -2) is 0",
+          "resultVarName": "TestResult_math/div-boundary_div(1, -2) is 0",
+          "resultVarId": 11,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 10,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(1, -2) is 0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "inexact",
+            "negative"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                1
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-2147483648, 3) is -715827882",
+          "resultVarName": "TestResult_math/div-boundary_div(-2147483648, 3) is -715827882",
+          "resultVarId": 13,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            -715827882
+          ],
+          "successResultVarId": 12,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-2147483648, 3) is -715827882",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "limit",
+            "inexact"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -2147483648
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(2147483647, -2) is -1073741823",
+          "resultVarName": "TestResult_math/div-boundary_div(2147483647, -2) is -1073741823",
+          "resultVarId": 15,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            -1073741823
+          ],
+          "successResultVarId": 14,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(2147483647, -2) is -1073741823",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "limit",
+            "inexact"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                2147483647
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-2147483647, 2) is -1073741823",
+          "resultVarName": "TestResult_math/div-boundary_div(-2147483647, 2) is -1073741823",
+          "resultVarId": 17,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            -1073741823
+          ],
+          "successResultVarId": 16,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-2147483647, 2) is -1073741823",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "limit",
+            "inexact"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -2147483647
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(2147483647, 2147483646) is 1",
+          "resultVarName": "TestResult_math/div-boundary_div(2147483647, 2147483646) is 1",
+          "resultVarId": 19,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            1
+          ],
+          "successResultVarId": 18,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(2147483647, 2147483646) is 1",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "limit",
+            "inexact"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                2147483647
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                2147483646
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(720519128, 7) is 102931304",
+          "resultVarName": "TestResult_math/div-boundary_div(720519128, 7) is 102931304",
+          "resultVarId": 21,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            102931304
+          ],
+          "successResultVarId": 20,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(720519128, 7) is 102931304",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "scatter"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                720519128
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-406091321, -3) is 135363773",
+          "resultVarName": "TestResult_math/div-boundary_div(-406091321, -3) is 135363773",
+          "resultVarId": 23,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            135363773
+          ],
+          "successResultVarId": 22,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-406091321, -3) is 135363773",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "scatter"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -406091321
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                -3
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div(-1265440754, 1711676100) is 0",
+          "resultVarName": "TestResult_math/div-boundary_div(-1265440754, 1711676100) is 0",
+          "resultVarId": 25,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 24,
+          "successResultVarName": "TestResult_HasPassed_math/div-boundary_div(-1265440754, 1711676100) is 0",
+          "comparison": {
+            "mode": "exact"
+          },
+          "targets": [
+            "S-2626"
+          ],
+          "specRefs": [
+            {
+              "revision": "c5d1e1e8",
+              "line": 2626,
+              "section": "Math operations"
+            }
+          ],
+          "valueClasses": [
+            "scatter"
+          ],
+          "inputs": [
+            {
+              "socket": "a",
+              "type": "int",
+              "value": [
+                -1265440754
+              ]
+            },
+            {
+              "socket": "b",
+              "type": "int",
+              "value": [
+                1711676100
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "usedSchemas": [
+    "event/onStart",
+    "event/send",
+    "flow/branch",
+    "flow/sequence",
+    "math/and",
+    "math/div",
+    "math/eq",
+    "pointer/set",
+    "variable/get",
+    "variable/set"
+  ]
+}

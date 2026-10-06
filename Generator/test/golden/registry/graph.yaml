@@ -1,0 +1,25 @@
+# Golden-test subset of data/registry/graph.yaml; regenerate with tools/make-golden-inputs.ts.
+specRevision: c5d1e1e8
+area: graph
+targets:
+  - id: S-4894
+    kind: statement
+    specRef:
+      line: 4894
+      section: JSON syntax and validation
+    summary: '`graphs` array MUST NOT exceed 2^31 elements'
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    scope: out-impractical
+  - id: S-4898
+    kind: statement
+    specRef:
+      line: 4898
+      section: JSON syntax and validation
+    summary: Empty JSON arrays MUST be omitted
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`A1a`, `B3a`, `C7d`.'
+    scope: out-rejection

@@ -6,3 +6,4 @@ LICENSE
 data/spec
 data/operations.yaml
 .venv
+test/golden/out

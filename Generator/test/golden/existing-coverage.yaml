@@ -1,0 +1,101 @@
+# Golden-test subset of data/existing-coverage.yaml; regenerate with tools/make-golden-inputs.ts.
+suiteRevision: 9ffd30e
+subTests:
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(-2147483647) + 2147483646 == -1
+    credits:
+      - S-3203
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(0) is +0
+    credits:
+      - S-3205
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: intToFloat(2147483647) - 2147483646 == 1
+    credits:
+      - S-3203
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: round(-0.3) is -0
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: Extras/Float_Precision
+    subTest: round(0.49999999999999994) == 0
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/start_playback_modes
+    subTest: |-
+      Restart: 1st
+      [done] not fired
+    credits:
+      - S-4352
+    note: Drafted from the coverage report; review.
+  - asset: animation/start_playback_modes
+    subTest: |-
+      Reverse (T..0):
+      position at 50%
+    credits:
+      - S-3891
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/state
+    subTest: |-
+      Not started:
+      translation unchanged
+    credits:
+      - S-184
+      - S-3891
+    note: Drafted from the coverage report; review.
+  - asset: animation/stop
+    subTest: |-
+      Position frozen 
+      at ~50%
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop
+    subTest: |-
+      Start [done] 
+      not fired
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: animation/stop_and_stopAt_edge_cases
+    subTest: |-
+      stop, not playing:
+      [out]
+    credits:
+      - S-4423
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] -2.50 = -3.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 0.50 = 1.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 1.50 = 2.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+  - asset: math/round
+    subTest: '[a] 2.50 = 3.00'
+    credits:
+      - S-568
+    note: Mapped by hand from the coverage report; review.
+invalid:
+  - id: A1a
+    credits:
+      - S-4898
+  - id: B3a
+    credits:
+      - S-4898
+  - id: C7d
+    credits:
+      - S-4898

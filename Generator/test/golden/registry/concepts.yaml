@@ -1,0 +1,28 @@
+# Golden-test subset of data/registry/concepts.yaml; regenerate with tools/make-golden-inputs.ts.
+specRevision: c5d1e1e8
+area: concepts
+targets:
+  - id: S-184
+    kind: statement
+    specRef:
+      line: 184
+      section: Concepts
+    summary: Animations MUST NOT play automatically when the asset contains a
+      behavior graph
+    covers: TODO
+    generator: TODO
+    reviewStatus: covered
+    notes: '`animation/state`: "Not started: translation unchanged" and `isPlaying`
+      false before start.'
+    scope: in
+  - id: S-400
+    kind: statement
+    specRef:
+      line: 400
+      section: Concepts
+    summary: Graph MUST be rejected if it exceeds implementation static limits
+    covers: TODO
+    generator: TODO
+    reviewStatus: none
+    notes: Limits are implementation-specific; no invalid case exceeds one.
+    scope: out-rejection

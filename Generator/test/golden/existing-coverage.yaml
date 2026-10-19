@@ -1,5 +1,5 @@
 # Golden-test subset of data/existing-coverage.yaml; regenerate with tools/make-golden-inputs.ts.
-suiteRevision: 9ffd30e
+suiteRevision: 70bb145
 subTests:
   - asset: Extras/Float_Precision
     subTest: intToFloat(-2147483647) + 2147483646 == -1
@@ -70,22 +70,22 @@ subTests:
       - S-4423
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] -2.50 = -3.00'
+    subTest: '[a] -2.5 = -3'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 0.50 = 1.00'
+    subTest: '[a] 0.5 = 1'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 1.50 = 2.00'
+    subTest: '[a] 1.5 = 2'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 2.50 = 3.00'
+    subTest: '[a] 2.5 = 3'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.

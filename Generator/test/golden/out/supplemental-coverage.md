@@ -1,6 +1,6 @@
 # Supplemental coverage report
 
-Generator khr-itest-gen 0.1.0; Specification c5d1e1e8; suite 9ffd30e; seed 0x4B48525F494E5445.
+Generator khr-itest-gen 0.1.0; Specification c5d1e1e8; suite 70bb145; seed 0x4B48525F494E5445.
 
 Copyright (c) 2026, The Khronos Group Inc.
 
@@ -36,7 +36,7 @@ not fired; animation/stop_and_stopAt_edge_cases / stop, not playing:
 [out] |
 | S-4894 | out-impractical | not-covered | impractical to test |
 | S-4898 | out-rejection | not-covered | rejection target, out of scope (requirements §1.1); covered by invalid-graph cases |
-| S-568 | in | covered-existing | Extras/Float_Precision / round(-0.3) is -0; Extras/Float_Precision / round(0.49999999999999994) == 0; math/round / [a] -2.50 = -3.00; math/round / [a] 0.50 = 1.00; math/round / [a] 1.50 = 2.00; math/round / [a] 2.50 = 3.00 |
+| S-568 | in | covered-existing | Extras/Float_Precision / round(-0.3) is -0; Extras/Float_Precision / round(0.49999999999999994) == 0; math/round / [a] -2.5 = -3; math/round / [a] 0.5 = 1; math/round / [a] 1.5 = 2; math/round / [a] 2.5 = 3 |
 | T-math/div-float2 | in | not-covered | vector and matrix results need component extraction in the harness (R1); planned for M4 |
 | T-math/div-float4x4 | in | not-covered | vector and matrix results need component extraction in the harness (R1); planned for M4 |
 

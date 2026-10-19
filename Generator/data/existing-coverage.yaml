@@ -1,7 +1,7 @@
 # Existing-coverage mapping: which existing sub-tests and invalid-graph cases cover which targets.
 # The only source of credit for the existing suite (requirements §11). Drafted by
 # tools/bootstrap-coverage.ts from the coverage report; review every entry.
-suiteRevision: 9ffd30e
+suiteRevision: 70bb145
 subTests:
   - asset: Extras/Float_Precision
     subTest: intToFloat(-2147483647) + 2147483646 == -1
@@ -368,22 +368,22 @@ subTests:
       - S-1075
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] -2.50 = -3.00'
+    subTest: '[a] -2.5 = -3'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 0.50 = 1.00'
+    subTest: '[a] 0.5 = 1'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 1.50 = 2.00'
+    subTest: '[a] 1.5 = 2'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.
   - asset: math/round
-    subTest: '[a] 2.50 = 3.00'
+    subTest: '[a] 2.5 = 3'
     credits:
       - S-568
     note: Mapped by hand from the coverage report; review.

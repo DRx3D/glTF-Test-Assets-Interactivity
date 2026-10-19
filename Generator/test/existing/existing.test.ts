@@ -12,16 +12,16 @@ const inventory = readSuite(defaultSuiteRoot(DEFAULT_DATA_DIR));
 const data = loadDataSet();
 const mapping = loadCoverageMapping(`${DEFAULT_DATA_DIR}/existing-coverage.yaml`);
 
-describe('readSuite against the existing suite at 9ffd30e', () => {
+describe('readSuite against the existing suite at 70bb145', () => {
   it('reads every sub-test and invalid case with no problems', () => {
-    expect(inventory.subTests.length).toBe(1073);
+    expect(inventory.subTests.length).toBe(1136);
     expect(inventory.invalidCases.length).toBe(179);
     expect(inventory.problems).toEqual([]);
   });
 
-  it('records the shared pass-variable convention (124 bool sub-tests)', () => {
+  it('records the shared pass-variable convention (182 bool sub-tests)', () => {
     const shared = inventory.subTests.filter((s) => s.sharedPassVariable);
-    expect(shared.length).toBe(124);
+    expect(shared.length).toBe(182);
     expect(shared.every((s) => s.resultVar.type === 'bool' && s.expected[0] === true)).toBe(true);
   });
 
@@ -43,13 +43,13 @@ describe('determineGaps', () => {
     expect(status('S-400')).toBe('rejection-not-covered');
     expect(status('S-4894')).toBe('impractical');
     const text = describeGaps(report, inventory);
-    expect(text).toMatch(/Existing suite: 1073 sub-tests, 179 invalid-graph cases/);
+    expect(text).toMatch(/Existing suite: 1136 sub-tests, 179 invalid-graph cases/);
     expect(text).toMatch(/gaps \(type signatures, \d+\):/);
   });
 
   it('reports stale entries, unknown targets, type mismatches and misused invalid credits', () => {
     const bad: CoverageMapping = {
-      suiteRevision: '9ffd30e',
+      suiteRevision: '70bb145',
       subTests: [
         { asset: 'math/abs', subTest: 'no such sub-test', credits: ['S-568'] },
         { asset: 'math/abs', subTest: '[a] -10 = 10', credits: ['S-0', 'T-math/abs-float2'] },
@@ -71,7 +71,7 @@ describe('determineGaps', () => {
   it('marks in-scope targets as gaps when nothing credits them', () => {
     const empty: Inventory = { subTests: [], invalidCases: [], names: new Set(), problems: [] };
     const report = determineGaps(data.registry, empty, {
-      suiteRevision: '9ffd30e',
+      suiteRevision: '70bb145',
       subTests: [],
       invalid: [],
     });

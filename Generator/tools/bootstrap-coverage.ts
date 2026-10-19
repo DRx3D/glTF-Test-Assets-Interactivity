@@ -10,7 +10,7 @@ import { DEFAULT_DATA_DIR, loadDataSet } from '../src/registry/check.js';
 import { defaultSuiteRoot, readSuite } from '../src/existing/reader.js';
 import type { CoverageMapping } from '../src/existing/coverage.js';
 
-const SUITE_REVISION = '9ffd30e';
+const SUITE_REVISION = '70bb145';
 const outPath = `${DEFAULT_DATA_DIR}/existing-coverage.yaml`;
 if (existsSync(outPath) && !process.argv.includes('--force')) {
   process.stderr.write('existing-coverage.yaml exists; use --force to overwrite\n');

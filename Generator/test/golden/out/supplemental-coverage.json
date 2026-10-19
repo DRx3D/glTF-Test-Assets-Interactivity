@@ -5,7 +5,7 @@
       "version": "0.1.0"
     },
     "specRevision": "c5d1e1e8",
-    "suiteRevision": "9ffd30e",
+    "suiteRevision": "70bb145",
     "seed": "0x4B48525F494E5445",
     "copyright": "Copyright (c) 2026, The Khronos Group Inc.",
     "partial": false,
@@ -148,10 +148,10 @@
       "coveredBy": [
         "Extras/Float_Precision / round(-0.3) is -0",
         "Extras/Float_Precision / round(0.49999999999999994) == 0",
-        "math/round / [a] -2.50 = -3.00",
-        "math/round / [a] 0.50 = 1.00",
-        "math/round / [a] 1.50 = 2.00",
-        "math/round / [a] 2.50 = 3.00"
+        "math/round / [a] -2.5 = -3",
+        "math/round / [a] 0.5 = 1",
+        "math/round / [a] 1.5 = 2",
+        "math/round / [a] 2.5 = 3"
       ]
     },
     {
@@ -400,7 +400,7 @@
     },
     {
       "asset": "math/round",
-      "subTest": "[a] -2.50 = -3.00",
+      "subTest": "[a] -2.5 = -3",
       "credits": [
         "S-568"
       ],
@@ -408,7 +408,7 @@
     },
     {
       "asset": "math/round",
-      "subTest": "[a] 0.50 = 1.00",
+      "subTest": "[a] 0.5 = 1",
       "credits": [
         "S-568"
       ],
@@ -416,7 +416,7 @@
     },
     {
       "asset": "math/round",
-      "subTest": "[a] 1.50 = 2.00",
+      "subTest": "[a] 1.5 = 2",
       "credits": [
         "S-568"
       ],
@@ -424,7 +424,7 @@
     },
     {
       "asset": "math/round",
-      "subTest": "[a] 2.50 = 3.00",
+      "subTest": "[a] 2.5 = 3",
       "credits": [
         "S-568"
       ],

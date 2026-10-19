@@ -206,5 +206,33 @@
       "glTF": "PerformanceTest.gltf",
       "glTF-Binary": "PerformanceTest.glb"
     }
+  },
+  {
+    "label": "Active Camera",
+    "name": "ActiveCamera",
+    "screenshot": "screenshot/screenshot.png",
+    "description": "Visualizes the read-only activeCamera pointers. A crosshair and squares are placed in front of the camera every tick and must stay centered and steady while the camera moves; an orange square shows the camera of the previous tick for comparison. Billboards use only the camera rotation, arrows only the camera position. A panel shows position, rotation, the origin in camera space and the projection values.",
+    "tags": [
+      "interactivity",
+      "test",
+      "camera"
+    ],
+    "variants": {
+      "glTF": "ActiveCamera.gltf",
+      "glTF-Binary": "ActiveCamera.glb"
+    }
+  },
+  {
+    "label": "Mini Chess",
+    "name": "MiniChess",
+    "screenshot": "screenshot/screenshot.png",
+    "description": "Chess against a built-in computer opponent. Human vs Computer: click one of your pieces (White), then the target square. Computer vs Computer: click the play button and the computer plays both sides automatically. The reset button starts a new game.",
+    "tags": [
+      "interactivity",
+      "showcase"
+    ],
+    "variants": {
+      "glTF-Binary": "mini-chess.glb"
+    }
   }
 ]

@@ -2,18 +2,19 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.3 |
-| Date | 2026-10-05 |
-| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.3, 2026-10-05) |
+| Document status | Draft 0.4 |
+| Date | 2026-10-19 |
+| Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` (Draft 0.4, 2026-10-19) |
 | Author | Leonard Daly (Daly Realism) |
 
 ## 1. Overview
 
-This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.3, 2026-10-05). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
+This project builds `khr-itest-gen`, a TypeScript/Node command-line generator that writes the supplemental KHR\_interactivity test assets defined in `Documents/KHR_interactivity_test_generator_spec.md` (the **requirements document**, Draft 0.4, 2026-10-19). The requirements document says *what* the generator must produce; this document says *how* to build it in TypeScript, module by module, so a team can plan, staff and accept the work from it alone.
 
 **Goals**
 
-- Produce about 130–150 supplemental assets and 1,300–1,600 sub-tests (requirements doc §1.9) that close every in-scope gap remaining at suite revision `9ffd30e` (§1.4–§1.6 and §10).
+- Produce about 130–150 supplemental assets and 1,300–1,600 sub-tests (requirements doc §1.9) that close every in-scope gap remaining at suite revision `70bb145` (§1.4–§1.6 and §10).
+- Deliver the generator as software. The generated assets are not committed to any repository; they may be provided collectively as a ZIP file of the output directory. Only the golden-test output (section 15) is committed, as a regression fixture.
 - Byte-identical output for identical inputs on Windows, macOS and Linux (§5.3).
 - Assets that existing runners execute without changes (§4.3, §7.2, §7.4).
 - Every requirement in the requirements document traceable to a module and a test (Appendix, section 19).
@@ -358,7 +359,7 @@ A second test compares the catalogue with the authoring tool's operation specs (
 ### 8.3 Existing coverage mapping (`data/existing-coverage.yaml`)
 
 ```yaml
-suiteRevision: 9ffd30e
+suiteRevision: 70bb145
 subTests:
   - asset: math/abs
     subTest: "[a] -10 = 10"
@@ -564,12 +565,12 @@ A generator **MUST** emit at least one sub-test whose `targets` includes each ta
 | `ref` (1) | `refEq-types` | Null, same object, same index with different object type | §1.9 |
 | `flow` (≈8) | `for-boundary`, `doN-state`, `waitAll-config`, `setDelay-timing`, `while-state` | Loop ranges at int32 limits, each ≤ 64 iterations; a flow under test sets distinct marker variables; delay and timing tests are async | §10.6, §1.5.2 |
 | `variable` (3) | `set-types`, `default-types`, `interpolate-types` | All 10 value types; indices ≥ 10 for multi-digit ids; Bézier control points chosen so the midpoint differs from linear by ≥ 20 × tolerance | §10.7 |
-| `pointer` (≈8) | `get-errors`, `interpolate-types`, `template-syntax`, `activeCamera-objectModel`, `animationState-objectModel` | Base scenes with camera, lights, morph targets, skins and animations; the expected rotation midpoint comes from MPFR slerp | §10.8, §1.5.3 |
+| `pointer` (≈8) | `get-errors`, `interpolate-types`, `template-syntax`, `animationState-objectModel` | Base scenes with camera, lights, morph targets, skins and animations; the expected rotation midpoint comes from MPFR slerp | §10.8, §1.5.3 |
 | `animation` (≈2) | `start-boundary`, `start-state` (isolated, `maxActiveAnimations`) | Sampler curves chosen so 0.05 s of change is measurable; expected positions from the known curve | §10.9 |
 | `event` (≈3) | `sendReceive-types`, `receive-state` | JSON-index logging into an int variable (`v = v * 10 + i`) to record order | §10.10 |
 | `debug` (1–2) | `log-syntax`, `log-config` | Asserts `out` fires; writes `expectedLogOutput`; declares `logCapture` | §10.10 |
 | `concepts` (≈4) | `socketRetention-state`, `typeDefault-types`, `precision-precision` | `g.raw()` for runnable edge cases; extension-declaration sub-tests conditional on `asset/extensions/<name>/enabled` | §10.3, §10.11 |
-| `config` (≈6) | `for-config`, `waitAll-config`, `multiGate-config`, `quatFromAngles-config` | Each invalid case paired with a valid control; behaviour chosen so default and as-written differ observably | §10.5 |
+| `config` (≈6) | `for-config`, `waitAll-config`, `multiGate-config` | Each invalid case paired with a valid control; behaviour chosen so default and as-written differ observably | §10.5 |
 | `prerequisites` (1) | `harness-prerequisites` | Verifies each harness op × type the supplemental assets use, including `isNaN`, `div` to ±Infinity, `neg` to −0, `le`, `max`, `not` | §7.2 |
 
 ### 12.1 Generator-specific rules
@@ -772,10 +773,10 @@ Two items need a working-group decision before M3 starts (R1, R2). The rest have
 | ID | Risk or open issue | Impact | Mitigation or decision needed |
 | --- | --- | --- | --- |
 | R1 | The §7.2 harness set has no component-extraction operations (section 10.4; requirements doc Appendix A item 8) | Vector and matrix results cannot be compared component by component, which §7.3 requires; NaN, ±0 and tolerance checks on vectors are impossible | **Decision:** add `math/extract2/3/4` and `math/extract2x2/3x3/4x4` to the harness set, verified by the supplemental prerequisites asset. The existing suite's harness already uses `math/extract3`. Fallback: restrict vector sub-tests to finite non-zero exact values compared with `math/eq`, and test special values in scalar form only |
-| R2 | §7.4 lists a flat oracle schema; the files on disk nest sub-tests under `tests[].subTests[]` with `entryPoints`, unchanged at revision `9ffd30e` (requirements doc Appendix A item 9) | A writer that follows §7.4 literally would break existing runners | **Decision:** confirm that the on-disk schema is normative (this document assumes so, section 11.3) and update §7.4 |
+| R2 | §7.4 lists a flat oracle schema; the files on disk nest sub-tests under `tests[].subTests[]` with `entryPoints`, unchanged at revision `70bb145` (requirements doc Appendix A item 9) | A writer that follows §7.4 literally would break existing runners | **Decision:** confirm that the on-disk schema is normative (this document assumes so, section 11.3) and update §7.4 |
 | R3 | `gmp-wasm` API, maintenance or WebAssembly performance falls short | Section 7 blocks M2 | Keep the `RefBackend` interface narrow; fallback backend on `decimal.js` with the Ziv check from section 7.2 and exact binary64 neighbour comparison instead of `Number(str)` |
 | R4 | Hand-transcribing 135 operations into `operations.yaml` introduces errors | Wrong signatures or special-case rows lead to wrong expected values | Two-person review per category; cross-check against the KHR\_interactivity JSON schemas and against `usedSchemas` and socket names in existing GLBs |
-| R5 | The existing-coverage mapping is large (1,073 sub-tests and 179 invalid-graph cases) and hand-curated | Gaps are missed, or duplicates emitted | `suggest-coverage` tool (section 9.4); report lists every credit for review; V5 duplicate check |
+| R5 | The existing-coverage mapping is large (1,136 sub-tests and 179 invalid-graph cases at revision `70bb145`) and hand-curated | Gaps are missed, or duplicates emitted | `suggest-coverage` tool (section 9.4); report lists every credit for review; V5 duplicate check |
 | R6 | Asynchronous and timing tests behave differently across engines' tick models | False failures | Tolerance in time, not value (§7.9); adapter jittered-tick runs (section 16) catch frame-rate assumptions before release |
 | R7 | `"-0"` in `expectedResultValue` is unknown to existing runners (Appendix A item 3) | Runners that compare oracle values directly misreport | In-graph pass variables are unaffected, and the authoring tool's harness uses them, so the risk applies only to other runners; publish a one-paragraph runner note with the first release |
 | R8 | Single-precision engines fail every precision sub-test (Appendix A item 2) | Noisy results for maintainers | Precision sub-tests carry facet `precision` and can be filtered by name; consider a separate tag in the index if the working group wants it |

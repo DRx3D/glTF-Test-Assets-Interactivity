@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.3 |
-| Date | 2026-10-05 |
+| Document status | Draft 0.4 |
+| Date | 2026-10-19 |
 | Project specification | `Documents/KHR_interactivity_test_generator_typescript_spec.md` |
 | Requirements document | `Documents/KHR_interactivity_test_generator_spec.md` |
 
-This is the build order for the supplemental test generator, updated for test suite revision `9ffd30e` (now on `main`, merged by PR #22). That revision already covers most flow, event, animation, interpolation and rejection targets, so Steps 10 and 11 are smaller than in Draft 0.1. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
+This is the build order for the supplemental test generator, updated for test suite revision `70bb145`. Revision `9ffd30e` (merged by PR #22) already covered most flow, event, animation, interpolation and rejection targets, so Steps 10 and 11 are smaller than in Draft 0.1, and `70bb145` adds the `activeCamera` pointers and two more configuration fallbacks.
+
+The deliverable is the generator software. The assets it generates are not committed to the repository; they may be provided collectively as a ZIP file of the output directory. Only the golden-test output (Step 8) is committed, as a regression fixture. It follows the module dependency order (project spec section 4) and the milestones M1–M6 (project spec section 17). Each step says what to build and how you know it is done.
 
 "Section N" refers to the TypeScript project specification. "§N" refers to the requirements document.
 
@@ -18,7 +20,7 @@ This is the build order for the supplemental test generator, updated for test su
 Both need the working group before M3 starts. Steps 1–3 can proceed while they are pending.
 
 - **R1, component extraction.** Ask the working group to add `math/extract2`, `extract3`, `extract4`, `extract2x2`, `extract3x3` and `extract4x4` to the harness operation set (§7.2). Without them, vector and matrix results cannot be compared component by component, which §7.3 requires. The existing suite's own harness already uses `math/extract3`, which supports the request.
-- **R2, oracle schema.** Confirm that the oracle shape on disk (`tests[].subTests[]` with `entryPoints`) is normative, and update the flat field list in §7.4 to match. The shape is unchanged at revision `9ffd30e`.
+- **R2, oracle schema.** Confirm that the oracle shape on disk (`tests[].subTests[]` with `entryPoints`) is normative, and update the flat field list in §7.4 to match. The shape is unchanged at revision `70bb145`.
 
 ---
 
@@ -167,7 +169,7 @@ M5 depends only on M3, so it can run in parallel with M4.
 - **`variable/`**: type defaults, matrix and `ref` variables, and interpolation of `float2`, `float3`, `float4` without slerp, and matrices.
 - **`event/`**: `send` and `receive` for vector, matrix and the remaining value types. Activation order and first-tick values are already covered.
 - **`debug/`**: asserts that `out` fires; records `expectedLogOutput` and declares `logCapture`.
-- **`config/`**: the fallback cases still missing (`flow/for` `initialIndex`, `math/quatFromAngles` `order`, `flow/multiGate` missing properties, `flow/waitAll` missing, non-integer and negative values, `debug/log` `severity`). Each invalid configuration must behave observably differently from the default, or generation fails.
+- **`config/`**: the fallback cases still missing (`flow/for` with no `initialIndex`, `flow/multiGate` missing properties, `flow/waitAll` missing, non-integer and negative values, `debug/log` `severity`). Each invalid configuration must behave observably differently from the default, or generation fails.
 - **`concepts/`**: socket retention, type defaults, and the runnable edge cases using `g.raw()`.
 - Conditional sub-tests for the `maxActive*` limits.
 - First engine adapter, run with a fixed 1/60 s tick and with a deterministic jittered tick.
@@ -179,7 +181,7 @@ M5 depends only on M3, so it can run in parallel with M4.
 ## Step 11: Pointer and animation generators, reports and release (M6)
 
 - **Base scenes**: cameras, lights, morph targets, skins and animations.
-- **`pointer/`**: `activeCamera`, the `{}` form of the animation state pointers, `pointer/get` type mismatch, nodes outside the scene, valid template syntax (`~0`, `~1`), and interpolation of the remaining types. Error paths and rotation slerp are already covered.
+- **`pointer/`**: the `{}` form of the animation state pointers, `pointer/get` type mismatch, nodes outside the scene, valid template syntax (`~0`, `~1`), and interpolation of the remaining types. Error paths, rotation slerp and the `activeCamera` pointers are already covered.
 - **`animation/`**: an animation with a maximum time of 0, and the `maxActiveAnimations` limit. Reverse playback, looping, restart, `stopAt` and autoplay are already covered.
 - **`report/`**: `supplemental-coverage.json` as the source of truth, with `supplemental-coverage.md` rendered from it.
 - **Determinism**: `--verify-determinism`, and a CI job that compares output hashes from Windows and Linux.

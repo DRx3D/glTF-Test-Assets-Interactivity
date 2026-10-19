@@ -1,6 +1,8 @@
 # Supplemental KHR_interactivity test generator: work to date
 
-Status as of 2026-10-06. Branch `generator-m3` in the DRx3D fork of `glTF-Test-Assets-Interactivity`; local commits on this branch are not pushed.
+Status as of 2026-10-19. Branch `generator-m3` in the DRx3D fork of `glTF-Test-Assets-Interactivity`, pushed to `origin`.
+
+**Deliverables.** This work creates only the generator software. The test assets it generates are not stored in the repository; they may be provided collectively as a ZIP file of the output directory. `Generator/out/` is git-ignored, and the only generated files committed are the golden-test fixtures in `test/golden/out/`.
 
 ## Summary
 
@@ -25,7 +27,7 @@ All are in `Documents/`. They are committed on the fork's `main` and pushed to `
 | `KHR_interactivity_test_generator_build_steps.md`     | Step-by-step build order with milestone gates                                                                                    |
 | `KHR_interactivity_authoring_tool_review.md`          | How the Khronos authoring tool relates to the plan                                                                               |
 
-The analysis was rerun after upstream merged `fix/spec-and-json-conform-fixes` (PR #22, suite content at `9ffd30e`), and the documents were then made consistent.
+The analysis was rerun after upstream merged `fix/spec-and-json-conform-fixes` (PR #22, suite content at `9ffd30e`), and again on 2026-10-19 for suite content at `70bb145` (re-exported assets, new sub-tests for `flow/for`, `flow/switch` and `math/quatFromAngles`, and the new `pointer/activeCamera` asset). The documents are now at Draft 0.4.
 
 ### Issues
 
@@ -34,12 +36,13 @@ Issue drafts live in `Documents/.issues.md`. That file is local only and never c
 | #   | Repository                            | Status                                                                                            |
 | --- | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | 1–3 | glTF-InteractivityGraph-AuthoringTool | Filed: #128 (`expectedDuration`), #129 (single-precision matrices), #130 (configuration fallback) |
-| 4–8 | glTF-Test-Assets-Interactivity        | Filed: #25–#29 (description and label defects, README count)                                      |
+| 4–8 | glTF-Test-Assets-Interactivity        | Filed: #25–#29 (description and label defects, README count); all fixed upstream and closed       |
 | 9   | glTF                                  | Filed: #2665 (graph versus extension rejection)                                                   |
 | 10  | AuthoringTool                         | Drafted: scalar `float` missing from `math/dot`, `math/length`, `math/normalize`                  |
-| 11  | Test-Assets                           | Drafted: oracle names pass variables that do not exist (124 sub-tests)                            |
+| 11  | Test-Assets                           | Withdrawn: oracle pass-variable names, fixed upstream by `70bb145` before filing                  |
 | 12  | AuthoringTool (engine 1.0.0)          | Drafted in M3: engine throws for valid graphs without `variables` or without event `values`       |
 | 13  | AuthoringTool (engine 1.0.0)          | Drafted in M3: engine npm package cannot be imported from Node.js                                 |
+| 14  | Test-Assets                           | Drafted: labels with line breaks run together in description files (145 sub-tests, 12 assets)     |
 
 ## Generator milestones
 
@@ -66,10 +69,10 @@ Code is in `Generator/` (Apache-2.0): about 5,200 lines of source, 2,200 of test
   - `data/operations.yaml`: 135 operations and 159 signatures, extracted from the Specification tables.
 - **Target registry** (`data/registry/`): 287 targets, checked by `check-registry` with 0 problems. 171 targets are still marked TODO for people to review.
 - **Existing suite** (`existing/`):
-  - The reader covers 1,073 sub-tests and 179 invalid-graph cases.
-  - `data/existing-coverage.yaml` holds 76 sub-test credits and 139 invalid-case credits.
+  - The reader covers 1,136 sub-tests and 179 invalid-graph cases (suite content at `70bb145`).
+  - `data/existing-coverage.yaml` holds 98 sub-test credits and 139 invalid-case credits. The 22 added on 2026-10-19 for the new upstream sub-tests are marked for review.
 - **Gap baseline** (`gaps`):
-  - In scope: 38 covered by the existing suite, 177 gaps.
+  - In scope: 40 covered by the existing suite, 175 gaps (177 before the `70bb145` credits for `math/quatFromAngles` order fallback and the `activeCamera` pointers).
   - Rejection: 56 covered by invalid cases, 10 not covered.
   - 6 impractical.
 - **Reference library** (`reference/`):
@@ -162,10 +165,10 @@ The project spec plans 27 engineer-weeks for one engineer. M1–M3 account for 1
   - R1: add the extract operations to the harness set. This blocks vector and matrix comparisons in M4, which are most of the math sub-tests.
   - R2: confirm that the nested oracle schema is normative.
 - **Registry review:** finish the 171 TODO targets and confirm the statement scopes. Each target needs `covers` and an owning generator before a generator can cover it.
-- **Mapping review:** confirm the 215 coverage credits, which a script proposed.
+- **Mapping review:** confirm the 237 coverage credits, which a script proposed (215 from the coverage report, 22 for the sub-tests added upstream at `70bb145`).
 - **Spot checks:** check `operations.yaml` and the interpretations against the Specification.
 - **Release acceptance:** working-group review of `supplemental-coverage.md`, and a hand check of 20 assets in the tool's viewer.
-- **Filing issues:** issues 10–13 are drafted in `Documents/.issues.md` but not yet filed.
+- **Filing issues:** issues 10, 12, 13 and 14 are drafted in `Documents/.issues.md` but not yet filed.
 
 With prompt reviews and decisions, a usable suite is about **2–4 weeks of calendar time** away. Without an R1 decision, M4 can still deliver scalar math, type, flow, state and event coverage, but most of the roughly 1,700 math sub-tests depend on comparing vectors and matrices component by component.
 

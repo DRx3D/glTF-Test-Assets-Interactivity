@@ -2,3 +2,5 @@ node_modules/
 dist/
 coverage/
 .venv/
+# Generated test assets are not committed (see README); only test/golden/out/ is.
+/out/

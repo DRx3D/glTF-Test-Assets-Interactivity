@@ -6,6 +6,8 @@ Generator for supplemental `KHR_interactivity` test assets. It writes assets tha
 - Design: [`Documents/KHR_interactivity_test_generator_typescript_spec.md`](../Documents/KHR_interactivity_test_generator_typescript_spec.md)
 - Build order: [`Documents/KHR_interactivity_test_generator_build_steps.md`](../Documents/KHR_interactivity_test_generator_build_steps.md)
 
+This work creates only the generator software. The test assets it generates are not stored in the repository; they may be provided collectively as a ZIP file of the output directory. `out/` is listed in `.gitignore` for that reason. The only generated files committed are the golden-test fixtures in `test/golden/out/`.
+
 ## Status
 
 Milestones M1 (foundations) and M2 (data and reference) of six are done; M3 (vertical slice) is in progress. M2's gate waits on two working-group decisions; see [`docs/M2-gate.md`](docs/M2-gate.md). In place:

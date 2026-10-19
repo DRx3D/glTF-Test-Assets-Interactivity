@@ -178,6 +178,23 @@ subTests:
     credits:
       - S-4591
     note: Mapped by hand from the coverage report; review.
+  - asset: flow/for
+    subTest: 'Invalid initialIndex "3": initial [index] 0'
+    credits: &a1
+      - S-311-runnable
+    note: 'Proposed for suite 70bb145: invalid initialIndex falls back to 0. S-3411 also needs a missing initialIndex; review.'
+  - asset: flow/for
+    subTest: 'Invalid initialIndex 1.5: initial [index] 0'
+    credits: *a1
+    note: 'Proposed for suite 70bb145: invalid initialIndex falls back to 0. S-3411 also needs a missing initialIndex; review.'
+  - asset: flow/for
+    subTest: 'Invalid initialIndex 2147483648: initial [index] 0'
+    credits: *a1
+    note: 'Proposed for suite 70bb145: invalid initialIndex falls back to 0. S-3411 also needs a missing initialIndex; review.'
+  - asset: flow/for
+    subTest: 'Invalid initialIndex true: initial [index] 0'
+    credits: *a1
+    note: 'Proposed for suite 70bb145: invalid initialIndex falls back to 0. S-3411 also needs a missing initialIndex; review.'
   - asset: flow/multiGate
     subTest: isRandom "yes" uses default configuration (in order)
     credits:
@@ -219,10 +236,19 @@ subTests:
       - S-311-runnable
     note: Mapped by hand from the coverage report; review.
   - asset: flow/switch
+    subTest: 'Cases [-2147483649, 0], selection 0: [0] and [1] not activated'
+    credits: &a2
+      - S-311-runnable
+    note: 'Proposed for suite 70bb145: invalid cases fall back to the default configuration; review.'
+  - asset: flow/switch
     subTest: Cases [0.5, 1] use default configuration
     credits:
       - S-311-runnable
     note: Mapped by hand from the coverage report; review.
+  - asset: flow/switch
+    subTest: 'Cases [0.5, 1], selection 1: [1] not activated'
+    credits: *a2
+    note: 'Proposed for suite 70bb145: invalid cases fall back to the default configuration; review.'
   - asset: flow/waitAll
     subTest: '[inputFlows] 65 uses default configuration'
     credits:
@@ -352,6 +378,32 @@ subTests:
     credits:
       - S-2510
     note: Mapped by hand from the coverage report; review.
+  - asset: math/quatFromAngles
+    subTest: invalid order "XYZ" uses yxz
+    credits: &a3
+      - S-2218
+      - S-311-runnable
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
+  - asset: math/quatFromAngles
+    subTest: invalid order "xxy" uses yxz
+    credits: *a3
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
+  - asset: math/quatFromAngles
+    subTest: invalid order "xy" uses yxz
+    credits: *a3
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
+  - asset: math/quatFromAngles
+    subTest: invalid order "xyzx" uses yxz
+    credits: *a3
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
+  - asset: math/quatFromAngles
+    subTest: invalid order 1 (number) uses yxz
+    credits: *a3
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
+  - asset: math/quatFromAngles
+    subTest: invalid order omitted uses yxz
+    credits: *a3
+    note: 'Proposed for suite 70bb145: invalid, non-string and omitted order fall back to yxz; review.'
   - asset: math/random
     subTest: Random (new number in each flow/for iteration, 10x)
     credits:
@@ -442,6 +494,67 @@ subTests:
     credits:
       - S-4774
     note: Mapped by hand from the coverage report; review.
+  - asset: pointer/activeCamera
+    subTest: |-
+      orthographic/xmag
+      isValid
+    credits: &a4
+      - O-/extensions/KHR_interactivity/activeCamera/*
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      orthographic/ymag
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      orthographic/zfar
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      orthographic/znear
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      perspective/aspectRatio
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      perspective/yfov
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      perspective/zfar
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      perspective/znear
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      position
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
+  - asset: pointer/activeCamera
+    subTest: |-
+      rotation
+      isValid
+    credits: *a4
+    note: 'Proposed for suite 70bb145: each activeCamera pointer is read and is read-only. Values depend on the viewer and are only sanity-checked; S-4801 (NaN when unavailable) stays a gap; review.'
   - asset: pointer/interpolate
     subTest: Rotation uses slerp (value at 25%)
     credits:

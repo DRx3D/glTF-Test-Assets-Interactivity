@@ -119,8 +119,8 @@ targets:
     summary: '`math/quatFromAngles`: invalid or missing `order` MUST fall back to the default'
     covers: TODO
     generator: TODO
-    reviewStatus: none
-    notes: All six valid orders are tested. No invalid or missing `order`.
+    reviewStatus: covered
+    notes: All six valid orders are tested. Since suite 70bb145, invalid strings (`XYZ`, `xxy`, `xy`, `xyzx`), a number and an omitted `order` are tested and expect the `yxz` result.
     scope: in
   - id: S-2510
     kind: statement

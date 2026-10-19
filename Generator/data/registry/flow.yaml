@@ -42,8 +42,8 @@ targets:
     summary: '`flow/for`: invalid or missing `initialIndex` MUST fall back to the default'
     covers: TODO
     generator: TODO
-    reviewStatus: none
-    notes: Only valid values (0 and 1) are used.
+    reviewStatus: partial
+    notes: Since suite 70bb145, invalid values (`1.5`, `2147483648`, `"3"`, `true`) are tested. Every `flow/for` node provides `initialIndex`, so a missing property is not tested.
     scope: in
   - id: S-3473
     kind: statement

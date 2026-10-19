@@ -173,7 +173,7 @@ targets:
     covers: TODO
     generator: TODO
     reviewStatus: none
-    notes: No test reads any `activeCamera` pointer.
+    notes: '`pointer/activeCamera` (suite 70bb145) assumes the viewer has an active camera; the unavailable case, where every value is NaN, is not tested.'
     scope: in
   - id: S-4826
     kind: statement
@@ -269,11 +269,11 @@ targets:
     reviewStatus: partial
   - id: O-/extensions/KHR_interactivity/activeCamera/*
     kind: pointer
-    summary: '/extensions/KHR_interactivity/activeCamera/*: None'
+    summary: '/extensions/KHR_interactivity/activeCamera/*: Covered since suite 70bb145 (`pointer/activeCamera`): every pointer is read, is read-only, and its values are sanity-checked'
     scope: in
     covers: TODO
     generator: TODO
-    reviewStatus: none
+    reviewStatus: covered
   - id: O-/animations/{}/extensions/KHR_interactivity/isPlaying
     kind: pointer
     summary: '/animations/{}/extensions/KHR_interactivity/isPlaying: Covered in the `[]` form; the `{}` form is not tested'

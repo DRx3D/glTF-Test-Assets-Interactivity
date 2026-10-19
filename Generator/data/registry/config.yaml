@@ -5,7 +5,7 @@ area: config
 targets:
   - id: E-config-flowForWithInitialindex15
     kind: edge
-    summary: 'Configuration fallback: `flow/waitAll` with `inputFlows: 65` and `flow/multiGate` with a non-boolean `isRandom` are covered. Still missing: `flow/for` with `initialIndex: 1.5`, `math/quatFromAngles` with an invalid `order`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`.'
+    summary: 'Configuration fallback: `flow/waitAll` with `inputFlows: 65`, `flow/multiGate` with a non-boolean `isRandom`, `flow/for` with an invalid `initialIndex` and `math/quatFromAngles` with an invalid or missing `order` are covered (the last two since suite 70bb145). Still missing: `flow/for` with a missing `initialIndex`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`.'
     scope: in
     covers: TODO
     generator: TODO

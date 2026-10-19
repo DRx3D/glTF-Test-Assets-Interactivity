@@ -24,15 +24,31 @@
         },
         {
           "name": "Empty range",
-          "nodeId": 72
+          "nodeId": 80
         },
         {
           "name": "Negative range",
-          "nodeId": 99
+          "nodeId": 106
         },
         {
           "name": "endIndex re-evaluation",
-          "nodeId": 127
+          "nodeId": 134
+        },
+        {
+          "name": "Invalid initialIndex 1.5",
+          "nodeId": 153
+        },
+        {
+          "name": "Invalid initialIndex 2147483648",
+          "nodeId": 166
+        },
+        {
+          "name": "Invalid initialIndex \"3\"",
+          "nodeId": 179
+        },
+        {
+          "name": "Invalid initialIndex true",
+          "nodeId": 192
         }
       ],
       "subTests": [
@@ -45,7 +61,7 @@
             true
           ],
           "successResultVarId": 2,
-          "successResultVarName": "TestResult_HasPassed_flow/for_[body] flow"
+          "successResultVarName": "TestResult_flow/for_[body] flow"
         },
         {
           "name": "Loop range (0..10)",
@@ -67,7 +83,7 @@
             true
           ],
           "successResultVarId": 6,
-          "successResultVarName": "TestResult_HasPassed_flow/for_[completed] flow"
+          "successResultVarName": "TestResult_flow/for_[completed] flow"
         },
         {
           "name": "Initial index",
@@ -97,65 +113,109 @@
           "resultVarId": 9,
           "resultVarType": "bool",
           "expectedResultValue": [
-            false
+            true
           ],
-          "successResultVarId": 10,
-          "successResultVarName": "TestResult_HasPassed_flow/for_startIndex > endIndex (5..2): no [loopBody]"
+          "successResultVarId": 9,
+          "successResultVarName": "TestResult_flow/for_startIndex > endIndex (5..2): no [loopBody]"
         },
         {
           "name": "startIndex > endIndex (5..2): [completed]",
           "resultVarName": "TestResult_flow/for_startIndex > endIndex (5..2): [completed]",
-          "resultVarId": 11,
+          "resultVarId": 10,
           "resultVarType": "bool",
           "expectedResultValue": [
             true
           ],
-          "successResultVarId": 11,
-          "successResultVarName": "TestResult_HasPassed_flow/for_startIndex > endIndex (5..2): [completed]"
+          "successResultVarId": 10,
+          "successResultVarName": "TestResult_flow/for_startIndex > endIndex (5..2): [completed]"
         },
         {
           "name": "startIndex > endIndex (5..2): [index] 5",
           "resultVarName": "TestResult_flow/for_startIndex > endIndex (5..2): [index] 5",
-          "resultVarId": 13,
+          "resultVarId": 12,
           "resultVarType": "int",
           "expectedResultValue": [
             5
           ],
-          "successResultVarId": 12,
+          "successResultVarId": 11,
           "successResultVarName": "TestResult_HasPassed_flow/for_startIndex > endIndex (5..2): [index] 5"
         },
         {
           "name": "Negative range (-3..0): 3 iterations",
           "resultVarName": "TestResult_flow/for_Negative range (-3..0): 3 iterations",
-          "resultVarId": 16,
+          "resultVarId": 15,
           "resultVarType": "int",
           "expectedResultValue": [
             3
           ],
-          "successResultVarId": 15,
+          "successResultVarId": 14,
           "successResultVarName": "TestResult_HasPassed_flow/for_Negative range (-3..0): 3 iterations"
         },
         {
           "name": "Negative range (-3..0): [index] 0 when completed",
           "resultVarName": "TestResult_flow/for_Negative range (-3..0): [index] 0 when completed",
-          "resultVarId": 18,
+          "resultVarId": 17,
           "resultVarType": "int",
           "expectedResultValue": [
             0
           ],
-          "successResultVarId": 17,
+          "successResultVarId": 16,
           "successResultVarName": "TestResult_HasPassed_flow/for_Negative range (-3..0): [index] 0 when completed"
         },
         {
           "name": "[endIndex] re-evaluated (10 -> 3 in body): 3 iterations",
           "resultVarName": "TestResult_flow/for_[endIndex] re-evaluated (10 -> 3 in body): 3 iterations",
-          "resultVarId": 22,
+          "resultVarId": 21,
           "resultVarType": "int",
           "expectedResultValue": [
             3
           ],
-          "successResultVarId": 21,
+          "successResultVarId": 20,
           "successResultVarName": "TestResult_HasPassed_flow/for_[endIndex] re-evaluated (10 -> 3 in body): 3 iterations"
+        },
+        {
+          "name": "Invalid initialIndex 1.5: initial [index] 0",
+          "resultVarName": "TestResult_flow/for_Invalid initialIndex 1.5: initial [index] 0",
+          "resultVarId": 23,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 22,
+          "successResultVarName": "TestResult_HasPassed_flow/for_Invalid initialIndex 1.5: initial [index] 0"
+        },
+        {
+          "name": "Invalid initialIndex 2147483648: initial [index] 0",
+          "resultVarName": "TestResult_flow/for_Invalid initialIndex 2147483648: initial [index] 0",
+          "resultVarId": 25,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 24,
+          "successResultVarName": "TestResult_HasPassed_flow/for_Invalid initialIndex 2147483648: initial [index] 0"
+        },
+        {
+          "name": "Invalid initialIndex \"3\": initial [index] 0",
+          "resultVarName": "TestResult_flow/for_Invalid initialIndex \"3\": initial [index] 0",
+          "resultVarId": 27,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 26,
+          "successResultVarName": "TestResult_HasPassed_flow/for_Invalid initialIndex \"3\": initial [index] 0"
+        },
+        {
+          "name": "Invalid initialIndex true: initial [index] 0",
+          "resultVarName": "TestResult_flow/for_Invalid initialIndex true: initial [index] 0",
+          "resultVarId": 29,
+          "resultVarType": "int",
+          "expectedResultValue": [
+            0
+          ],
+          "successResultVarId": 28,
+          "successResultVarName": "TestResult_HasPassed_flow/for_Invalid initialIndex true: initial [index] 0"
         }
       ]
     }

@@ -10,7 +10,7 @@ This work creates only the generator software. The test assets it generates are 
 
 ## Status
 
-Milestones M1 (foundations) and M2 (data and reference) of six are done; M3 (vertical slice) is in progress. M2's gate waits on two working-group decisions; see [`docs/M2-gate.md`](docs/M2-gate.md). In place:
+Milestones M1 (foundations), M2 (data and reference) and M3 (vertical slice) of six are done. The M3 slice also passes the authoring tool's own sample-asset harness; see [`docs/work-to-date.md`](docs/work-to-date.md#harness-run) and `tools/make-harness-tree.ts`. M2's gate waits on two working-group decisions; see [`docs/M2-gate.md`](docs/M2-gate.md). In place:
 
 | Module             | Contents                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------------------------------- |

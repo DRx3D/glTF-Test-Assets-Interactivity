@@ -10,8 +10,8 @@ The project builds `khr-itest-gen`, a TypeScript generator for supplemental `KHR
 
 - **Planning is complete.** The requirements, design spec and build steps are in `Documents/`, on the fork's `main` branch and in GitLab.
 - **Milestones M1 and M2 are complete.** M2's gate still waits on two working-group decisions (R1 and R2).
-- **M3, the vertical slice, is built and tested.** Three of its four gate items are met. The remaining one is running the slice through the authoring tool's own sample-asset harness.
-- **The generator runs end to end.** It produces 2 supplemental assets with 54 sub-tests. Every sub-test passes on the Khronos authoring tool's engine.
+- **Milestone M3, the vertical slice, is complete.** All four gate items are met, including a run through the authoring tool's own sample-asset harness, unmodified, on both its Core and Babylon configurations.
+- **The generator runs end to end.** It produces 2 supplemental assets with 54 sub-tests. Every sub-test passes on the Khronos authoring tool's engine, through our adapter and through the tool's own harness.
 - **The finished suite is expected to have about 130–150 assets and 1,300–1,600 sub-tests.**
 - **About 14 engineer-weeks of planned work remain (M4–M6).** At the pace of M1–M3, that is roughly 4–7 working sessions, plus review that only people and the working group can do. See [Remaining effort](#remaining-effort).
 
@@ -33,16 +33,17 @@ The analysis was rerun after upstream merged `fix/spec-and-json-conform-fixes` (
 
 Issue drafts live in `Documents/.issues.md`. That file is local only and never committed. Every filed issue carries an AI disclosure.
 
-| #   | Repository                            | Status                                                                                            |
-| --- | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 1–3 | glTF-InteractivityGraph-AuthoringTool | Filed: #128 (`expectedDuration`), #129 (single-precision matrices), #130 (configuration fallback) |
-| 4–8 | glTF-Test-Assets-Interactivity        | Filed: #25–#29 (description and label defects, README count); all fixed upstream and closed       |
-| 9   | glTF                                  | Filed: #2665 (graph versus extension rejection)                                                   |
-| 10  | AuthoringTool                         | Drafted: scalar `float` missing from `math/dot`, `math/length`, `math/normalize`                  |
-| 11  | Test-Assets                           | Withdrawn: oracle pass-variable names, fixed upstream by `70bb145` before filing                  |
-| 12  | AuthoringTool (engine 1.0.0)          | Drafted in M3: engine throws for valid graphs without `variables` or without event `values`       |
-| 13  | AuthoringTool (engine 1.0.0)          | Drafted in M3: engine npm package cannot be imported from Node.js                                 |
-| 14  | Test-Assets                           | Drafted: labels with line breaks run together in description files (145 sub-tests, 12 assets)     |
+| #   | Repository                            | Status                                                                                                                  |
+| --- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| 1–3 | glTF-InteractivityGraph-AuthoringTool | Filed: #128 (`expectedDuration`), #129 (single-precision matrices), #130 (configuration fallback); all fixed and closed |
+| 4–8 | glTF-Test-Assets-Interactivity        | Filed: #25–#29 (description and label defects, README count); all fixed upstream and closed                             |
+| 9   | glTF                                  | Filed: #2665 (graph versus extension rejection)                                                                         |
+| 10  | AuthoringTool                         | Drafted: scalar `float` missing from `math/dot`, `math/length`, `math/normalize`; still open at `4349755`               |
+| 11  | Test-Assets                           | Withdrawn: oracle pass-variable names, fixed upstream by `70bb145` before filing                                        |
+| 12  | AuthoringTool (engine 1.0.0)          | Withdrawn: engine throws without `variables` or event `values`; fixed in tool `main` and engine 1.1.0                   |
+| 13  | AuthoringTool (engine 1.0.0)          | Withdrawn: engine npm package cannot be imported from Node.js; fixed in engine 1.1.0                                    |
+| 14  | Test-Assets                           | Drafted: labels with line breaks run together in description files (145 sub-tests, 12 assets)                           |
+| 15  | AuthoringTool                         | Drafted: `schema:generate` never finds `../glTF` on Windows (`URL.pathname` gives `C:\C:\…`)                            |
 
 ## Generator milestones
 
@@ -83,7 +84,7 @@ Code is in `Generator/` (Apache-2.0): about 5,200 lines of source, 2,200 of test
 - **`data/interpretations.yaml`** with its schema and checks.
 - **Gate summary:** `docs/M2-gate.md`.
 
-### M3 Vertical slice (in progress: 3 of 4 gate items met)
+### M3 Vertical slice (complete)
 
 **Modules built:**
 
@@ -107,13 +108,38 @@ Code is in `Generator/` (Apache-2.0): about 5,200 lines of source, 2,200 of test
 | V1–V9 pass                                                     | Met                                                                                                                       |
 | Golden test in place                                           | Met. 13 targets in `test/golden/`, output compared byte for byte                                                          |
 | Slice runs correctly on one engine                             | Met on the authoring tool's engine. One workaround (an empty event `values` object) is applied and reported; see issue 12 |
-| Slice runs through the tool's sample-asset harness, unmodified | Not done. Needs a local clone of the authoring tool                                                                       |
+| Slice runs through the tool's sample-asset harness, unmodified | Met on 2026-10-19 (tool `main` at `4349755`). See [Harness run](#harness-run)                                             |
 
 **Engine verification:**
 
 - Both slice assets pass every sub-test and send `test/onSuccess` exactly once, and every indicator turns green.
 - A separate test runs every comparison mode with a right and a wrong expected value. Each passes and fails correctly, including telling −0 from +0, NaN, the tolerance modes and sets.
 
+#### Harness run
+
+The authoring tool was cloned next to this repository (`../glTF-InteractivityGraph-AuthoringTool`, `main` at `4349755`, 2026-10-19) and installed with `npm ci`. Its harness needs a full suite tree, so `tools/make-harness-tree.ts` copies the existing suite and adds the generated assets under `Tests/Interactivity`, as a supplemental run written there would look. The harness finds the unindexed assets through their `test-Json/*.json` files. Nothing in the tool was changed.
+
+```
+cd Generator
+npx tsx src/cli/index.ts generate --spec c5d1e1e8 --suite ../Tests/Interactivity \
+    --registry data/registry --out ./out/slice --copyright-owner "The Khronos Group Inc." \
+    --copyright-year 2026 --only "prerequisites,math/div" --verify-determinism
+npx tsx tools/make-harness-tree.ts out/slice out/harness
+
+cd ../../glTF-InteractivityGraph-AuthoringTool
+KHR_INTERACTIVITY_SAMPLE_ASSETS=<path to Generator/out/harness>
+KHR_INTERACTIVITY_ASSET_NAME_FILTER=math/div-boundary     # or prerequisites/harness-types
+npm run test:assets:core                                  # and npm run test:assets:e2e
+```
+
+| Asset                         | Schema validation | Core engine | Babylon (`NullEngine`) |
+| ----------------------------- | ----------------- | ----------- | ---------------------- |
+| `prerequisites/harness-types` | Pass              | 41/41       | 41/41                  |
+| `math/div-boundary`           | Pass              | 13/13       | 13/13                  |
+
+The harness takes each sub-test's in-graph pass variable as its result and warns when the result disagrees with `expectedResultValue` beyond its own tolerance. A run with `--silent=false` showed no such warnings. The tool now waits for `test/onStart`'s `expectedDuration` and for `test/onSuccess` or `test/onFailed` (AuthoringTool #128, fixed), so async assets in M5 no longer need the 6 s settle limit described in the authoring tool review.
+
+The generated GLBs declare `test/onSuccess` and `test/onFailed` without `values`. They ran in the harness without our adapter's workaround, which confirms that tool `main` fixed the event part of issue 12; the `variables` part was checked in the code only. Engine 1.1.0 (npm, 2026-10-14) has the same fix and imports in Node.js (issue 13); the adapter still pins 1.0.0 and should move to 1.1.0 and drop the workaround.
 **Differences from the design:**
 
 - The prerequisites asset is named `harness-types`, because §6.2 has no `prerequisites` facet.
@@ -149,11 +175,10 @@ Math sampling density drives most of the uncertainty. Asset splitting at 100 sub
 
 ## Remaining effort
 
-The project spec plans 27 engineer-weeks for one engineer. M1–M3 account for 13 of them, and M1–M3 took roughly six working sessions here.
+The project spec plans 27 engineer-weeks for one engineer. M1–M3 account for 13 of them, and M1–M3 took roughly seven working sessions here, including the 2026-10-19 sync with upstream and the harness run that closed M3.
 
 | Remaining work                                                                                                                                                      | Plan (engineer-weeks) | Estimate at the pace so far    | What paces it                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ------------------------------------------------------------------------ |
-| Finish M3: run the slice in the authoring tool's harness                                                                                                            | —                     | under 1 session                | Cloning and installing the tool; its harness behaviour                   |
 | M4 Math and type: table-driven math generator, special generators (`select`, `switch`, `random`, `matDecompose`, quaternion, colour), packing, expected-value audit | 6                     | 1–2 sessions                   | R1 (vector and matrix comparison); audit mismatches                      |
 | M5 Flow, state, events: flow, variable, event, debug, config and concepts generators; async harness; conditional sub-tests                                          | 4                     | 1–2 sessions                   | Async timing on a real engine, which needs simulated time in the adapter |
 | M6 Pointers, animation, release: base scenes, pointer and animation generators, cross-OS determinism, documentation                                                 | 4                     | 1–2 sessions                   | Base scenes; working-group review of the coverage report                 |

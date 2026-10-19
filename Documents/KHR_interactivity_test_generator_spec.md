@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| Document status | Draft 0.3 |
-| Date | 2026-10-05 |
+| Document status | Draft 0.4 |
+| Date | 2026-10-19 |
 | Target specification | `KHR_interactivity`, `Specification.adoc` at `KhronosGroup/glTF` revision `c5d1e1e8` |
-| Target test suite | `KhronosGroup/glTF-Test-Assets-Interactivity` `main`; test content as of revision `9ffd30e`, merged by PR #22 (`fc073cf`) |
+| Target test suite | `KhronosGroup/glTF-Test-Assets-Interactivity` `main`; test content as of revision `70bb145` |
 
 This document specifies software (the _generator_) that produces supplemental `KHR_interactivity` test assets. The assets fill the coverage gaps identified in Section 1 without modifying the existing test suite.
+
+_Note on deliverables:_ This work creates only the generator software. The test assets it generates are not stored in the repository; they may be provided collectively as a ZIP file. The one exception is the small golden-test output used to check the generator's own determinism (Section 5.3), which is committed with the generator's tests.
 
 Section 1 is informative. Section 2 defines how the rest of the document is to be read.
 
@@ -17,7 +19,7 @@ Section 1 is informative. Section 2 defines how the rest of the document is to b
 
 ### 1.1 Purpose
 
-The `KHR_interactivity` extension is ratified, and its test suite has at least one test for every operation it defines. A requirement-level review of the suite at revision `0f24a49` found that most of the specification's normative statements, many operation type signatures, and a large set of edge cases had no test coverage. The suite has since been extended substantially (revision `9ffd30e`, merged to `main` by PR #22), including a new set of invalid-graph cases. This section records the review repeated against that revision and the estimate of how many assets are needed to close the gaps that remain. The rest of this document specifies a generator that produces those assets.
+The `KHR_interactivity` extension is ratified, and its test suite has at least one test for every operation it defines. A requirement-level review of the suite at revision `0f24a49` found that most of the specification's normative statements, many operation type signatures, and a large set of edge cases had no test coverage. The suite has since been extended substantially (revision `9ffd30e`, merged to `main` by PR #22), including a new set of invalid-graph cases, and again at revision `70bb145`. This section records the review repeated against the latest revision and the estimate of how many assets are needed to close the gaps that remain. The rest of this document specifies a generator that produces those assets.
 
 Two scope decisions made after the original review apply to this version of the generator:
 
@@ -31,7 +33,7 @@ The review compared the `KHR_interactivity` specification against the test asset
 | Source | Revision |
 | --- | --- |
 | `KhronosGroup/glTF`, `extensions/2.0/Khronos/KHR_interactivity/Specification.adoc` (status: Complete, Ratified) | `c5d1e1e8` (2026-09-28) |
-| `KhronosGroup/glTF-Test-Assets-Interactivity`, `main`, `Tests/Interactivity` | `9ffd30e` (2026-10-05), merged to `main` by PR #22 (`fc073cf`) |
+| `KhronosGroup/glTF-Test-Assets-Interactivity`, `main`, `Tests/Interactivity` | `70bb145` (2026-10-12), the last commit on `main` that changes `Tests/Interactivity`; later commits up to `c41f2de` (2026-10-15) change only showcase models |
 
 Line numbers in this document refer to `Specification.adoc` at the revision above. Revision `c5d1e1e8` differs from `166ed85`, used by the original review, only by four typo fixes, so every line number is unchanged.
 
@@ -49,9 +51,9 @@ The full review is maintained separately as `Documents/KHR_interactivity_test_co
 
 ### 1.3 Summary of findings
 
-Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 159 test assets with 1,073 sub-tests, plus 179 invalid-graph cases. The suite README gives 1,071 sub-tests; the count here was taken from the oracle files (reported as [Test-Assets #29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29)).
+Node-level coverage is complete. All 135 operations have at least one dedicated test. The suite now has 160 test assets with 1,136 sub-tests, plus 179 invalid-graph cases. These counts, taken from the oracle files, match the suite README.
 
-Requirement-level coverage has improved a great deal. Of the 128 normative statements assessed (the BCP 14 terminology statement is excluded), 83 are covered, 17 are partially covered, and 28 have no coverage (6 of them impractical array-size limits). At the previous revision the figures were 14, 18, and 96.
+Requirement-level coverage has improved a great deal. Of the 128 normative statements assessed (the BCP 14 terminology statement is excluded), 84 are covered, 18 are partially covered, and 26 have no coverage (6 of them impractical array-size limits). The figures were 83, 17, and 28 at revision `9ffd30e`, and 14, 18, and 96 at revision `0f24a49`.
 
 The structural gap identified in the previous report is closed. The new `invalid/` set provides 179 deliberately invalid graphs, each breaking one validation rule, and the new `graph/` tests check valid graphs that look suspicious. Together they cover most of the JSON syntax and validation statements, and the operation-level rejection rules for `variable/*`, `pointer/*`, `event/*`, `math/switch`, `flow/switch` and `debug/log`. The rejection statements that remain uncovered fall into three groups: implementation limits (graph size, socket counts), type-equality rules for `math/select`, `math/dot` and `math/matMul`, and `pointer/set` with an invalid `type`.
 
@@ -79,7 +81,7 @@ Invalid-graph cases are cited by their id in `invalid/invalid-index.json` (for e
 | 238 | Socket order procedure MUST be used to compare ids | Covered | `flow/sequence` checks numeric, length-based, and case ordering. |
 | 272 | Implementations MUST support all listed type signatures (including double-precision `float`) | Partial | Double precision is now asserted in `Extras/Float_Precision`. `float2x2` and `float3x3` are still used by only a few matrix tests and never as variable or event types. |
 | 309 | Configuration on non-configurable operations MUST be ignored | Covered | `graph/ignored_configuration`: `math/add` with a configuration. Only one operation is checked. |
-| 311 | Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection | Covered | Fallback is asserted for `flow/switch`, `math/switch`, `flow/waitAll`, and `flow/multiGate`. Rejection is asserted for missing configuration on `variable/get`, `variable/set`, `event/receive`, `event/send`, and `pointer/get` (`G1a`, `G2a`, `G8a`, `G9a`, `G4a`). |
+| 311 | Default configuration MUST be used when configuration is missing or invalid; operations without a default MUST cause rejection | Covered | Fallback is asserted for `flow/switch`, `math/switch`, `flow/waitAll`, `flow/multiGate`, `flow/for`, and `math/quatFromAngles`. Rejection is asserted for missing configuration on `variable/get`, `variable/set`, `event/receive`, `event/send`, and `pointer/get` (`G1a`, `G2a`, `G8a`, `G9a`, `G4a`). |
 | 313 | All defined configuration properties MUST be present and valid, otherwise fall back to default; undefined configuration properties MUST be ignored | Covered | `flow/multiGate` with `isRandom: "yes"`; `flow/switch` with an unknown property. |
 | 359 | Variables without an initial value MUST be initialized to the type default | Partial | `float`, `float2`, `float3`, and `float4` variables are now declared without a value in `variable/set_and_get`, but no test asserts the resulting `bool` false, `int` 0, or NaN defaults. |
 | 361 | Variables MUST retain their values until execution terminates | Covered | Implicit in every test, since results are stored in variables and read back. |
@@ -99,7 +101,7 @@ Invalid-graph cases are cited by their id in `invalid/invalid-index.json` (for e
 | 1083 | `math/random`: value MUST be updated on access after a new flow activation | Covered | Now also across `flow/for` iterations. |
 | 1560 | `math/dot`: both inputs MUST have the same type | None | Rejection test needed. |
 | 1813 | `math/matMul`: both inputs MUST have the same type | None | Rejection test needed. |
-| 2218 | `math/quatFromAngles`: invalid or missing `order` MUST fall back to the default | None | All six valid orders are tested. No invalid or missing `order`. |
+| 2218 | `math/quatFromAngles`: invalid or missing `order` MUST fall back to the default | Covered | All six valid orders are tested, and invalid strings (`XYZ`, `xxy`, `xy`, `xyzx`), a number, and an omitted `order` all expect the `yxz` result. |
 | 2510 | Integer negation of `-2147483648` MUST return `-2147483648` | Covered | `math/neg` and `math/abs`. |
 | 2534 | Integer addition overflow MUST wrap | Covered | `2147483647 + 1`. |
 | 2563 | Integer subtraction overflow MUST wrap | Covered | `-2147483648 - 1`. |
@@ -122,7 +124,7 @@ Invalid-graph cases are cited by their id in `invalid/invalid-index.json` (for e
 | 3281 | `flow/sequence`: graph MUST be rejected if output flow count exceeds the limit | None | |
 | 3341 | `flow/switch`: case values MUST be converted to decimal strings without leading zeros | Partial | Negative and empty case arrays, `[0.5, 1]`, `[-2147483649, 0]`, and duplicates `[1, 2, 2]` are covered. The float-literal examples (`-1.0`, `0.1e1`) are not. |
 | 3343 | `flow/switch`: graph MUST be rejected if generated flows exceed the limit | None | |
-| 3411 | `flow/for`: invalid or missing `initialIndex` MUST fall back to the default | None | Only valid values (0 and 1) are used. |
+| 3411 | `flow/for`: invalid or missing `initialIndex` MUST fall back to the default | Partial | Invalid values (`1.5`, `2147483648`, `"3"`, `true`) fall back to 0. Every `flow/for` node provides `initialIndex`, so a missing property is not tested. |
 | 3473 | `flow/multiGate`: graph MUST be rejected if output flow count exceeds the limit | None | |
 | 3477 | `flow/multiGate`: if either configuration property is missing or non-boolean, the default MUST be used for both | Partial | A non-boolean `isRandom` is covered. A missing property, a non-boolean `isLoop`, and `isLoop: true` with `isRandom: true` are not. |
 | 3538 | `flow/waitAll`: invalid `inputFlows` (missing, non-integer, negative, >64) MUST fall back to the default | Partial | `inputFlows: 65` is covered. Missing, non-integer, and negative values are not. |
@@ -205,7 +207,7 @@ Log output is implementation-facing, so verifying it would need an oracle that c
 | 4738 | `asset/majorVersion`/`minorVersion` MUST be the minimum of the asset version and the maximum supported version | Covered | Only the common case (asset 2.0) can be tested with a normal asset. |
 | 4740 | Supported extensions in `extensionsUsed` MUST appear as `asset/extensions/<name>/enabled` | Covered | Includes unknown and declared-but-unused extensions. |
 | 4774 | Runtime limit values MUST be at least 1 | Covered | |
-| 4801 | Unavailable active camera data MUST be reported as NaN | None | No test reads any `activeCamera` pointer. |
+| 4801 | Unavailable active camera data MUST be reported as NaN | None | `pointer/activeCamera` reads every `activeCamera` pointer but assumes the viewer has an active camera. The unavailable case, where the values are NaN, is not tested. |
 | 4826 | Animation `minTime`/`maxTime` MUST come from sampler input accessor min/max, ignore unused samplers, and be NaN for invalid animations | Partial | `animation/state` covers min/max and an unused sampler. The NaN result for an invalid animation is not tested. |
 
 #### 1.4.11 JSON syntax and validation
@@ -328,7 +330,7 @@ These behaviors are defined in the operation procedures rather than as standalon
 | --- | --- |
 | `/extensions/KHR_interactivity/asset/*` | Covered, including an unused extension |
 | `/extensions/KHR_interactivity/limits/*` | Covered (≥ 1 only) |
-| `/extensions/KHR_interactivity/activeCamera/*` (10 pointers) | None |
+| `/extensions/KHR_interactivity/activeCamera/*` (10 pointers) | Covered (`pointer/activeCamera`): every pointer is read, `pointer/set` and `pointer/interpolate` fail with `err`, and the values are sanity-checked. An active camera is assumed |
 | `/animations/{}/extensions/KHR_interactivity/isPlaying`, `minTime`, `maxTime`, `playhead`, `virtualPlayhead` | Covered in the `[]` form; the `{}` form is not tested |
 | `/extensions/KHR_interactivity/delays/{}` | Covered (valid reference only) |
 | `/extensions/KHR_interactivity/events/{}` | Covered |
@@ -351,7 +353,7 @@ The suite now has a rejection category. `invalid/` holds 179 cases with an `expe
 4. `variable/set` and `variable/interpolate` misuse: covered (`G2*`, `G3*`), except an empty `variables` array.
 5. `pointer/set` with `{value}` in the template: covered (`G6a`, `G6b`).
 6. The specification's invalid pointer template examples: covered (`G5-01`–`G5-22`).
-7. Configuration fallback: `flow/waitAll` with `inputFlows: 65` and `flow/multiGate` with a non-boolean `isRandom` are covered. Still missing: `flow/for` with `initialIndex: 1.5`, `math/quatFromAngles` with an invalid `order`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`.
+7. Configuration fallback: `flow/waitAll` with `inputFlows: 65`, `flow/multiGate` with a non-boolean `isRandom`, `flow/for` with an invalid `initialIndex`, and `math/quatFromAngles` with an invalid or missing `order` are covered. Still missing: `flow/for` with no `initialIndex`, `flow/multiGate` with a missing property, and `debug/log` with an invalid `severity`.
 8. Switch case encodings: `[0.5, 1]`, `[-2147483649, 0]` (flow only), and duplicates are covered. Still missing: `[-1.0, 0, 1]`, `[0.1e1, 2, 2]`, and `[-2147483649, 0]` for `math/switch`.
 
 Rejection cases still missing: graphs that exceed static limits (generated socket and flow counts), type-equality violations for `math/select`, `math/dot`, and `math/matMul`, and `pointer/set` with an invalid `type`.
@@ -422,19 +424,9 @@ These are properties of the current assets that limit what they can verify, inde
 
 **Wide tolerances.** Most comparisons use `abs(actual - expected) < tolerance`, with tolerances from 0.0001 to 0.4. Animation checks still use 0.3–0.4, and some interpolation midpoint checks still use 0.1. These confirm that something happened but cannot distinguish easing curves or detect small timing drift. The authoring tool's sample-asset harness does not loosen this further: it takes the in-graph pass variable as the result and uses its own 0.05 / 3% tolerance only for a warning.
 
-**Engine-specific expected values.** `UnityGLTF.Interactivity.StaticRefPointer` still appears as an expected value in four description files (`event/Event_Refs`, `pointer/CoreReadOnlyPointers_GetTests`, `UserInteractions/eventOnHover`, `UserInteractions/eventOnSelect`). These are generator artifacts and are not meaningful to other implementations. Reported as [Test-Assets #25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25).
+**Label and description defects (resolved).** Upstream changes after revision `9ffd30e`, mainly the re-export at `3dd45c3`, fixed the defects reported against it: the engine-specific `UnityGLTF.Interactivity.StaticRefPointer` expected value in four description files ([Test-Assets #25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25)), labels that stated the opposite of the expected value ([#26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26)), labels that rounded their inputs to two decimals ([#27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27)), log messages with a comma as the decimal separator ([#28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28)), and the README sub-test count ([#29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29)). All five issues are closed. Labels now print values in full (`[a] 757.003235 = 758`), and negated checks say so (`(0.1 + 0.2 == 0.3) == false`).
 
-**Sub-test labels round their inputs.** Labels such as `[a] 757.00 = 758.00` (`math/ceil`, actual input `757.003`) and `[a] 1.10 = 63.00` (`math/deg`, expected `62.9999962`) still appear wrong to a reviewer. Reported as [Test-Assets #27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27).
-
-**Ambiguous sub-test labels.** Several labels state the opposite of the expected value, because the result variable records a failure or a negated condition:
-
-- `event/Event_Refs`: "ref not null" expects `False`, and "onTickt wo nodes" is still misspelled.
-- `event/activation_order_and_onTick`: "receive: all get the sent value", "onTick: same values in a tick", and "timeSinceStart non-decreasing" all expect `False`.
-- `Extras/Float_Precision`: "0.1 + 0.2 != 0.3", "literal 1.79e308 is finite", and "1e30 * 1e30 is finite" expect `False`.
-
-The results are probably correct, but each label needs reading against the graph to confirm. Reported as [Test-Assets #26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26).
-
-**Locale leakage.** Log messages still use a comma as the decimal separator ("Proximity range: 0,0001"), including in the new assets. This only affects log text, not results. Reported as [Test-Assets #28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28).
+**Labels with line breaks.** 145 sub-test labels in 12 assets contain a line break with no space on either side, so the description files run the words together ("positionisValid", "two customtypes"). Every label in the new `pointer/activeCamera` asset is affected. The results are not affected. An issue for the suite repository has been drafted but not yet filed.
 
 **Out-of-scope operations.** `UserInteractions/eventOnHover` and `eventOnSelect` test `KHR_node_hoverability` and `KHR_node_selectability` operations. `graph/unsupported_operations_and_graphs` declares `test/*` operations on purpose, to check how unsupported extension operations are handled. Neither counts toward core operation coverage.
 
@@ -446,7 +438,7 @@ One open issue comes from the new invalid set. The suite README reports 38 cases
 
 ### 1.9 Asset count estimate
 
-The estimate below assumes full coverage of every in-scope gap that remains at revision `9ffd30e`, configuration-fallback tests included, and the sampling approach made normative in Section 8. Rejection cases are excluded (Section 1.1).
+The estimate below assumes full coverage of every in-scope gap that remains at revision `70bb145`, configuration-fallback tests included, and the sampling approach made normative in Section 8. Rejection cases are excluded (Section 1.1).
 
 | Area | Assets | Sub-tests | What drives the count |
 | --- | --- | --- | --- |
@@ -455,15 +447,15 @@ The estimate below assumes full coverage of every in-scope gap that remains at r
 | Reference equality | 1 | ~8 | Same index with different object type; references from pointers and events |
 | Flow control | ~8 | ~45 | `for`/`doN` near the int32 limits, negative `n`, `waitAll` 0 and 64, `setDelay` 0 and limits, `while` with a changing condition |
 | Variables | 3 | ~45 | Type defaults, matrix and `ref` variables, interpolation of `float2`, `float3`, `float4` without slerp and matrices |
-| Pointers and object model | ~8 | ~80 | `activeCamera`, `{}` forms of animation state, `pointer/get` type mismatch, nodes outside the scene, valid template syntax, interpolation of the remaining types |
+| Pointers and object model | ~8 | ~80 | `{}` forms of animation state, `pointer/get` type mismatch, nodes outside the scene, valid template syntax, interpolation of the remaining types |
 | Animation | ~2 | ~6 | Maximum time of 0, `maxActiveAnimations` |
 | Events | ~3 | ~20 | `event/send` and `event/receive` for vector, matrix and remaining types |
 | Debug log | 1–2 | ~12 | Graph runs correctly with templated messages; checking the log text itself needs the runner to capture it |
 | Concepts and precision | ~4 | ~35 | Precision and negative zero for the operations not in `Extras/Float_Precision`, socket value retention |
-| Configuration fallback | ~6 | ~30 | `flow/for`, `math/quatFromAngles`, `flow/multiGate`, `flow/waitAll` and `debug/log` cases still missing |
+| Configuration fallback | ~6 | ~30 | `flow/for` (missing `initialIndex`), `flow/multiGate`, `flow/waitAll` and `debug/log` cases still missing |
 | **Total** | **~145** | **~1,950** | |
 
-The figures carry an uncertainty of roughly ±30%, almost all of it in the math operations, where sampling density drives the count. Packing several sample values into the components of one vector or matrix sub-test is what keeps the math total near 1,700 rather than 5,000.
+The figures carry an uncertainty of roughly ±30%, almost all of it in the math operations, where sampling density drives the count. The new coverage at revision `70bb145` (the `activeCamera` pointers and two configuration fallbacks) removes only a few sub-tests from the pointer and configuration rows, well within that uncertainty, so the figures are unchanged. Packing several sample values into the components of one vector or matrix sub-test is what keeps the math total near 1,700 rather than 5,000.
 
 Some tests must run in an asset of their own because they depend on graph-wide state: anything that exhausts a `maxActive*` limit, and timing checks that other activity would disturb. Pointer tests also need several base scenes (lights, material extensions, cameras, skins, morph targets, and animations). These account for the asset count being above one per operation.
 
@@ -471,15 +463,17 @@ Compared with the original review, the existing suite now covers most of the ord
 
 ### 1.10 Changes since the original review
 
-Draft 0.1 of this document was based on suite revision `0f24a49`. The table compares the two reviews.
+Draft 0.1 of this document was based on suite revision `0f24a49`, and drafts 0.2 and 0.3 on revision `9ffd30e`. The table compares the three reviews.
 
-| Area | Revision `0f24a49` | Revision `9ffd30e` |
-| --- | --- | --- |
-| Test assets / sub-tests | 149 / 831 | 159 / 1,073 |
-| Invalid-graph cases | 0 | 179 |
-| Statements covered / partial / none | 14 / 18 / 96 | 83 / 17 / 28 |
+| Area | Revision `0f24a49` | Revision `9ffd30e` | Revision `70bb145` |
+| --- | --- | --- | --- |
+| Test assets / sub-tests | 149 / 831 | 159 / 1,073 | 160 / 1,136 |
+| Invalid-graph cases | 0 | 179 | 179 |
+| Statements covered / partial / none | 14 / 18 / 96 | 83 / 17 / 28 | 84 / 18 / 26 |
 
-New assets: `animation/start_playback_modes`, `animation/state`, `animation/stop_and_stopAt_edge_cases`, `event/activation_order_and_onTick`, `graph/extra_and_unknown_sockets`, `graph/ignored_configuration`, `graph/json_syntax`, `graph/unsupported_operations_and_graphs`, `pointer/set_edge_cases`, and `Extras/Float_Precision`.
+From `9ffd30e` to `70bb145`: the new `pointer/activeCamera` asset (48 sub-tests) covers the `activeCamera` pointers, and new sub-tests in `math/quatFromAngles` (+6), `flow/switch` (+5) and `flow/for` (+4) cover configuration fallback. Line 2218 moved from None to Covered and line 3411 from None to Partial. The re-export at `3dd45c3` changed about 290 labels without changing results and closed Test-Assets #25 to #29 (Section 1.7).
+
+From `0f24a49` to `9ffd30e`, new assets: `animation/start_playback_modes`, `animation/state`, `animation/stop_and_stopAt_edge_cases`, `event/activation_order_and_onTick`, `graph/extra_and_unknown_sockets`, `graph/ignored_configuration`, `graph/json_syntax`, `graph/unsupported_operations_and_graphs`, `pointer/set_edge_cases`, and `Extras/Float_Precision`.
 
 Extended assets, by number of sub-tests added: `pointer/interpolate` (+14), `variable/interpolate` (+14), `flow/setDelay_and_cancelDelay` (+8), `flow/for` (+6), `flow/multiGate` (+6), `math/round` (+6), `variable/set_and_get` (+6), `flow/throttle` (+5), `math/smoothStep` (+5), `flow/waitAll` (+4), `math/pow` (+4), and 24 others with one to three each.
 
@@ -631,7 +625,7 @@ Supplemental assets **MUST** be written under the output path using the existing
 
 `<category>` **MUST** be the operation category of the operation under test (`math`, `type`, `ref`, `flow`, `variable`, `pointer`, `animation`, `event`, `debug`), or one of `concepts`, `config`, or `prerequisites` for assets that are not about a single operation category.
 
-_Informative:_ Writing directly into the existing repository's `Tests/Interactivity` directory is permitted by this layout, because Section 6.2 prevents collisions and Section 4.3 prevents modification of existing files.
+_Informative:_ Writing directly into the existing repository's `Tests/Interactivity` directory is permitted by this layout, because Section 6.2 prevents collisions and Section 4.3 prevents modification of existing files. In this project, however, the generated output is not committed to any repository; it may be provided collectively as a ZIP file of the output directory.
 
 ### 6.2 Asset names
 
@@ -902,7 +896,7 @@ Where computing an expected value requires an interpretation of the Specificatio
 
 ## 10. Coverage Requirements
 
-_Informative:_ Sections 10.2 to 10.12 list everything the generator must be able to cover. At suite revision `9ffd30e`, many of these targets are already covered by existing sub-tests, for example the flow procedures in Section 10.6, ordering and first-tick values in Section 10.10, and most of the animation targets in Section 10.9. Gap determination (Section 11) removes covered targets, so the generator emits sub-tests only for what remains. The requirements are kept complete so the generator stays correct against later suite revisions.
+_Informative:_ Sections 10.2 to 10.12 list everything the generator must be able to cover. At suite revision `70bb145`, many of these targets are already covered by existing sub-tests, for example the flow procedures in Section 10.6, ordering and first-tick values in Section 10.10, and most of the animation targets in Section 10.9. Gap determination (Section 11) removes covered targets, so the generator emits sub-tests only for what remains. The requirements are kept complete so the generator stays correct against later suite revisions.
 
 ### 10.1 Target registry
 
@@ -1095,9 +1089,9 @@ These points need a decision by the working group or the test-asset maintainers.
 4. **Index merging.** Whether `supplemental-index.json` is merged into `test-index.json` and `mathtests-index.json`, or kept separate, is for the maintainers to decide. The authoring tool's harness also runs any `test-Json/*.json` file that no index lists, so supplemental assets written under `Tests/Interactivity` run there whether or not the indexes are merged.
 5. **Conditional sub-tests.** Reporting a skipped sub-test as passed keeps existing runners working but hides skips from them. The alternative is a third result state, which existing runners do not support.
 6. **Extension-dependent sub-tests.** Section 10.11 uses an operation from another Khronos extension to test declaration handling. The maintainers may prefer that these sub-tests live with that extension's tests.
-7. **Existing suite issues.** Section 1.7 lists issues in the existing assets, such as engine-specific expected values and sub-test labels that state the opposite of the expected value. This generator does not correct them (Section 4.3); they need to be fixed in the existing generator. They are reported as Test-Assets [#25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25), [#26](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/26), [#27](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/27), [#28](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/28) and [#29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29).
+7. **Existing suite issues.** Section 1.7 lists issues in the existing assets. This generator does not correct them (Section 4.3); they need to be fixed in the existing generator. The five reported at revision `9ffd30e`, Test-Assets [#25](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/25) to [#29](https://github.com/KhronosGroup/glTF-Test-Assets-Interactivity/issues/29), are fixed and closed. One remains at revision `70bb145`: labels whose line breaks are lost in the description files.
 8. **Component extraction in the harness.** The harness operation set in Section 7.2 has no `math/extract*` operations, which component-by-component comparison of vector and matrix results needs (Section 7.3). The existing suite's harness already uses `math/extract3`. The working group needs to decide whether the extract operations join the harness set, verified by the supplemental prerequisites asset.
-9. **Oracle file shape.** Section 7.4 lists the oracle properties as a flat set, but the existing oracle files, which existing runners read, nest sub-tests under `tests[].subTests[]` and add `description` and `entryPoints`. The nested shape is unchanged at revision `9ffd30e`. Section 7.4 should be updated to describe the nested shape.
+9. **Oracle file shape.** Section 7.4 lists the oracle properties as a flat set, but the existing oracle files, which existing runners read, nest sub-tests under `tests[].subTests[]` and add `description` and `entryPoints`. The nested shape is unchanged at revision `70bb145`. Section 7.4 should be updated to describe the nested shape.
 10. **Remaining rejection gaps.** Rejection tests are out of scope for this generator (Section 1.1). Section 1.6.1 lists the rejection cases the existing `invalid/` set does not yet include; they need to be added there.
 11. **Graph versus extension rejection.** For 38 invalid-graph cases the Specification's normative text requires rejecting the graph while its Validation section requires rejecting the extension (Section 1.8). This does not affect the generator, but the Specification should resolve it; reported as [glTF #2665](https://github.com/KhronosGroup/glTF/issues/2665).
 12. **Defect reporting.** Defects found while building or running the generator are filed as issues in the repository that owns them: test-asset defects (Section 1.7) in `glTF-Test-Assets-Interactivity`, engine and harness defects in `glTF-InteractivityGraph-AuthoringTool` or the relevant implementation, and Specification text issues (Section 1.8) in `glTF`.
